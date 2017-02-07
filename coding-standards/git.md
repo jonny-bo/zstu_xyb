@@ -11,7 +11,7 @@
 
 在这篇文章中介绍的开发模型在大约一年前已经在我的私有项目和工作引入的，而且已经被证明是非常成功的。我想写一些关于这个模型的东西已经好一段时间了，但是一直苦于没有时间，不过现在可以了。我不想探讨任何项目细节，只讨论分支策略和发布管理。
 
-<img src="coding-standards/git-branch-model-1.jpg" style="background-color:white">
+<img src="images/git-branch-model-1.jpg" style="background-color:white">
 
 这篇文章围绕着Git做为我们所有的源代码版本控制工具而展开的。
 
@@ -29,7 +29,7 @@
 
 我们使用的，且与这个分支模型配合的非常好的库，他有一个“真正”的中央仓库。注意，这个库只是被认为是中央仓库(因为Git是一个分布式的版本控制工具，在技术层面没有所谓的中央仓库)。我们将会为这个仓库起名为origin，因为所有的Git用户对这个名字都比较熟悉。
 
-<img src="coding-standards/git-branch-model-2.jpg" style="background-color:white">
+<img src="images/git-branch-model-2.jpg" style="background-color:white">
 
 每个开发者从origin拉取和推送代码。除了集中式的推送拉取关系，每个开发者也有可能从别的开发者处拉取代码，形成自己的团队。例如当与两个或者更多的人开发一个大的特性时，或者在将代码推送到origin之前，这种代码管理模式可能有用。在上图中，存在Alice和Bob，Alice和David，Clair 和David三个子团队
 
@@ -37,7 +37,7 @@
 
 ## 主分支
 
-<img src="coding-standards/git-branch-model-3.jpg" style="background-color:white">
+<img src="images/git-branch-model-3.jpg" style="background-color:white">
 
 老实说，我们讨论的开发模型受到了当前已存在模型的很大启发。集中式的版本库有两个永久存在的主分支：
 
@@ -70,7 +70,7 @@ origin的master分支每个Git用户都很熟悉。平行的另外一个分支�
 
 ### 特性分支
 
-<img src="coding-standards/git-branch-model-4.jpg" style="background-color:white">
+<img src="images/git-branch-model-4.jpg" style="background-color:white">
 
 特性分支可以从develop分支拉取建立，最终必须合并回develop分支。特性分支的命名，除了 master， develop， release-\*，或hotfix-\*以外，可以随便起名。
 
@@ -104,7 +104,7 @@ $ git push origin develop
 
 --no-ff参数的作用是在合并的时候，会创建一个新的提交对象，即使是fast-forward方式的合并。这就避免了丢失特性分支的历史记录信息以及提交记录信息。比较一下。
 
-<img src="coding-standards/git-branch-model-5.jpg" style="background-color:white">
+<img src="images/git-branch-model-5.jpg" style="background-color:white">
 
 在右面的例子中，是不可能从Git历史记录中看到一个已经实现了的特性的所有提交对象-除非你去查看所有的日志信息。要想获取整个特性分支信息，在右面的例子中的确是一个头疼的问题，但是如果使用--no-ff参数就没有这个问题。
 
@@ -179,7 +179,7 @@ Deleted branch release-1.2 (was ff452fe).
 
 ## Hotfix分支
 
-<img src="coding-standards/git-branch-model-6.jpg" style="background-color:white">
+<img src="images/git-branch-model-6.jpg" style="background-color:white">
 
 Hotfix分支从master分支建立，必须合并回develop分支和master分支，为Hotfix分支可以这样起名:hotfix-\*
 

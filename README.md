@@ -16,11 +16,11 @@
 
 ## 开发规范
 
-* [Git 使用规范](git.md)
-* [MySQL开发规范](mysql.md)
-* [REST API编写规范](rest-api.md)
+* [Git 使用规范](coding-standards/git.md)
+* [MySQL开发规范](coding-standards/mysql.md)
+* [REST API编写规范](coding-standards/rest-api.md)
 * [PHP规范GITHUB中文版](https://github.com/PizzaLiu/PHP-FIG)
-* [Android规范](mobile/android.md)
+* [Android规范](coding-standards/android.md)
 
 
 
