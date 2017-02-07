@@ -1,4 +1,28 @@
-# Biz & Symfony Starter 
+# 编码规范
+
+为了提升团队开发效率，方便团队成员快速上手，制定此编码规范。本文档会不定期更新，所有开发成员均有义务参与本文档的编辑与完善。
+内容涉及开发相关的技术规范、最佳实践、架构设计、团队协作等方面。
+
+**为什么要有编码规范？**
+
+编码规范对于程序员而言尤为重要，有以下几个原因:
+
+  * 一个软件的生命周期中，80%的时间花费在维护
+  * 几乎没有任何一个软件，在其整个生命周期中，均由最初的开发人员来维护
+  * 编码规范可以改善软件的可读性，可以让程序员尽快而彻底地理解新的代码
+  * 如果你将源码作为产品发布，就需要确任它是否被很好的打包并且清晰无误.
+
+为了保证开发过程中各成员的程序结构和开发框架的一致性及代码的可维护性，作为项目开发过程中相关人员的工作基础和依据，并作为项目质量评估的标准。
+
+## 开发规范
+
+* [Git 使用规范](git.md)
+* [MySQL开发规范](mysql.md)
+* [REST API编写规范](rest-api.md)
+* [PHP规范GITHUB中文版](https://github.com/PizzaLiu/PHP-FIG)
+* [Android规范](mobile/android.md)
+
+
 
 ## PHP初始化
 
@@ -12,7 +36,7 @@
 
     创建数据库：
     ```
-    CREATE DATABASE `example` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+    CREATE DATABASE `zstu_xyb` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
     ```
 
     创建数据库表：
