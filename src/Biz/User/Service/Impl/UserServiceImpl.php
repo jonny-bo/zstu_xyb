@@ -9,9 +9,14 @@ use Biz\Common\Exception\UnexpectedValueException;
 use Biz\Common\Exception\ResourceNotFoundException;
 use Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder;
 use Biz\Common\SimpleValidator;
+use Biz\Common\ArrayToolkit;
 
 class UserServiceImpl extends BaseService implements UserService
 {
+    protected $requiredFields = array(
+        'username', 'password', 'nickname', 'email'
+    );
+
     public function getUser($id)
     {
         return $this->getUserDao()->get($id);
@@ -65,25 +70,7 @@ class UserServiceImpl extends BaseService implements UserService
 
     public function register($registration)
     {
-        if (!SimpleValidator::nickname($registration['nickname'])) {
-            throw new UnexpectedValueException('昵称校验失败');
-        }
-
-        if (!$this->isUsernameAvaliable($registration['username'])) {
-            throw new UnexpectedValueException('用户名已存在');
-        }
-
-        if (!SimpleValidator::email($registration['email'])) {
-            throw new UnexpectedValueException('Email校验失败');
-        }
-
-        if (!$this->isEmailAvaliable($registration['email'])) {
-            throw new UnexpectedValueException('Email已存在');
-        }
-
-        if (isset($registration['mobile']) && $registration['mobile'] != "" && !SimpleValidator::mobile($registration['mobile'])) {
-            throw new UnexpectedValueException('手机号校验失败');
-        }
+        $this->vilidateUser($registration);
 
         $user = array();
 
@@ -108,6 +95,33 @@ class UserServiceImpl extends BaseService implements UserService
         $user['created_time']   = time();
 
         return $this->getUserDao()->create($user);
+    }
+
+    protected function vilidateUser($registration)
+    {
+        if (!ArrayToolkit::requireds($registration, $this->requiredFields)) {
+            throw new InvalidArgumentException('缺少必要参数');
+        }
+
+        if (!SimpleValidator::nickname($registration['nickname'])) {
+            throw new UnexpectedValueException('昵称校验失败');
+        }
+
+        if (!$this->isUsernameAvaliable($registration['username'])) {
+            throw new UnexpectedValueException('用户名已存在');
+        }
+
+        if (!SimpleValidator::email($registration['email'])) {
+            throw new UnexpectedValueException('Email校验失败');
+        }
+
+        if (!$this->isEmailAvaliable($registration['email'])) {
+            throw new UnexpectedValueException('Email已存在');
+        }
+
+        if (isset($registration['mobile']) && $registration['mobile'] != "" && !SimpleValidator::mobile($registration['mobile'])) {
+            throw new UnexpectedValueException('手机号校验失败');
+        }
     }
 
     public function verifyPassword($id, $password)
