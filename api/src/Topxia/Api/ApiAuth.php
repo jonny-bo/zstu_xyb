@@ -51,23 +51,24 @@ class ApiAuth
             }
 
             if (!$inWhiteList && empty($token)) {
-                throw new \RuntimeException('API Token不存在！');
+                throw new RuntimeException('API Token不存在！');
             }
 
             $token = $this->getUserService()->getToken('mobile_login', $token);
 
-            if (!$inWhiteList && empty($token['userId'])) {
-                throw new \RuntimeException('API Token不正确！');
+
+            if (!$inWhiteList && empty($token['user_id'])) {
+                throw new RuntimeException('API Token不正确！');
             }
 
-            $user = $this->getUserService()->getUser($token['userId']);
+            $user = $this->getUserService()->getUser($token['user_id']);
 
             if (!$inWhiteList && empty($user)) {
-                throw new \RuntimeException('登录用户不存在！');
+                throw new RuntimeException('登录用户不存在！');
             }
 
             if ($user) {
-                $user['currentIp'] = $request->getClientIp();
+                $user['login_ip'] = $request->getClientIp();
             }
 
             $this->setCurrentUser($user);

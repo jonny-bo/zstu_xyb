@@ -8,7 +8,9 @@ interface UserService
 
     public function getUserByUsername($username);
 
-    public function createUser($user);
+    public function searchUsersCount($conditions);
+
+    public function searchUsers($conditions, $orderbys, $start, $limit);
 
     public function makeToken($type, $userId = null, $expiredTime = null, $data = null);
     
@@ -23,4 +25,12 @@ interface UserService
     public function verifyInSaltOut($password, $salt, $out);
 
     public function markLoginInfo();
+
+    public function isEmailAvaliable($email);
+
+    public function isUsernameAvaliable($nickname);
+
+    public function isMobileAvaliable($mobile);
+
+    public function register($registration);
 }

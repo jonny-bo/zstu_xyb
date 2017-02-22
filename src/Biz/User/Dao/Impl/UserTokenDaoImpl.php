@@ -19,4 +19,9 @@ class UserTokenDaoImpl extends GeneralDaoImpl implements UserTokenDao
             ),
         );
     }
+
+    public function getByToken($token)
+    {
+        return $this->getByFields(array('token' => $token));
+    }
 }

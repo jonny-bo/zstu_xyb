@@ -1,6 +1,7 @@
 <?php
 
 namespace Topxia\Api\Convert;
+
 use Topxia\Service\Common\ServiceKernel;
 
 class UserConvert implements Convert
@@ -14,6 +15,4 @@ class UserConvert implements Convert
         }
         return $user;
     }
-
 }
-

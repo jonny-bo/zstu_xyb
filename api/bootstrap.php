@@ -45,6 +45,9 @@ $biz = new \Codeages\Biz\Framework\Context\Biz(array(
 ));
 
 $biz['migration.directories'][] = dirname(__DIR__) . '/migrations';
+$biz['user.password_encoder'] = function () {
+    return new \Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder('sha256');
+};
 $biz->register(new \Codeages\Biz\Framework\Provider\DoctrineServiceProvider());
 $biz->register(new \Codeages\Biz\RateLimiter\RateLimiterServiceProvider());
 $biz['subscribers'] = new \ArrayObject();

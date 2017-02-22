@@ -8,8 +8,7 @@ use Topxia\Api\ApiAuth;
 use Symfony\Component\Debug\Exception\FlattenException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
-
-include __DIR__.'/src/functions.php';
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 $app = new Silex\Application();
 
@@ -29,8 +28,7 @@ $app->view(function (array $controllerResult) use ($app) {
     return $app->json($controllerResult);
 });
 
-$app->error(function (\Exception $exception) use ($app) {
-
+$app->error(function (HttpException $exception) use ($app) {
     $error = array(
         'code' => $exception->getStatusCode(),
         'message' => $exception->getMessage(),

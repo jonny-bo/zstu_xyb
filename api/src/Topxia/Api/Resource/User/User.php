@@ -29,7 +29,7 @@ class User extends BaseResource
         $res['updated_time'] = date('c', $res['updated_time']);
         $res['created_time'] = date('c', $res['created_time']);
 
-        $user = new CurrentUser($this->biz['user']);
+        $user = $this->biz['user'];
 
         if (!$user->isLogin() || !$user->isAdmin() || ($user['id'] != $res['id'])) {
             unset($res['email']);

@@ -10,6 +10,7 @@ use Biz\Common\Exception\ResourceNotFoundException;
 use Biz\Common\Exception\RuntimeException;
 use Biz\Common\Exception\AccessDeniedException;
 use Biz\Common\ArrayToolkit;
+use AppBundle\Security\CurrentUser;
 
 class Login extends BaseResource
 {
@@ -18,7 +19,7 @@ class Login extends BaseResource
         $fields = $request->request->all();
 
         if (!ArrayToolkit::requireds($fields, array('username', 'password'))) {
-            return $this->error('required field', '缺少必填字段');
+            throw new RuntimeException('缺少必填字段');
         }
 
         $user = $this->getUserService()->getUserByUsername($fields['username']);
@@ -34,7 +35,7 @@ class Login extends BaseResource
         $token = $this->getUserService()->makeToken('mobile_login', $user['id']);
 
         $user['login_ip']  = $request->getClientIp();
-        $this->biz['user'] = $user;
+        $this->biz['user'] = new CurrentUser($user);
 
         $user  = $this->getUserService()->markLoginInfo();
 

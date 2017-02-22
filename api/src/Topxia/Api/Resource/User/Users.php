@@ -5,6 +5,7 @@ namespace Topxia\Api\Resource\User;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 use Topxia\Api\Resource\BaseResource;
+use Biz\Common\ArrayToolkit;
 
 class Users extends BaseResource
 {
@@ -12,25 +13,54 @@ class Users extends BaseResource
     {
         $conditions = $request->query->all();
 
-        if (empty($conditions)) {
-            return array();
-        }
+        // if (empty($conditions)) {
+        //     return array();
+        // }
 
         $start = $request->query->get('start', 0);
         $limit = $request->query->get('limit', 100);
 
         if (isset($conditions['cursor'])) {
-            $conditions['updatedTime_GE'] = $conditions['cursor'];
-            $users = $this->getUserService()->searchUsers($conditions, array('updated_time', 'ASC'), $start, $limit);
+            $conditions['updated_time_GE'] = $conditions['cursor'];
+            $users = $this->getUserService()->searchUsers($conditions, array('updated_time' => 'ASC'), $start, $limit);
             $next = $this->nextCursorPaging($conditions['cursor'], $start, $limit, $users);
 
             return $this->wrap($this->filter($users), $next);
         } else {
-            $users = $this->getUserService()->searchUsers($conditions, array('created_time','DESC'), $start, $limit);
-            $total = $this->getUserService()->searchUserCount($conditions);
+            $users = $this->getUserService()->searchUsers($conditions, array('created_time' =>'DESC'), $start, $limit);
+            $total = $this->getUserService()->searchUsersCount($conditions);
 
             return $this->wrap($this->filter($users), $total);
         }
+    }
+
+    public function post(Request $request)
+    {
+        $fields = $request->request->all();
+
+        if (!ArrayToolkit::requireds($fields, array('email', 'username', 'password', 'nickname'))) {
+            return array('message' => '缺少必填字段');
+        }
+
+        $loginIp = $request->getClientIp();
+        $fields['created_ip'] = $loginIp;
+
+        $user = $this->getUserService()->register($fields);
+
+        return $this->callFilter('User/User', $user);
+    }
+
+    public function filter($res)
+    {
+        return $this->multicallFilter('User/User', $res);
+    }
+
+    protected function multicallFilter($name, $res)
+    {
+        foreach ($res as $key => $one) {
+            $res[$key] = $this->callFilter($name, $one);
+        }
+        return $res;
     }
     
     protected function getTokenService()

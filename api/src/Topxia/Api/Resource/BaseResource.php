@@ -138,16 +138,16 @@ abstract class BaseResource
 
         if (count($currentRows) < $currentLimit) {
             return array(
-                'cursor' => $end['updatedTime'] + 1,
+                'cursor' => $end['updated_time'] + 1,
                 'start'  => 0,
                 'limit'  => $currentLimit,
                 'eof'    => true
             );
         }
 
-        if ($end['updatedTime'] != $currentCursor) {
+        if ($end['updated_time'] != $currentCursor) {
             $next = array(
-                'cursor' => $end['updatedTime'],
+                'cursor' => $end['updated_time'],
                 'start'  => 0,
                 'limit'  => $currentLimit,
                 'eof'    => false

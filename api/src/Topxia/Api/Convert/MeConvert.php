@@ -1,6 +1,7 @@
 <?php
 
 namespace Topxia\Api\Convert;
+
 use Topxia\Service\Common\ServiceKernel;
 
 class MeConvert implements Convert
@@ -27,8 +28,7 @@ class MeConvert implements Convert
                 'roles' => array(),
             );
         }
+
         return $user;
     }
-
 }
-
