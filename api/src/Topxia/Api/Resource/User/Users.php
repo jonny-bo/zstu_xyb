@@ -5,6 +5,11 @@ namespace Topxia\Api\Resource\User;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 use Topxia\Api\Resource\BaseResource;
+use Biz\Common\Exception\InvalidArgumentException;
+use Biz\Common\Exception\UnexpectedValueException;
+use Biz\Common\Exception\ResourceNotFoundException;
+use Biz\Common\Exception\RuntimeException;
+use Biz\Common\Exception\AccessDeniedException;
 use Biz\Common\ArrayToolkit;
 
 class Users extends BaseResource
@@ -39,7 +44,7 @@ class Users extends BaseResource
         $fields = $request->request->all();
 
         if (!ArrayToolkit::requireds($fields, array('email', 'username', 'password', 'nickname'))) {
-            return array('message' => '缺少必填字段');
+            throw new RuntimeException('缺少必填字段');
         }
 
         $loginIp = $request->getClientIp();

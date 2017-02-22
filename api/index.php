@@ -29,6 +29,7 @@ $app->view(function (array $controllerResult) use ($app) {
 });
 
 $app->error(function (HttpException $exception) use ($app) {
+
     $error = array(
         'code' => $exception->getStatusCode(),
         'message' => $exception->getMessage(),

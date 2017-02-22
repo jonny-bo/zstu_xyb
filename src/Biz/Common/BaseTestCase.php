@@ -34,14 +34,14 @@ class BaseTestCase extends ParentTestCase
     protected function createUser($username)
     {
         $user = array(
-            'username' => 'test',
-            'nickname' =>"hh",
-            "phone" => '13582654789',
-            "email" =>"1514654@qq.com",
-            "status"=>'admitLogin',
+            'username' => $username,
+            'nickname' => "test",
+            "phone"    => '13582654789',
+            "email"    => "807725437@qq.com",
             'password' => '12345',
+            'roles'    => array('ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN')
         );
-        return $this->getUserService()->initUser($user);
+        return $this->getUserService()->register($user);
     }
 
     protected function getUserService()
