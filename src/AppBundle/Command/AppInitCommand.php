@@ -20,11 +20,13 @@ class AppInitCommand extends Command
         $output->writeln('Init Application.');
         $user = array(
             'username' => 'admin',
+            'nickname' => 'admin',
             'password' => 'kaifazhe',
-            'roles' => array('ROLE_SUPER_ADMIN'),
+            'email'     => 'test@admin.com',
+            'roles' => array('ROLE_SUPER_ADMIN', 'ROLE_ADMIN', 'ROLE_USER'),
         );
 
-        $this->getUserService()->createUser($user);
+        $this->getUserService()->register($user);
 
         $output->writeln([
             "Admin Username: {$user['username']}",

@@ -46,7 +46,7 @@ class AppKernel extends Kernel implements PluginableHttpKernelInterface
         $biz['migration.directories'][] = dirname(__DIR__) . '/migrations';
         $biz['user.password_encoder'] = function() {
             return new \Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder('sha256');
-        }; 
+        };
 
         $biz->register(new \Codeages\Biz\Framework\Provider\DoctrineServiceProvider());
         $biz->boot();
