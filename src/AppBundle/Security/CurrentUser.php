@@ -40,6 +40,11 @@ class CurrentUser implements CurrentUserInterface, AdvancedUserInterface, Equata
     {
     }
 
+    public function getId()
+    {
+        return $this->fields['id'];
+    }
+
     public function isAccountNonExpired()
     {
         return true;

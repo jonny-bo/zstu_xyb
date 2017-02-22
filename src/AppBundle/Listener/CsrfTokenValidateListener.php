@@ -30,6 +30,10 @@ class CsrfTokenValidateListener
             return;
         }
 
+        if (stripos($request->getPathInfo(), '/login_check') === 0) {
+            return;
+        }
+
         if ($request->isXmlHttpRequest()) {
             $token = $request->headers->get('X-CSRF-Token');
         } else {

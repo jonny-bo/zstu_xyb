@@ -1,4 +1,5 @@
 app:
+    prefix: /
     resource: "@AppBundle/Resources/config/routing.yml"
 
 app_admin:
