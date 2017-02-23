@@ -16,6 +16,7 @@ class UserTokenDaoImpl extends GeneralDaoImpl implements UserTokenDao
             'serializes' => array(),
             'orderbys' => array(),
             'conditions' => array(
+                'token = :token'
             ),
         );
     }

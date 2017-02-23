@@ -17,6 +17,7 @@ class UserDaoImpl extends GeneralDaoImpl implements UserDao
             'orderbys' => array('created_time', 'updated_time'),
             'conditions' => array(
                 'username = :username',
+                'nickname = :nickname',
                 'updated_time' >= 'updated_time_GE'
             ),
         );

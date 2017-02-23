@@ -168,6 +168,126 @@ class UserServiceTest extends BaseTestCase
         $this->assertEquals($user['username'], $found['username']);
     }
 
+    public function testSearchUsersCount()
+    {
+        $userText1 = array(
+            'username' => 'test1',
+            'nickname' => 'test1',
+            'email'    => 'test1@admin.com',
+            'password' => 'testuser'
+        );
+        $userText2 = array(
+            'username' => 'test2',
+            'nickname' => 'test2',
+            'email'    => 'test2@admin.com',
+            'password' => 'testuser'
+        );
+
+        $oldCount = $this->getUserService()->searchUsersCount(array());
+
+        $this->getUserService()->register($userText1);
+
+        $this->getUserService()->register($userText2);
+
+        $result = $this->getUserService()->searchUsersCount(array());
+
+        $this->assertEquals($result, $oldCount+2);
+
+        $result = $this->getUserService()->searchUsersCount(array('username' => 'test2'));
+
+        $this->assertEquals($result, 1);
+    }
+
+    public function testSearchUsers()
+    {
+        $userText1 = array(
+            'username' => 'test1',
+            'nickname' => 'test1',
+            'email'    => 'test1@admin.com',
+            'password' => 'testuser'
+        );
+        $userText2 = array(
+            'username' => 'test2',
+            'nickname' => 'test2',
+            'email'    => 'test2@admin.com',
+            'password' => 'testuser'
+        );
+
+        $this->getUserService()->register($userText1);
+
+        $this->getUserService()->register($userText2);
+
+        $result = $this->getUserService()->searchUsers(array('username' => 'test1'), array(), 0, 10);
+
+        $this->assertEquals($result[0]['username'], 'test1');
+
+        $result = $this->getUserService()->searchUsers(array(), array(), 0, 10);
+
+        $this->assertEquals(count($result), 3);
+    }
+
+    public function testMakeTokenAndGetToken()
+    {
+        $currentUser = self::$biz['user'];
+
+        $result = $this->getUserService()->makeToken('mobile_login', $currentUser['id']);
+        $token  = $this->getUserService()->getToken('mobile_login', $result);
+
+        $this->assertEquals($token['user_id'], $currentUser['id']);
+        $this->assertEquals($token['token'], $result);
+        $this->assertEquals($token['type'], 'mobile_login');
+    }
+
+    public function testSearchTokenCount()
+    {
+        $currentUser = self::$biz['user'];
+
+        $this->getUserService()->makeToken('mobile_login', $currentUser['id']);
+        $this->getUserService()->makeToken('mobile_login', $currentUser['id']);
+
+        $tokensCount  = $this->getUserService()->searchTokenCount(array());
+
+        $this->assertEquals($tokensCount, 2);
+    }
+
+    public function testDeleteToken()
+    {
+        $currentUser = self::$biz['user'];
+
+        $token = $this->getUserService()->makeToken('mobile_login', $currentUser['id']);
+
+        $this->getUserService()->deleteToken('mobile_login', $token);
+
+        $result = $this->getUserService()->getToken('mobile_login', $token);
+
+        $this->assertEquals($result, null);
+    }
+
+    public function testVerifyPassword()
+    {
+        $userText1 = array(
+            'username' => 'test1',
+            'nickname' => 'test1',
+            'email'    => 'test@admin.com',
+            'password' => 'testuser'
+        );
+
+        $user   = $this->getUserService()->register($userText1);
+
+        $result = $this->getUserService()->verifyPassword($user['id'], 'testuser');
+
+        $this->assertEquals($result, true);
+    }
+
+    public function testMarkLoginInfo()
+    {
+        $user   = self::$biz['user'];
+
+        $result = $this->getUserService()->markLoginInfo();
+
+        $this->assertEquals($result['login_ip'], $user['login_ip']);
+    }
+
     protected function getUserService()
     {
         return self::$biz->service('User:UserService');
