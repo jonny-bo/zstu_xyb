@@ -3,7 +3,9 @@
 $resources = array(
     'User/User',
     'User/Login',
-    'User/Users'
+    'User/Users',
+    'Express/Expresses',
+    'Express/Express'
 );
 
 foreach ($resources as $res) {
