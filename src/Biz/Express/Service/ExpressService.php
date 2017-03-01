@@ -15,4 +15,6 @@ interface ExpressService
     public function updateExpress($expressId, $fields);
 
     public function deleteExpress($expressId);
+
+    public function orderExpress($expressId);
 }

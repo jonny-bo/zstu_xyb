@@ -2,7 +2,7 @@
 
 namespace Biz\User\Service\Impl;
 
-use Codeages\Biz\Framework\Service\BaseService;
+use Biz\Common\BaseService;
 use Biz\User\Service\UserService;
 use Biz\Common\Exception\InvalidArgumentException;
 use Biz\Common\Exception\UnexpectedValueException;
@@ -89,7 +89,7 @@ class UserServiceImpl extends BaseService implements UserService
         $user['email']          = $registration['email'];
         $user['email_verified'] = isset($registration['email_verified']) ? $registration['email_verified'] : 0;
         $user['nickname']       = $registration['nickname'];
-        $user['roles']          = array('ROLE_USER');
+        // $user['roles']          = array('ROLE_USER');
         $user['created_ip']     = empty($registration['created_ip']) ? '' : $registration['created_ip'];
 
         $user['created_time']   = time();

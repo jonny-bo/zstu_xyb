@@ -59,14 +59,6 @@ class Users extends BaseResource
     {
         return $this->multicallFilter('User/User', $res);
     }
-
-    protected function multicallFilter($name, $res)
-    {
-        foreach ($res as $key => $one) {
-            $res[$key] = $this->callFilter($name, $one);
-        }
-        return $res;
-    }
     
     protected function getTokenService()
     {

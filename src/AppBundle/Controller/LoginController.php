@@ -16,16 +16,11 @@ class LoginController extends BaseController
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        if ($error) {
-            return $this->createJsonResponse(array(
-                'error' => 'login error',
-                'message' => "last login is {$lastUsername}"
-            ));
-        }
-        return $this->createJsonResponse(
+        return $this->render(
+            'user/login.html.twig',
             array(
-                'code' => 1,
-                'message' => 'please login'
+                'last_username' => $lastUsername,
+                'error' => $error,
             )
         );
     }

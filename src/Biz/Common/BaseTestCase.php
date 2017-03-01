@@ -37,7 +37,7 @@ class BaseTestCase extends ParentTestCase
             'username' => $username,
             'nickname' => "test",
             "phone"    => '13582654789',
-            "email"    => "807725437@qq.com",
+            "email"    => "{$username}@test.com",
             'password' => '12345',
             'roles'    => array('ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN')
         );

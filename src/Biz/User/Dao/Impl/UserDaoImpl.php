@@ -18,7 +18,7 @@ class UserDaoImpl extends GeneralDaoImpl implements UserDao
             'conditions' => array(
                 'username = :username',
                 'nickname = :nickname',
-                'updated_time' >= 'updated_time_GE'
+                'updated_time >= :updated_time_GE'
             ),
         );
     }
