@@ -58,7 +58,7 @@ class ExpressServiceImpl extends BaseService implements ExpressService
         $express = $this->getExpress($expressId);
 
         if (!$express) {
-            throw new ResourceNotFoundException('该订单已经被取消');
+            throw new ResourceNotFoundException('订单', $expressId);
         }
 
         if ($express['status'] != 0) {

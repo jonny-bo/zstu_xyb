@@ -129,7 +129,7 @@ class UserServiceImpl extends BaseService implements UserService
         $user = $this->getUser($id);
 
         if (empty($user)) {
-            throw new ResourceNotFoundException('User', $id);
+            throw new ResourceNotFoundException('用户', $id);
         }
 
         return $this->verifyInSaltOut($password, $user['salt'], $user['password']);

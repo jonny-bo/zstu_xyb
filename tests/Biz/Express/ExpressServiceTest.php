@@ -74,6 +74,54 @@ class ExpressServiceTest extends BaseTestCase
         $this->assertEquals($express['receiver_id'], $user['id']);
     }
 
+    /**
+     * @expectedException Biz\Common\Exception\ResourceNotFoundException
+     * @expectedExceptionCode 0
+     */
+    public function testOrderExpressWithNotExpress()
+    {
+        $this->getExpressService()->orderExpress(11);
+    }
+
+    /**
+     * @expectedException Biz\Common\Exception\UnexpectedValueException
+     * @expectedExceptionCode 0
+     */
+    public function testOrderExpressIsOrder()
+    {
+        $expressText = array(
+            'title'  => 'test',
+            'detail' => 'detail',
+            'offer'  => 3,
+            'status' => 1
+        );
+
+        $express = $this->getExpressService()->createExpress($expressText);
+    
+        $this->assertEquals($express['status'], 1);
+
+        $this->getExpressService()->orderExpress($express['id']);
+    }
+
+    /**
+     * @expectedException Biz\Common\Exception\UnexpectedValueException
+     * @expectedExceptionCode 0
+     */
+    public function testOrderExpressNotOwner()
+    {
+        $expressText = array(
+            'title'  => 'test',
+            'detail' => 'detail',
+            'offer'  => 3
+        );
+
+        $express = $this->getExpressService()->createExpress($expressText);
+    
+        $this->assertEquals($express['status'], 0);
+
+        $this->getExpressService()->orderExpress($express['id']);
+    }
+
     protected function getUserService()
     {
         return self::$biz->service('User:UserService');
