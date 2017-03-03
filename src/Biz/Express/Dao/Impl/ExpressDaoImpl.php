@@ -16,7 +16,9 @@ class ExpressDaoImpl extends GeneralDaoImpl implements ExpressDao
             'serializes' => array(),
             'orderbys' => array('created_time'),
             'conditions' => array(
-                'status = :status'
+                'status       = :status',
+                'publisher_id = :publisher_id',
+                'receiver_id  = :receiver_id'
             ),
         );
     }

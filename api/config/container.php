@@ -6,6 +6,7 @@ $resources = array(
     'User/Users',
     'Express/Expresses',
     'Express/Express',
+    'Express/MyExpresses'
 );
 
 foreach ($resources as $res) {
