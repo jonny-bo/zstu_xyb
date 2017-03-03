@@ -2,11 +2,7 @@
 
 $resources = array(
     'User/User',
-    'User/Login',
-    'User/Users',
-    'Express/Expresses',
     'Express/Express',
-    'Express/MyExpresses'
 );
 
 foreach ($resources as $res) {

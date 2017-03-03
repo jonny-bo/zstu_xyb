@@ -6,6 +6,12 @@ use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 use Topxia\Api\Resource\BaseResource;
 use AppBundle\Security\CurrentUser;
+use Biz\Common\Exception\InvalidArgumentException;
+use Biz\Common\Exception\UnexpectedValueException;
+use Biz\Common\Exception\ResourceNotFoundException;
+use Biz\Common\Exception\RuntimeException;
+use Biz\Common\Exception\AccessDeniedException;
+use Biz\Common\ArrayToolkit;
 
 class User extends BaseResource
 {
@@ -17,6 +23,74 @@ class User extends BaseResource
             return $this->error(404, "用户(#{$userId})不存在");
         }
         
+        return $this->filter($user);
+    }
+
+    public function search(Request $request)
+    {
+        $conditions = $request->query->all();
+
+        $start = $request->query->get('start', 0);
+        $limit = $request->query->get('limit', 10);
+
+        if (isset($conditions['cursor'])) {
+            $conditions['updated_time_GE'] = $conditions['cursor'];
+            $users = $this->getUserService()->searchUsers($conditions, array('updated_time' => 'ASC'), $start, $limit);
+            $next = $this->nextCursorPaging($conditions['cursor'], $start, $limit, $users);
+
+            return $this->wrap($this->multiFilter($users), $next);
+        } else {
+            $users = $this->getUserService()->searchUsers($conditions, array('created_time' =>'DESC'), $start, $limit);
+            $total = $this->getUserService()->searchUsersCount($conditions);
+
+            return $this->wrap($this->multiFilter($users), $total);
+        }
+    }
+
+    public function login(Request $request)
+    {
+        $fields = $request->request->all();
+
+        if (!ArrayToolkit::requireds($fields, array('username', 'password'))) {
+            throw new RuntimeException('缺少必填字段');
+        }
+
+        $user = $this->getUserService()->getUserByUsername($fields['username']);
+
+        if (empty($user)) {
+            throw new ResourceNotFoundException('用户名', $fields['username'], '用户名不存在');
+        }
+
+        if (!$this->getUserService()->verifyPassword($user['id'], $fields['password'])) {
+            throw new RuntimeException('密码错误');
+        }
+        
+        $token = $this->getUserService()->makeToken('mobile_login', $user['id']);
+
+        $user['login_ip']  = $request->getClientIp();
+        $this->biz['user'] = new CurrentUser($user);
+
+        $user  = $this->getUserService()->markLoginInfo();
+
+        return array(
+            'user'  => $this->filter($user),
+            'token' => $token
+        );
+    }
+
+    public function register(Request $request)
+    {
+        $fields = $request->request->all();
+
+        if (!ArrayToolkit::requireds($fields, array('email', 'username', 'password', 'nickname'))) {
+            throw new RuntimeException('缺少必填字段');
+        }
+
+        $loginIp = $request->getClientIp();
+        $fields['created_ip'] = $loginIp;
+
+        $user = $this->getUserService()->register($fields);
+
         return $this->filter($user);
     }
 

@@ -24,6 +24,14 @@ abstract class BaseResource
         return $app["res.{$name}"]->filter($res);
     }
 
+    protected function multiFilter($res)
+    {
+        foreach ($res as $key => $one) {
+            $res[$key] = $this->filter($one);
+        }
+        return $res;
+    }
+
     protected function multicallFilter($name, $res)
     {
         foreach ($res as $key => $one) {
@@ -34,6 +42,14 @@ abstract class BaseResource
 
     protected function simplify($res)
     {
+        return $res;
+    }
+
+    protected function multiSimplify($res)
+    {
+        foreach ($res as $key => $one) {
+            $res[$key] = $this->simplify($one);
+        }
         return $res;
     }
 

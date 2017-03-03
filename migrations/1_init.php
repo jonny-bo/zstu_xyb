@@ -17,10 +17,10 @@ class Init extends Migration
           `title` text NOT NULL COMMENT '通知标题',
           `from_id` int(10) unsigned NOT NULL COMMENT '发送人id',
           `content` text NOT NULL COMMENT '通知内容',
-          `targetId` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '通知发送对象ID',
-          `createdTime` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '发送通知时间',
+          `target_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '通知发送对象ID',
+          `created_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '发送通知时间',
           `published` int(10) NOT NULL DEFAULT '0' COMMENT '是否已经发送',
-          `sendedTime` int(10) NOT NULL DEFAULT '0' COMMENT '群发通知的发送时间',
+          `sended_time` int(10) NOT NULL DEFAULT '0' COMMENT '群发通知的发送时间',
           PRIMARY KEY (`id`)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='群发通知表' AUTO_INCREMENT=1 ;
 

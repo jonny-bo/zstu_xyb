@@ -51,19 +51,7 @@ class ExpressServiceImpl extends BaseService implements ExpressService
 
     public function orderExpress($expressId)
     {
-        $lockName = "express_{$expressId}";
-        $lock     = $this->getLock();
-        $lock->get($lockName, 10);
-
-        $express = $this->getExpress($expressId);
-
-        if (!$express) {
-            throw new ResourceNotFoundException('订单', $expressId);
-        }
-
-        if ($express['status'] != 0) {
-            throw new UnexpectedValueException('该订单已经被别人抢先');
-        }
+        $express = $this->checkExpressById($expressId);
 
         $user = $this->getCurrentUser();
 
@@ -71,7 +59,11 @@ class ExpressServiceImpl extends BaseService implements ExpressService
             throw new UnexpectedValueException('自己不能接自己的订单');
         }
 
-        $express = $this->updateExpress($expressId, array('status' => 1, 'receiver_id' => $user['id']));
+        $lockName = "express_{$expressId}";
+        $lock     = $this->getLock();
+        $lock->get($lockName, 10);
+
+        $this->updateExpress($expressId, array('status' => 1, 'receiver_id' => $user['id']));
 
         $lock->release($lockName);
 
@@ -80,12 +72,31 @@ class ExpressServiceImpl extends BaseService implements ExpressService
 
     public function updateExpress($expressId, $fields)
     {
+        $this->checkExpressById($expressId);
+
         return $this->getExpressDao()->update($expressId, $fields);
     }
 
     public function deleteExpress($expressId)
     {
+        $this->checkExpressById($expressId);
+
         return $this->getExpressDao()->delete($expressId);
+    }
+
+    protected function checkExpressById($expressId)
+    {
+        $express = $this->getExpressService()->getExpress($expressId);
+
+        if (!$express) {
+            throw new ResourceNotFoundException('订单', $expressId);
+        }
+
+        if ($express['status'] != 0) {
+            throw new UnexpectedValueException('该订单已经被别人接收');
+        }
+
+        return $express;
     }
 
     protected function getExpressDao()
