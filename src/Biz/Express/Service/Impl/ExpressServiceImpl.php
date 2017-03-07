@@ -86,7 +86,7 @@ class ExpressServiceImpl extends BaseService implements ExpressService
 
     protected function checkExpressById($expressId)
     {
-        $express = $this->getExpressService()->getExpress($expressId);
+        $express = $this->getExpress($expressId);
 
         if (!$express) {
             throw new ResourceNotFoundException('订单', $expressId);
