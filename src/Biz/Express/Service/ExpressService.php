@@ -17,4 +17,8 @@ interface ExpressService
     public function deleteExpress($expressId);
 
     public function orderExpress($expressId);
+
+    public function confirmMyPublishExpress($expressId);
+
+    public function confirmMyReceiveExpress($expressId);
 }

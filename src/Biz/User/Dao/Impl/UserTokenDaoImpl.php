@@ -25,4 +25,9 @@ class UserTokenDaoImpl extends GeneralDaoImpl implements UserTokenDao
     {
         return $this->getByFields(array('token' => $token));
     }
+
+    public function findByUserIdAndType($userId, $type)
+    {
+        return $this->findByFields(array('userId' => $userId, 'type' => $type));
+    }
 }

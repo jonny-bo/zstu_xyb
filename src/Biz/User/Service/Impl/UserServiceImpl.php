@@ -149,6 +149,13 @@ class UserServiceImpl extends BaseService implements UserService
         $token['data']        = serialize($data);
         $token['times']       = empty($args['times']) ? 0 : intval($args['times']);
         $token['expired_time'] = $expiredTime ? (int)$expiredTime : 0;
+
+        $oldTokens = $this->getUserTokenDao()->findByUserIdAndType($userId, $type);
+
+        if (!empty($oldTokens)) {
+            $this->deleteOldTokens($oldTokens);
+        }
+
         $token                = $this->getUserTokenDao()->create($token);
         return $token['token'];
     }
@@ -200,6 +207,13 @@ class UserServiceImpl extends BaseService implements UserService
             'login_ip'   => $user['login_ip'],
             'login_time' => time()
         ));
+    }
+
+    protected function deleteOldTokens(array $oldTokens)
+    {
+        foreach ($oldTokens as $oldToken) {
+            $this->getUserTokenDao()->delete($oldToken['id']);
+        }
     }
 
     protected function getPasswordEncoder()

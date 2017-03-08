@@ -326,7 +326,7 @@ class Init extends Migration
           `roles` varchar(1024) NOT NULL DEFAULT '' COMMENT '角色',
           `nickname` varchar(64) NOT NULL DEFAULT '' COMMENT '昵称',
           `email` varchar(128) NOT NULL DEFAULT '' COMMENT '邮箱',
-          `avatar` varchar(255) DEFAULT NULL COMMENT '头像',
+          `avatar` varchar(255) NOT NULL DEFAULT '' COMMENT '头像',
           `point` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '积分',
           `coin` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '金币',
           `login_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '最后登录时间',
