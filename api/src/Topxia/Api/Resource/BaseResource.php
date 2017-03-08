@@ -5,6 +5,7 @@ namespace Topxia\Api\Resource;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 use Codeages\Biz\Framework\Context\Biz;
+use Biz\Common\Exception\InvalidArgumentException;
 
 abstract class BaseResource
 {
@@ -75,7 +76,7 @@ abstract class BaseResource
         $requestFields = array_keys($requestData);
         foreach ($requiredFields as $field) {
             if (!in_array($field, $requestFields)) {
-                throw new \Exception("缺少必需的请求参数{$field}");
+                throw new InvalidArgumentException("缺少必需的请求参数{$field}");
             }
         }
 
