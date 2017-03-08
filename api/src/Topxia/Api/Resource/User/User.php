@@ -107,8 +107,7 @@ class User extends BaseResource
 
         if (!$user->isLogin() || !$user->isAdmin() || ($user['id'] != $res['id'])) {
             unset($res['email']);
-            unset($res['point']);
-            unset($res['coin']);
+            unset($res['roles']);
             unset($res['login_ip']);
             unset($res['updated_time']);
             unset($res['login_time']);
