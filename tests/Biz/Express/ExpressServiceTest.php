@@ -122,22 +122,37 @@ class ExpressServiceTest extends BaseTestCase
         $this->getExpressService()->orderExpress($express['id']);
     }
 
-    public function confirmMyPublishExpressTest()
+    public function confirmMyExpressTest()
     {
         $expressText = array(
             'title'  => 'test',
             'detail' => 'detail',
             'offer'  => 3
         );
+        $user1 = $this->createUser('test_user1');
+        $currentUser1 = new CurrentUser($user1);
+        self::$biz['user'] = $currentUser1;
 
-        $this->getExpressService()->createExpress($expressText);
+        $express = $this->getExpressService()->createExpress($expressText);
 
-        $user = $this->createUser('test_user2');
-        $currentUser = new CurrentUser($user);
-        self::$biz['user'] = $currentUser;
+        $this->assertEquals($express['status'], 0);
+
+        $user2 = $this->createUser('test_user2');
+        $currentUser2 = new CurrentUser($user2);
+        self::$biz['user'] = $currentUser2;
 
         $express = $this->getExpressService()->orderExpress($express['id']);
-        
+
+        $this->assertEquals($express['status'], 1);
+
+        $express = $this->getExpressService()->confirmMyReceiveExpress($express['id']);
+
+        $this->assertEquals($express['status'], 2);
+
+        self::$biz['user'] = $currentUser1;
+
+        $express = $this->getExpressService()->confirmMyPublishExpress($express['id']);
+        $this->assertEquals($express['status'], 3);
     }
 
     protected function getUserService()

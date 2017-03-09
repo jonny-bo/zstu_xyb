@@ -62,7 +62,7 @@ class ExpressServiceImpl extends BaseService implements ExpressService
         $lock     = $this->getLock();
         $lock->get($lockName, 10);
 
-        $this->updateExpress($expressId, array('status' => 1, 'receiver_id' => $user['id']));
+        $express = $this->updateExpress($expressId, array('status' => 1, 'receiver_id' => $user['id']));
 
         $lock->release($lockName);
 
@@ -96,7 +96,7 @@ class ExpressServiceImpl extends BaseService implements ExpressService
             throw new UnexpectedValueException('该订单不能确认收货');
         }
 
-        $this->updateExpress($expressId, array('status' => 3));
+        return $this->updateExpress($expressId, array('status' => 3));
     }
 
     public function confirmMyReceiveExpress($expressId)
@@ -112,7 +112,7 @@ class ExpressServiceImpl extends BaseService implements ExpressService
             throw new UnexpectedValueException('该订单不能确认送到');
         }
 
-        $this->updateExpress($expressId, array('status' => 2));
+        return $this->updateExpress($expressId, array('status' => 2));
     }
 
     protected function checkExpressById($expressId)
