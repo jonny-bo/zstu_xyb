@@ -84,6 +84,38 @@ class ExpressServiceImpl extends BaseService implements ExpressService
         return $this->getExpressDao()->delete($expressId);
     }
 
+    public function confirmMyPublishExpress($expressId)
+    {
+        $user    = $this->getCurrentUser();
+        $express = $this->getExpress($expressId);
+
+        if ($user['id'] != $express['publisher_id']) {
+            throw new UnexpectedValueException('不是发布者，不能确认收货');
+        }
+
+        if ($express['status'] != 2) {
+            throw new UnexpectedValueException('该订单不能确认收货');
+        }
+
+        $this->updateExpress($expressId, array('status' => 3));
+    }
+
+    public function confirmMyReceiveExpress($expressId)
+    {
+        $user    = $this->getCurrentUser();
+        $express = $this->getExpress($expressId);
+
+        if ($user['id'] != $express['receiver_id']) {
+            throw new UnexpectedValueException('不是订单接收人，不能确认送到');
+        }
+
+        if ($express['status'] != 1) {
+            throw new UnexpectedValueException('该订单不能确认送到');
+        }
+
+        $this->updateExpress($expressId, array('status' => 2));
+    }
+
     protected function checkExpressById($expressId)
     {
         $express = $this->getExpress($expressId);

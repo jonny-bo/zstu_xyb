@@ -16,7 +16,8 @@ class UserTokenDaoImpl extends GeneralDaoImpl implements UserTokenDao
             'serializes' => array(),
             'orderbys' => array(),
             'conditions' => array(
-                'token = :token'
+                'token = :token',
+                'user_id = :user_id'
             ),
         );
     }
@@ -28,6 +29,6 @@ class UserTokenDaoImpl extends GeneralDaoImpl implements UserTokenDao
 
     public function findByUserIdAndType($userId, $type)
     {
-        return $this->findByFields(array('userId' => $userId, 'type' => $type));
+        return $this->findByFields(array('user_id' => $userId, 'type' => $type));
     }
 }

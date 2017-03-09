@@ -122,6 +122,24 @@ class ExpressServiceTest extends BaseTestCase
         $this->getExpressService()->orderExpress($express['id']);
     }
 
+    public function confirmMyPublishExpressTest()
+    {
+        $expressText = array(
+            'title'  => 'test',
+            'detail' => 'detail',
+            'offer'  => 3
+        );
+
+        $this->getExpressService()->createExpress($expressText);
+
+        $user = $this->createUser('test_user2');
+        $currentUser = new CurrentUser($user);
+        self::$biz['user'] = $currentUser;
+
+        $express = $this->getExpressService()->orderExpress($express['id']);
+        
+    }
+
     protected function getUserService()
     {
         return self::$biz->service('User:UserService');

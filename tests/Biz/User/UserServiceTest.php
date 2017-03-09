@@ -240,14 +240,16 @@ class UserServiceTest extends BaseTestCase
 
     public function testSearchTokenCount()
     {
-        $currentUser = self::$biz['user'];
-
-        $this->getUserService()->makeToken('mobile_login', $currentUser['id']);
-        $this->getUserService()->makeToken('mobile_login', $currentUser['id']);
+        $this->getUserService()->makeToken('mobile_login', 1);
+        $this->getUserService()->makeToken('mobile_login', 2);
 
         $tokensCount  = $this->getUserService()->searchTokenCount(array());
 
         $this->assertEquals($tokensCount, 2);
+
+        $tokensCount  = $this->getUserService()->searchTokenCount(array('user_id' => 1));
+
+        $this->assertEquals($tokensCount, 1);
     }
 
     public function testDeleteToken()
