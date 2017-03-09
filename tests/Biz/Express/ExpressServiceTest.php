@@ -155,6 +155,130 @@ class ExpressServiceTest extends BaseTestCase
         $this->assertEquals($express['status'], 3);
     }
 
+    /**
+     * @expectedException Biz\Common\Exception\UnexpectedValueException
+     * @expectedExceptionCode 0
+     */
+    public function confirmMyExpressTestWithOneUser()
+    {
+        $expressText = array(
+            'title'  => 'test',
+            'detail' => 'detail',
+            'offer'  => 3
+        );
+        $user1 = $this->createUser('test_user1');
+        $currentUser1 = new CurrentUser($user1);
+        self::$biz['user'] = $currentUser1;
+
+        $express = $this->getExpressService()->createExpress($expressText);
+
+        $this->assertEquals($express['status'], 0);
+
+        $user2 = $this->createUser('test_user2');
+        $currentUser2 = new CurrentUser($user2);
+        self::$biz['user'] = $currentUser2;
+
+        $express = $this->getExpressService()->orderExpress($express['id']);
+
+        $this->assertEquals($express['status'], 1);
+
+        self::$biz['user'] = $currentUser1;
+
+        $express = $this->getExpressService()->confirmMyReceiveExpress($express['id']);
+    }
+
+    /**
+     * @expectedException Biz\Common\Exception\UnexpectedValueException
+     * @expectedExceptionCode 0
+     */
+    public function confirmMyExpressTestWithOtherUser()
+    {
+        $expressText = array(
+            'title'  => 'test',
+            'detail' => 'detail',
+            'offer'  => 3
+        );
+        $user1 = $this->createUser('test_user1');
+        $currentUser1 = new CurrentUser($user1);
+        self::$biz['user'] = $currentUser1;
+
+        $express = $this->getExpressService()->createExpress($expressText);
+
+        $this->assertEquals($express['status'], 0);
+
+        $user2 = $this->createUser('test_user2');
+        $currentUser2 = new CurrentUser($user2);
+        self::$biz['user'] = $currentUser2;
+
+        $express = $this->getExpressService()->orderExpress($express['id']);
+
+        $this->assertEquals($express['status'], 1);
+
+        $express = $this->getExpressService()->confirmMyReceiveExpress($express['id']);
+
+        $this->assertEquals($express['status'], 2);
+
+        $express = $this->getExpressService()->confirmMyPublishExpress($express['id']);
+    }
+
+    /**
+     * @expectedException Biz\Common\Exception\UnexpectedValueException
+     * @expectedExceptionCode 0
+     */
+    public function confirmMyExpressTestWithStatus()
+    {
+        $expressText = array(
+            'title'  => 'test',
+            'detail' => 'detail',
+            'offer'  => 3
+        );
+        $user1 = $this->createUser('test_user1');
+        $currentUser1 = new CurrentUser($user1);
+        self::$biz['user'] = $currentUser1;
+
+        $express = $this->getExpressService()->createExpress($expressText);
+
+        $this->assertEquals($express['status'], 0);
+
+        $user2 = $this->createUser('test_user2');
+        $currentUser2 = new CurrentUser($user2);
+        self::$biz['user'] = $currentUser2;
+
+        $this->assertEquals($express['status'], 0);
+
+        $express = $this->getExpressService()->confirmMyReceiveExpress($express['id']);
+    }
+
+    /**
+     * @expectedException Biz\Common\Exception\UnexpectedValueException
+     * @expectedExceptionCode 0
+     */
+    public function confirmMyExpressTestWithOtherStatus()
+    {
+        $expressText = array(
+            'title'  => 'test',
+            'detail' => 'detail',
+            'offer'  => 3
+        );
+        $user1 = $this->createUser('test_user1');
+        $currentUser1 = new CurrentUser($user1);
+        self::$biz['user'] = $currentUser1;
+
+        $express = $this->getExpressService()->createExpress($expressText);
+
+        $this->assertEquals($express['status'], 0);
+
+        $user2 = $this->createUser('test_user2');
+        $currentUser2 = new CurrentUser($user2);
+        self::$biz['user'] = $currentUser2;
+
+        $this->assertEquals($express['status'], 0);
+
+        self::$biz['user'] = $currentUser1;
+
+        $express = $this->getExpressService()->confirmMyReceiveExpress($express['id']);
+    }
+
     protected function getUserService()
     {
         return self::$biz->service('User:UserService');
