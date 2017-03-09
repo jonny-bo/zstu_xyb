@@ -77,7 +77,8 @@ class UserServiceImpl extends BaseService implements UserService
         $user['username']       = $registration['username'];
 
         $user['salt']           = md5(time().mt_rand(0, 1000));
-        $user['password']       = $this->biz['user.password_encoder']->encodePassword($registration['password'], $user['salt']);
+
+        $user['password']       = $this->passwordEncode($registration['password'], $user['salt']);
         $user['roles']          = empty($registration['roles']) ? array('ROLE_USER') : $registration['roles'];
 
         if (isset($registration['mobile'])) {
@@ -137,7 +138,7 @@ class UserServiceImpl extends BaseService implements UserService
 
     public function verifyInSaltOut($password, $salt, $out)
     {
-        return $out == $this->getPasswordEncoder()->encodePassword($password, $salt);
+        return $out == $this->passwordEncode($password, $salt);
     }
 
     public function makeToken($type, $userId = null, $expiredTime = null, $data = null, $args = array())
@@ -197,7 +198,7 @@ class UserServiceImpl extends BaseService implements UserService
 
     public function markLoginInfo()
     {
-        $user = $this->biz['user'];
+        $user = $this->getCurrentUser();
 
         if (empty($user)) {
             return;
@@ -216,9 +217,9 @@ class UserServiceImpl extends BaseService implements UserService
         }
     }
 
-    protected function getPasswordEncoder()
+    protected function passwordEncode($password, $salt)
     {
-        return new MessageDigestPasswordEncoder('sha256');
+        return $this->biz['user.password_encoder']->encodePassword($password, $salt);
     }
 
     protected function getUserDao()

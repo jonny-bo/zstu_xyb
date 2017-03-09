@@ -3,7 +3,6 @@
 namespace Biz\Express\Service\Impl;
 
 use Biz\Common\BaseService;
-use Biz\User\Service\UserService;
 use Biz\Common\Exception\InvalidArgumentException;
 use Biz\Common\Exception\UnexpectedValueException;
 use Biz\Common\Exception\ResourceNotFoundException;
