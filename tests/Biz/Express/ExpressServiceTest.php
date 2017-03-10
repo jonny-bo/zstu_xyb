@@ -22,6 +22,37 @@ class ExpressServiceTest extends BaseTestCase
         $this->assertEquals($express['detail'], $expressText['detail']);
     }
 
+    public function testSearchExpressCount()
+    {
+        $expressText1 = array(
+            'title'  => 'test1',
+            'detail' => 'detail1',
+            'offer'  => 3
+        );
+        $expressText2 = array(
+            'title'  => 'test2',
+            'detail' => 'detail2',
+            'offer'  => 3
+        );
+        $expressText3 = array(
+            'title'  => 'test3',
+            'detail' => 'detail3',
+            'offer'  => 3
+        );
+
+        $express1 = $this->getExpressService()->createExpress($expressText1);
+        $express2 = $this->getExpressService()->createExpress($expressText2);
+        $express3 = $this->getExpressService()->createExpress($expressText3);
+
+        $this->assertEquals($express1['offer'], $expressText1['offer']);
+        $this->assertEquals($express2['title'], $expressText2['title']);
+        $this->assertEquals($express3['detail'], $expressText3['detail']);
+
+        $count = $this->getExpressService()->searchExpressCount(array());
+
+        $this->assertEquals($count, 3);
+    }
+
     /**
      * @expectedException Biz\Common\Exception\InvalidArgumentException
      * @expectedExceptionCode 0
@@ -159,7 +190,7 @@ class ExpressServiceTest extends BaseTestCase
      * @expectedException Biz\Common\Exception\UnexpectedValueException
      * @expectedExceptionCode 0
      */
-    public function confirmMyExpressTestWithOneUser()
+    public function testConfirmMyExpressWithOneUser()
     {
         $expressText = array(
             'title'  => 'test',
@@ -191,7 +222,7 @@ class ExpressServiceTest extends BaseTestCase
      * @expectedException Biz\Common\Exception\UnexpectedValueException
      * @expectedExceptionCode 0
      */
-    public function confirmMyExpressTestWithOtherUser()
+    public function testConfirmMyExpressWithOtherUser()
     {
         $expressText = array(
             'title'  => 'test',
@@ -225,7 +256,7 @@ class ExpressServiceTest extends BaseTestCase
      * @expectedException Biz\Common\Exception\UnexpectedValueException
      * @expectedExceptionCode 0
      */
-    public function confirmMyExpressTestWithStatus()
+    public function testConfirmMyExpressWithStatus()
     {
         $expressText = array(
             'title'  => 'test',
@@ -253,7 +284,7 @@ class ExpressServiceTest extends BaseTestCase
      * @expectedException Biz\Common\Exception\UnexpectedValueException
      * @expectedExceptionCode 0
      */
-    public function confirmMyExpressTestWithOtherStatus()
+    public function testConfirmMyExpressWithOtherStatus()
     {
         $expressText = array(
             'title'  => 'test',

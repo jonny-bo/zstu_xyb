@@ -96,7 +96,7 @@ class ExpressServiceImpl extends BaseService implements ExpressService
             throw new UnexpectedValueException('该订单不能确认收货');
         }
 
-        return $this->updateExpress($expressId, array('status' => 3));
+        return $this->getExpressDao()->update($expressId, array('status' => 3));
     }
 
     public function confirmMyReceiveExpress($expressId)
@@ -112,7 +112,7 @@ class ExpressServiceImpl extends BaseService implements ExpressService
             throw new UnexpectedValueException('该订单不能确认送到');
         }
 
-        return $this->updateExpress($expressId, array('status' => 2));
+        return $this->getExpressDao()->update($expressId, array('status' => 2));
     }
 
     protected function checkExpressById($expressId)

@@ -55,6 +55,20 @@ class MyExpress extends BaseResource
         return $this->wrap($this->multicallFilter('Express/Express', $expresses), $total);
     }
 
+    public function publishedConfirm($expressId)
+    {
+        $this->getExpressService()->confirmMyPublishExpress($expressId);
+
+        return array('success' => 'true');
+    }
+
+    public function recivedConfirm($expressId)
+    {
+        $this->getExpressService()->confirmMyReceiveExpress($expressId);
+
+        return array('success' => 'true');
+    }
+
     public function filter($res)
     {
         return $res;
