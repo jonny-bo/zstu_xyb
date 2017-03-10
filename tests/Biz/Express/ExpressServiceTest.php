@@ -22,6 +22,25 @@ class ExpressServiceTest extends BaseTestCase
         $this->assertEquals($express['detail'], $expressText['detail']);
     }
 
+    public function testDeleteExpress()
+    {
+        $expressText = array(
+            'title'  => 'test',
+            'detail' => 'detail',
+            'offer'  => 3
+        );
+
+        $express = $this->getExpressService()->createExpress($expressText);
+
+        $this->assertEquals($express['offer'], $expressText['offer']);
+        $this->assertEquals($express['title'], $expressText['title']);
+        $this->assertEquals($express['detail'], $expressText['detail']);
+
+        $result = $this->getExpressService()->deleteExpress($express['id']);
+
+        $this->assertEquals($result, 1);
+    }
+
     public function testSearchExpressCount()
     {
         $expressText1 = array(
