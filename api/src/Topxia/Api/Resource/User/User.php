@@ -12,6 +12,7 @@ use Biz\Common\Exception\ResourceNotFoundException;
 use Biz\Common\Exception\RuntimeException;
 use Biz\Common\Exception\AccessDeniedException;
 use Biz\Common\ArrayToolkit;
+use Biz\Common\FileToolkit;
 
 class User extends BaseResource
 {
@@ -78,6 +79,23 @@ class User extends BaseResource
         );
     }
 
+    public function setAvatar(Request $request)
+    {
+        $file = $request->files->get('file');
+
+        if (!FileToolkit::isImageFile($file)) {
+            throw new \RuntimeException('您上传的不是图片文件，请重新上传。');
+        }
+
+        if (FileToolkit::getMaxFilesize() <= $file->getClientSize()) {
+            throw new \RuntimeException('您上传的图片超过限制，请重新上传。');
+        }
+
+        $user = $this->getUserInfoService()->changeAvatar($file);
+
+        return $this->filter($user);
+    }
+
     public function register(Request $request)
     {
         $fields = $request->request->all();
@@ -102,6 +120,10 @@ class User extends BaseResource
         $res['login_time'] = date('c', $res['login_time']);
         $res['updated_time'] = date('c', $res['updated_time']);
         $res['created_time'] = date('c', $res['created_time']);
+
+        if (!empty($res['avatar'])) {
+            $res['avatar'] = $this->getFileUrl($res['avatar']);
+        }
 
         $user = $this->biz['user'];
 
@@ -138,5 +160,10 @@ class User extends BaseResource
     protected function getUserService()
     {
         return $this->biz->service('User:UserService');
+    }
+
+    protected function getUserInfoService()
+    {
+        return $this->biz->service('User:UserInfoService');
     }
 }

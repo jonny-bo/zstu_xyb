@@ -9,6 +9,7 @@ $app->post(_u('/users/login'), 'res.User/User:login');
 $app->get(_u('/users/{userId}'), 'res.User/User:get');
 $app->get(_u('/users'), 'res.User/User:search');
 $app->post(_u('/users/register'), 'res.User/User:register');  // 用户注册
+$app->post(_u('/users/avatar'), 'res.User/User:setAvatar');
 
 $app->get(_u('/my/expresses'), 'res.Express/MyExpress:get');
 $app->post(_u('/my/publish_expresses/{expressId}'), 'res.Express/MyExpress:publishedConfirm');

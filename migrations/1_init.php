@@ -254,7 +254,7 @@ class Init extends Migration
           PRIMARY KEY (`id`)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-        CREATE TABLE IF NOT EXISTS `second_hand_goods` (
+        CREATE TABLE IF NOT EXISTS `old_goods` (
           `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
           `title` varchar(128) NOT NULL DEFAULT '' COMMENT '旧货交易标题',
           `cover` varchar(128) NOT NULL DEFAULT '' COMMENT '旧货交易封面',
