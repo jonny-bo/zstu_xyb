@@ -17,7 +17,7 @@ class AppInitCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln('Init Application.');
+        $output->writeln('<info>开始初始化系统</info>');
         $user = array(
             'username' => 'admin',
             'nickname' => 'admin',
@@ -29,9 +29,10 @@ class AppInitCommand extends Command
         $this->getUserService()->register($user);
 
         $output->writeln([
-            "Admin Username: {$user['username']}",
-            "Admin Password: {$user['password']}",
+            "管理员 用户名: {$user['username']}",
+            "管理员 密码: {$user['password']}",
         ]);
+        $output->writeln('<info>初始化系统完毕</info>');
     }
 
     protected function getUserService()

@@ -257,7 +257,7 @@ class Init extends Migration
         CREATE TABLE IF NOT EXISTS `old_goods` (
           `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
           `title` varchar(128) NOT NULL DEFAULT '' COMMENT '旧货交易标题',
-          `cover` varchar(128) NOT NULL DEFAULT '' COMMENT '旧货交易封面',
+          `thumb` varchar(128) NOT NULL DEFAULT '' COMMENT '缩略图',
           `publisher_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '旧货交易发布者id',
           `category_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '栏目id',
           `body` text COMMENT '正文',
