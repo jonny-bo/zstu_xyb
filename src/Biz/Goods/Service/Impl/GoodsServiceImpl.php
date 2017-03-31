@@ -12,12 +12,12 @@ class GoodsServiceImpl extends BaseService implements GoodsService
         return $this->getGoodsDao()->get($goodsId);
     }
 
-    public function searchGoodss($conditions, $orderBy, $start, $limit)
+    public function searchGoods($conditions, $orderBy, $start, $limit)
     {
         return $this->getGoodsDao()->search($conditions, $orderBy, $start, $limit);
     }
 
-    public function searchGoodssCount($conditions)
+    public function searchGoodsCount($conditions)
     {
         return $this->getGoodsDao()->count($conditions);
     }

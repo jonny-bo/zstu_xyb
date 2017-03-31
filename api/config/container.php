@@ -4,7 +4,8 @@ $resources = array(
     'User/User',
     'Express/Express',
     'Express/MyExpress',
-    'Category/Category',
+    'Goods/Category',
+    'Goods/Goods',
 );
 
 foreach ($resources as $res) {

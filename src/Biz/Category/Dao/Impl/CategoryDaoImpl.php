@@ -18,4 +18,9 @@ class CategoryDaoImpl extends GeneralDaoImpl implements CategoryDao
             'conditions' => array(),
         );
     }
+
+    public function findByGroupId($groupId)
+    {
+        return $this->findByFields(array('group_id' => $groupId));
+    }
 }

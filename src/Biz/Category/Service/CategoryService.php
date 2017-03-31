@@ -15,4 +15,6 @@ interface CategoryService
     public function updateCategory($categoryId, $fields);
 
     public function deleteCategory($categoryId);
+
+    public function findCategoryByGroupCode($code);
 }

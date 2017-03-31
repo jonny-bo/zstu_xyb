@@ -15,7 +15,13 @@ class GoodsDaoImpl extends GeneralDaoImpl implements GoodsDao
             'timestamps' => array('created_time', 'updated_time'),
             'serializes' => array(),
             'orderbys' => array('created_time', 'updated_time', 'post_num', 'hits'),
-            'conditions' => array(),
+            'conditions' => array(
+                'id = :id',
+                'category_id = :category_id',
+                'updated_time >= :start_time',
+                'updated_time <= :end_time',
+                'title LIKE :title'
+            ),
         );
     }
 }

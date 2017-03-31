@@ -37,8 +37,19 @@ class CategoryServiceImpl extends BaseService implements CategoryService
         return $this->getCategoryDao()->delete($categoryId);
     }
 
+    public function findCategoryByGroupCode($code)
+    {
+        $group = $this->getCategoryGroupService()->getCategoryGroupByCode($code);
+        return $this->getCategoryDao()->findByGroupId($group['id']);
+    }
+
     protected function getCategoryDao()
     {
         return $this->biz->dao('Category:CategoryDao');
+    }
+
+    protected function getCategoryGroupService()
+    {
+        return $this->biz->service('Category:CategoryGroupService');
     }
 }

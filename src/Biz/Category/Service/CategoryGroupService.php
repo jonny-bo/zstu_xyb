@@ -15,4 +15,6 @@ interface CategoryGroupService
     public function updateCategoryGroup($categoryGroupId, $fields);
 
     public function deleteCategoryGroup($categoryGroupId);
+
+    public function getCategoryGroupByCode($code);
 }
