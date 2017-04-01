@@ -20,7 +20,7 @@ class Goods extends BaseResource
 
         $start   = $request->query->get('start', 0);
         $limit   = $request->query->get('limit', 10);
-        $conditions['status'] = isset($conditions['status']) ? $conditions['status'] : 0;
+        $conditions['status'] = isset($conditions['status']) ? $conditions['status'] : 1;
         if (isset($conditions['title'])) {
             $conditions['title'] = '%'.$conditions['title'].'%';
         }
@@ -29,7 +29,7 @@ class Goods extends BaseResource
         $goods = $this->getGoodsService()->searchGoods($conditions, $ordeyBy, $start, $limit);
         $total = $this->getGoodsService()->searchGoodsCount($conditions);
 
-        return $this->wrap($this->multiFilter($goods), $total);
+        return $this->wrap($this->multiSimplify($goods), $total);
     }
 
     public function filter($res)
@@ -49,6 +49,17 @@ class Goods extends BaseResource
 
     public function simplify($res)
     {
+        $res['thumb'] = $this->getFileUrl($res['thumb']);
+        $res['publisher'] = $this->callSimplify('User/User', $this->getUserService()->getUser($res['publisher_id']));
+        $res['category'] = $this->getCategoryService()->getCategory($res['category_id'])['name'];
+
+        $res['updated_time'] = date('c', $res['updated_time']);
+        $res['created_time'] = date('c', $res['created_time']);
+
+        unset($res['publisher_id']);
+        unset($res['category_id']);
+        unset($res['body']);
+
         return $res;
     }
 
