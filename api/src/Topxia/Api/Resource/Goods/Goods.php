@@ -36,6 +36,16 @@ class Goods extends BaseResource
     {
         $goods = $this->getGoodsService()->getGoods($goodsId);
 
+        if (empty($goods)) {
+            return $this->error('404', '请求内容不存在');
+        }
+        return $this->filter($goods);
+    }
+
+    public function post(Request $request)
+    {
+        $goods = $request->request->all();
+        
         return $this->filter($goods);
     }
 
