@@ -68,6 +68,22 @@ abstract class BaseResource
         return $res;
     }
 
+    protected function getOrderBy($conditions, $default = array())
+    {
+        $orderbys = array();
+        $orderByStr = isset($conditions['orderby']) ? $conditions['orderby'] : '';
+        if ($orderByStr) {
+            $orderbyTemp = explode(',', trim($orderByStr, ','));
+            foreach ($orderbyTemp as $orderby) {
+                list($field, $indicator) = explode(' ', $orderby);
+                $orderbys[$field] = strtoupper($indicator);
+            }
+            return $orderbys;
+        } else {
+            return $default;
+        }
+    }
+
     /**
      * 检查每个API必需参数的完整性
      */

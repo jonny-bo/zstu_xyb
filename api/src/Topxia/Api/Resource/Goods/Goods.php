@@ -20,8 +20,12 @@ class Goods extends BaseResource
 
         $start   = $request->query->get('start', 0);
         $limit   = $request->query->get('limit', 10);
-        $ordeyBy = array('updated_time' => 'DESC');
+        $conditions['status'] = isset($conditions['status']) ? $conditions['status'] : 0;
+        if (isset($conditions['title'])) {
+            $conditions['title'] = '%'.$conditions['title'].'%';
+        }
 
+        $ordeyBy = $this->getOrderBy($conditions, array('updated_time' => 'DESC'));
         $goods = $this->getGoodsService()->searchGoods($conditions, $ordeyBy, $start, $limit);
         $total = $this->getGoodsService()->searchGoodsCount($conditions);
 
