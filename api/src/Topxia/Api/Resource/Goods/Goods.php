@@ -32,6 +32,13 @@ class Goods extends BaseResource
         return $this->wrap($this->multiSimplify($goods), $total);
     }
 
+    public function get($goodsId)
+    {
+        $goods = $this->getGoodsService()->getGoods($goodsId);
+
+        return $this->filter($goods);
+    }
+
     public function filter($res)
     {
         $res['thumb'] = $this->getFileUrl($res['thumb']);

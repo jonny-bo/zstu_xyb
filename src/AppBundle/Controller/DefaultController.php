@@ -6,11 +6,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends BaseController
 {
-    public function indexAction(Request $request)
+    public function indexAction()
     {
-        $groups = $this->getCategoryGroupService()->getCategoryGroup(1);
-
-        var_dump($groups);exit();
         return $this->render('default/index.html.twig', array());
     }
 
