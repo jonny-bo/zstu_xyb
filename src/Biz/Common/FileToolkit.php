@@ -957,7 +957,7 @@ class FileToolkit
         $directory = $targetPath.'/'.$targetGroup;
         $file      = $originFile->move($directory, $filename);
 
-        return $filename;
+        return $targetGroup.'/'.$filename;
     }
 
     public static function remove($filepath)

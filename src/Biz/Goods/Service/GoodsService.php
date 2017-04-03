@@ -15,4 +15,8 @@ interface GoodsService
     public function updateGoods($goodsId, $fields);
 
     public function deleteGoods($goodsId);
+
+    public function publishGoods($goodsId);
+
+    public function cancelGoods($goodsId);
 }

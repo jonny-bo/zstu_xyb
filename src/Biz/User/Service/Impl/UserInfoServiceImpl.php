@@ -36,7 +36,7 @@ class UserInfoServiceImpl extends BaseService implements UserInfoService
 
         $filename = FileToolkit::moveFile(__DIR__.'/../../../../../web/files', $file, 'user');
 
-        return $this->getUserDao()->update($user['id'], array('avatar' => 'user/'.$filename));
+        return $this->getUserDao()->update($user['id'], array('avatar' => $filename));
     }
 
     protected function getUserDao()

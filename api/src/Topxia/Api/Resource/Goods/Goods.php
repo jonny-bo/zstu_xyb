@@ -11,9 +11,13 @@ use Biz\Common\Exception\ResourceNotFoundException;
 use Biz\Common\Exception\RuntimeException;
 use Biz\Common\Exception\AccessDeniedException;
 use Biz\Common\ArrayToolkit;
+use Biz\Common\FileToolkit;
 
 class Goods extends BaseResource
 {
+    protected $requireFiles = array(
+        'title', 'thumb', 'category_id', 'body', 'price'
+    );
     public function search(Request $request)
     {
         $conditions = $request->query->all();
@@ -45,8 +49,22 @@ class Goods extends BaseResource
     public function post(Request $request)
     {
         $goods = $request->request->all();
-        
-        return $this->filter($goods);
+        $goods['thumb'] = $request->files->get('thumb');
+
+        if (!ArrayToolkit::requireds($goods, $this->requireFiles)) {
+            throw new InvalidArgumentException('缺少必填字段');
+        }
+        if (!FileToolkit::isImageFile($goods['thumb'])) {
+            throw new \RuntimeException('您上传的不是图片文件，请重新上传。');
+        }
+
+        if (FileToolkit::getMaxFilesize() <= $goods['thumb']->getClientSize()) {
+            throw new \RuntimeException('您上传的图片超过限制，请重新上传。');
+        }
+
+        $this->getGoodsService()->createGoods($goods);
+
+        return array('success' => 'true');
     }
 
     public function filter($res)
