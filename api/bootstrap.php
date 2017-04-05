@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 
 define('RUNTIME_ENV', 'API');
-define('ROOT_DIR', __DIR__ . DIRECTORY_SEPARATOR . '/../app');
+define('ROOT_DIR', __DIR__ . DIRECTORY_SEPARATOR . '..');
 
 $debug = true;
 if (API_ENV == 'prod') {
@@ -37,11 +37,14 @@ $biz = new \Codeages\Biz\Framework\Context\Biz(array(
         'driver'   => $parameters['database_driver'],
         'charset'  => 'UTF8'
     ),
-    'cache_directory'    => ROOT_DIR . '/cache',
-    'tmp_directory'      => ROOT_DIR . '/tmp',
-    'log_directory'      => ROOT_DIR . '/logs',
-    'plugin.directory'   => ROOT_DIR . '/../plugins',
-    'plugin.config_file' => ROOT_DIR . '/config/plugin_installed.php'
+    'cache_directory'    => ROOT_DIR . '/var/cache',
+    'tmp_directory'      => ROOT_DIR . '/var/tmp',
+    'log_directory'      => ROOT_DIR . '/var/logs',
+    'plugin.directory'   => ROOT_DIR . '/plugins',
+    'plugin.config_file' => ROOT_DIR . '/app/config/plugin_installed.php',
+    'upload.public_directory' => ROOT_DIR . '/web/files',
+    'upload.public_url_path'  => '/files',
+    'upload.private_directory' => '/var/data/private_files',
 ));
 
 $biz['migration.directories'][] = dirname(__DIR__) . '/migrations';

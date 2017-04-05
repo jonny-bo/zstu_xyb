@@ -29,3 +29,5 @@ $app->post(_u('/goods'), 'res.Goods/Goods:post');
 $app->post(_u('/goods/{goodsId}'), 'res.Goods/Goods:delete');
 $app->post(_u('/goods/{goodsId}/publish'), 'res.Goods/Goods:publish');
 $app->post(_u('/goods/{goodsId}/cancel'), 'res.Goods/Goods:cancel');
+
+$app->post(_u('/upload'), 'res.File/File:upload');
