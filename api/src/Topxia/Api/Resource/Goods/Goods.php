@@ -38,11 +38,8 @@ class Goods extends BaseResource
 
     public function get($goodsId)
     {
-        $goods = $this->getGoodsService()->getGoods($goodsId);
+        $goods = $this->checkGoods($goodsId);
 
-        if (empty($goods)) {
-            return $this->error('404', '请求内容不存在');
-        }
         return $this->filter($goods);
     }
 
@@ -67,7 +64,33 @@ class Goods extends BaseResource
         return array('success' => 'true');
     }
 
+    public function publish($goodsId)
+    {
+        $this->checkGoods($goodsId);
+
+        $this->getGoodsService()->publishGoods($goodsId);
+
+        return array('success' => 'true');
+    }
+
+    public function cancel($goodsId)
+    {
+        $this->checkGoods($goodsId);
+
+        $this->getGoodsService()->cancelGoods($goodsId);
+
+        return array('success' => 'true');
+    }
+
     public function delete($goodsId)
+    {
+        $this->checkGoods($goodsId);
+        $this->getGoodsService()->deleteGoods($goodsId);
+
+        return array('success' => 'true');
+    }
+
+    protected function checkGoods($goodsId)
     {
         $goods = $this->getGoodsService()->getGoods($goodsId);
 
@@ -75,9 +98,7 @@ class Goods extends BaseResource
             return $this->error('404', '请求内容不存在');
         }
 
-        $this->getGoodsService()->deleteGoods($goodsId);
-
-        return array('success' => 'true');
+        return $goods;
     }
 
     public function filter($res)

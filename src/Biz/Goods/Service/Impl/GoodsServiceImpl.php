@@ -89,7 +89,7 @@ class GoodsServiceImpl extends BaseService implements GoodsService
         if ($goods['status'] != 1) {
             throw new RuntimeException('未发布的物品不能取消发布');
         }
-        return $this->getGoodsDao()->update($goodsId, array('status' => 0));
+        return $this->getGoodsDao()->update($goodsId, array('status' => 2));
     }
 
     protected function beforAction($goodsId)
