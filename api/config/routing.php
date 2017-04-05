@@ -26,3 +26,4 @@ $app->get(_u('/goods/categorys'), 'res.Goods/Category:all');
 $app->get(_u('/goods'), 'res.Goods/Goods:search');
 $app->get(_u('/goods/{goodsId}'), 'res.Goods/Goods:get');
 $app->post(_u('/goods'), 'res.Goods/Goods:post');
+$app->post(_u('/goods/{goodsId}'), 'res.Goods/Goods:delete');

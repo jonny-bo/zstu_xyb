@@ -67,11 +67,24 @@ class Goods extends BaseResource
         return array('success' => 'true');
     }
 
+    public function delete($goodsId)
+    {
+        $goods = $this->getGoodsService()->getGoods($goodsId);
+
+        if (empty($goods)) {
+            return $this->error('404', '请求内容不存在');
+        }
+
+        $this->getGoodsService()->deleteGoods($goodsId);
+
+        return array('success' => 'true');
+    }
+
     public function filter($res)
     {
         $res['thumb'] = $this->getFileUrl($res['thumb']);
         $res['publisher'] = $this->callSimplify('User/User', $this->getUserService()->getUser($res['publisher_id']));
-        $res['category'] = $this->callSimplify('Goods/Category', $this->getCategoryService()->getCategory($res['category_id']));
+        $res['category'] = $this->getCategoryService()->getCategory($res['category_id'])['name'];
 
         $res['updated_time'] = date('c', $res['updated_time']);
         $res['created_time'] = date('c', $res['created_time']);
@@ -84,15 +97,7 @@ class Goods extends BaseResource
 
     public function simplify($res)
     {
-        $res['thumb'] = $this->getFileUrl($res['thumb']);
-        $res['publisher'] = $this->callSimplify('User/User', $this->getUserService()->getUser($res['publisher_id']));
-        $res['category'] = $this->getCategoryService()->getCategory($res['category_id'])['name'];
-
-        $res['updated_time'] = date('c', $res['updated_time']);
-        $res['created_time'] = date('c', $res['created_time']);
-
-        unset($res['publisher_id']);
-        unset($res['category_id']);
+        $res = $this->filter($res);
         unset($res['body']);
 
         return $res;

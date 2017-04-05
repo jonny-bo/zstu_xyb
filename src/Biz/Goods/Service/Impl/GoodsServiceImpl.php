@@ -51,27 +51,48 @@ class GoodsServiceImpl extends BaseService implements GoodsService
 
     public function updateGoods($goodsId, $fields)
     {
-        $this->beforUpdate($goodsId);
+        $goods = $this->beforAction($goodsId);
+        $this->checkFields($fields);
+
+        if ($goods['status'] == 1) {
+            throw new RuntimeException('已发布物品不能进行修改');
+        }
 
         return $this->getGoodsDao()->update($goodsId, $fields);
     }
 
     public function deleteGoods($goodsId)
     {
+        $goods = $this->beforAction($goodsId);
+        if ($goods['status'] == 1) {
+            throw new RuntimeException('该物品已经发布，不能删除');
+        }
+
         return $this->getGoodsDao()->delete($goodsId);
     }
 
     public function publishGoods($goodsId)
     {
-        return $this->updateGoods($goodsId, array('status' => 1));
+        $goods = $this->beforAction($goodsId);
+
+        if ($goods['status'] == 1) {
+            throw new RuntimeException('该物品已经发布，不要重复发布');
+        }
+
+        return $this->getGoodsDao()->update($goodsId, array('status' => 1));
     }
 
     public function cancelGoods($goodsId)
     {
-        return $this->updateGoods($goodsId, array('status' => 0));
+        $goods = $this->beforAction($goodsId);
+
+        if ($goods['status'] != 1) {
+            throw new RuntimeException('未发布的物品不能取消发布');
+        }
+        return $this->getGoodsDao()->update($goodsId, array('status' => 0));
     }
 
-    protected function beforUpdate($goodsId)
+    protected function beforAction($goodsId)
     {
         $goods = $this->getGoods($goodsId);
 
@@ -84,10 +105,9 @@ class GoodsServiceImpl extends BaseService implements GoodsService
             throw new RuntimeException("非法用户操作");
         }
 
-        if ($goods['status'] == 1) {
-            throw new RuntimeException("已发布旧货不能操作");
-        }
+        return $goods;
     }
+
     protected function checkFields($fields)
     {
         if (isset($fields['price']) && !SimpleValidator::float($fields['price'])) {
