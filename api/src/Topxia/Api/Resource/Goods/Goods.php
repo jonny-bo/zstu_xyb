@@ -97,7 +97,7 @@ class Goods extends BaseResource
         $goods = $this->getGoodsService()->getGoods($goodsId);
 
         if (empty($goods)) {
-            return $this->error('404', '请求内容不存在');
+            throw new ResourceNotFoundException('goods', '请求内容不存在');
         }
 
         return $goods;
