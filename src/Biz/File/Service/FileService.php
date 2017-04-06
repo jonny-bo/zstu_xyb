@@ -9,6 +9,8 @@ interface FileService
 {
     public function getFile($fileId);
 
+    public function findFilesByIds(array $fileIds);
+
     public function searchFiles($conditions, $orderBy, $start, $limit);
 
     public function searchFilesCount($conditions);

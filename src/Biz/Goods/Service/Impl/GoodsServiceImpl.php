@@ -16,7 +16,7 @@ use Biz\Common\Exception\AccessDeniedException;
 class GoodsServiceImpl extends BaseService implements GoodsService
 {
     protected $requireFiles = array(
-        'title', 'thumb', 'category_id', 'body', 'price'
+        'title', 'category_id', 'body', 'price'
     );
 
     public function getGoods($goodsId)
@@ -42,9 +42,17 @@ class GoodsServiceImpl extends BaseService implements GoodsService
 
         $this->checkFields($fields);
 
-        $fields['thumb']         = FileToolkit::moveFile(__DIR__.'/../../../../../web/files', $fields['thumb'], 'goods');
+        $fileIds = array();
+        foreach ($fields['files'] as $file) {
+            $res = $this->getFileService()->uploadFile('goods', $file);
+            array_push($fileIds, $res['id']);
+        }
+
+        $fields['imgs'] = json_encode($fileIds);
         $fields['publisher_id'] = $this->getCurrentUser()['id'];
         $fields['status']       = 0;
+
+        unset($fields['files']);
 
         return $this->getGoodsDao()->create($fields);
     }
@@ -113,12 +121,18 @@ class GoodsServiceImpl extends BaseService implements GoodsService
         if (isset($fields['price']) && !SimpleValidator::float($fields['price'])) {
             throw new InvalidArgumentException("字段不合法");
         }
-        if (isset($fields['thumb']) && !empty($fields['thumb'])) {
-            if (!FileToolkit::isImageFile($fields['thumb'])) {
-                throw new \RuntimeException('您上传的不是图片文件，请重新上传。');
+        if (isset($fields['files']) && !empty($fields['files'])) {
+            if (count($fields['files']) >= 10) {
+                throw new \RuntimeException('上传数量超过限制。');
             }
-            if (FileToolkit::getMaxFilesize() <= $fields['thumb']->getClientSize()) {
-                throw new \RuntimeException('您上传的图片超过限制，请重新上传。');
+            foreach ($fields['files'] as $file) {
+                if (!FileToolkit::isImageFile($file)) {
+                    throw new \RuntimeException('您上传的不是图片文件，请重新上传。');
+                }
+
+                if (FileToolkit::getMaxFilesize() <= $file->getClientSize()) {
+                    throw new \RuntimeException('您上传的图片超过限制，请重新上传。');
+                }
             }
         }
     }
@@ -126,5 +140,15 @@ class GoodsServiceImpl extends BaseService implements GoodsService
     protected function getGoodsDao()
     {
         return $this->biz->dao('Goods:GoodsDao');
+    }
+
+    protected function getFileService()
+    {
+        return $this->biz->service('File:FileService');
+    }
+
+    protected function getFileGroupService()
+    {
+        return $this->biz->service('File:FileGroupService');
     }
 }

@@ -12,6 +12,11 @@ class CategoryGroupServiceImpl extends BaseService implements CategoryGroupServi
         return $this->getCategoryGroupDao()->get($categoryGroupId);
     }
 
+    public function findAllCategoryGroups()
+    {
+        return $this->getCategoryGroupDao()->findAllGroups();
+    }
+
     public function searchCategoryGroups($conditions, $orderBy, $start, $limit)
     {
         return $this->getCategoryGroupDao()->search($conditions, $orderBy, $start, $limit);

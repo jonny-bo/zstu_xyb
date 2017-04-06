@@ -16,8 +16,13 @@ class File extends BaseResource
 {
     public function upload(Request $request)
     {
-        $file = $request->files->get('file');
-        $res = $this->getFileService()->uploadFile('goods', $file);
+        $file  = $request->files->get('file');
+        $code  = $request->request->get('group');
+        $group = $this->getFileGroupService()->getFileGroupByCode($code);
+        if (empty($group)) {
+             return $this->error('not_group', '上传文件组不能为空');
+        }
+        $res = $this->getFileService()->uploadFile($code, $file);
         $parsed = $this->getFileService()->parseFileUri($res['uri']);
 
         $url = rtrim($this->biz['upload.public_url_path'].'/'.$parsed['path']);
@@ -38,6 +43,11 @@ class File extends BaseResource
     protected function getFileService()
     {
         return $this->biz->service('File:FileService');
+    }
+
+    protected function getFileGroupService()
+    {
+        return $this->biz->service('File:FileGroupService');
     }
 
     protected function getUserService()

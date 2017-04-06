@@ -8,6 +8,8 @@ interface FileGroupService
 
     public function getFileGroupByCode($code);
 
+    public function findAllFileGroups();
+
     public function searchFileGroups($conditions, $orderBy, $start, $limit);
 
     public function searchFileGroupsCount($conditions);

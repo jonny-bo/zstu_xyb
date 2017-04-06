@@ -6,6 +6,8 @@ interface CategoryGroupService
 {
     public function getCategoryGroup($categoryGroupId);
 
+    public function findAllCategoryGroups();
+
     public function searchCategoryGroups($conditions, $orderBy, $start, $limit);
 
     public function searchCategoryGroupsCount($conditions);

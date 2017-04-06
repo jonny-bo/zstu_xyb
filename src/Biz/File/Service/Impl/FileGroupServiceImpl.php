@@ -17,6 +17,11 @@ class FileGroupServiceImpl extends BaseService implements FileGroupService
         return $this->getFileGroupDao()->getByCode($code);
     }
 
+    public function findAllFileGroups()
+    {
+        return $this->getFileGroupDao()->findAllGroups();
+    }
+
     public function searchFileGroups($conditions, $orderBy, $start, $limit)
     {
         return $this->getFileGroupDao()->search($conditions, $orderBy, $start, $limit);

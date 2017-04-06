@@ -23,4 +23,10 @@ class FileGroupDaoImpl extends GeneralDaoImpl implements FileGroupDao
     {
         return $this->getByFields(array('code' => $code));
     }
+
+    public function findAllGroups()
+    {
+        $sql = "SELECT * FROM {$this->table}";
+        return $this->db()->fetchAll($sql);
+    }
 }

@@ -20,6 +20,11 @@ class FileServiceImpl extends BaseService implements FileService
         return $this->getFileDao()->get($fileId);
     }
 
+    public function findFilesByIds(array $fileIds)
+    {
+        return $this->getFileDao()->get($fileIds);
+    }
+
     public function searchFiles($conditions, $orderBy, $start, $limit)
     {
         return $this->getFileDao()->search($conditions, $orderBy, $start, $limit);
@@ -70,7 +75,14 @@ class FileServiceImpl extends BaseService implements FileService
 
     public function deleteFile($fileId)
     {
-        return $this->getFileDao()->delete($fileId);
+        $file = $this->getFile($fileId);
+
+        $parsed = $this->parseFileUri($file['uri']);
+        if (file_exists($parsed['fullpath'])) {
+            @unlink($parsed['fullpath']);
+        }
+
+        return $this->getFileDao->delete($fileId);
     }
 
     public function parseFileUri($uri)
@@ -113,7 +125,10 @@ class FileServiceImpl extends BaseService implements FileService
 
         $newFile = $file->move($directory, $parsed['name']);
 
-        $newFilePath = FileToolkit::imagerotatecorrect($newFile->getRealPath());
+        if (FileToolkit::isImageFile($file)) {
+            $newFilePath = FileToolkit::imagerotatecorrect($newFile->getRealPath());
+        }
+
         if ($newFilePath) {
             return new File($newFilePath);
         }
