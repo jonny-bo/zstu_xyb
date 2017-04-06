@@ -124,10 +124,7 @@ class Goods extends BaseResource
 
     public function simplify($res)
     {
-        $res = $this->filter($res);
-        unset($res['body']);
-
-        return $res;
+        return $this->filter($res);
     }
 
     protected function getGoodsService()
