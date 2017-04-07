@@ -18,13 +18,17 @@ git:
 
 before_script:
   - mysql -e 'CREATE DATABASE `zstu_xyb_test` DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci'
-  - composer install
+  - composer install --prefer-dist --dev --no-interaction
   - cp app/config/parameters_test.yml.dist app/config/parameters_test.yml
   - cp app/config/parameters.yml.dist app/config/parameters.yml
   - mkdir web/files
 
 script:
-  - phpunit -c app/
+  - mkdir -p build/logs
+  - phpunit -c app/phpunit.xml.dist --coverage-clover build/logs/clover.xml
+
+after_script:
+  - travis_retry php vendor/bin/coveralls -v
 
 cache:
   directories:
