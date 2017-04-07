@@ -27,7 +27,7 @@
         <whitelist>
             <directory>../src/Biz</directory>
             <exclude>
-                <directory>../src/Biz/Exception</directory>
+                <directory>../src/Biz/Common</directory>
             </exclude>
         </whitelist>
     </filter>
