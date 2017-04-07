@@ -19,6 +19,7 @@
         "codeages/biz-framework": "^0.1.7",
         "codeages/plugin-bundle": "^0.1.0",
         "phpunit/phpunit": "4.5.*",
+        "satooshi/php-coveralls":"*",
         "silex/silex": "*",
         "codeages/rest-api-client": "^0.1.3",
         "codeages/biz-rate-limiter": "^0.1.1",
