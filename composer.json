@@ -19,7 +19,7 @@
         "codeages/biz-framework": "^0.1.7",
         "codeages/plugin-bundle": "^0.1.0",
         "phpunit/phpunit": "4.5.*",
-        "silex/silex": "~2.0.3",
+        "silex/silex": "*",
         "codeages/rest-api-client": "^0.1.3",
         "codeages/biz-rate-limiter": "^0.1.1",
         "escapestudios/wsse-authentication-bundle": "^2.2",
