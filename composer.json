@@ -27,6 +27,15 @@
         "jpush/jpush": "~3.5"
     },
     "require-dev": {
+        "symfony/symfony": "^2.8.14",
+        "doctrine/doctrine-bundle": "~1.4",
+        "symfony/swiftmailer-bundle": "~2.3",
+        "sensio/distribution-bundle": "~5.0",
+        "sensio/framework-extra-bundle": "^3.0.2",
+        "incenteev/composer-parameter-handler": "~2.0",
+        "codeages/biz-framework": "^0.1.7",
+        "codeages/plugin-bundle": "^0.1.0",
+        "symfony/monolog-bundle": "~2.4",
         "satooshi/php-coveralls":"*",
         "phpunit/phpunit": "4.5.*",
         "sensio/generator-bundle": "~3.0"
