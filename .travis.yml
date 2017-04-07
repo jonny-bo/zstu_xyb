@@ -18,9 +18,6 @@ git:
 
 before_script:
   - mysql -e 'CREATE DATABASE `zstu_xyb_test` DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci'
-  - composer install
-  - bin/phpmig migrate
-  - app/console app:init
   - cp app/config/parameters_test.yml.dist app/config/parameters_test.yml
   - cp app/config/parameters.yml.dist app/config/parameters.yml
   - mkdir web/files
