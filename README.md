@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/jonny-bo/zstu_xyb.svg?branch=develop)](https://travis-ci.org/jonny-bo/zstu_xyb)
+[![Coverage Status](https://coveralls.io/repos/github/jonny-bo/zstu_xyb/badge.svg?branch=develop)](https://coveralls.io/github/jonny-bo/zstu_xyb?branch=develop)
 # 编码规范
 
 为了提升团队开发效率，方便团队成员快速上手，制定此编码规范。本文档会不定期更新，所有开发成员均有义务参与本文档的编辑与完善。
