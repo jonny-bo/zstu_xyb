@@ -36,7 +36,7 @@ $app->error(function (HttpException $exception) use ($app) {
     );
 
     if ($app['debug']) {
-        if (!$eception instanceof FlattenException) {
+        if (!$exception instanceof FlattenException) {
             $exception = FlattenException::create($exception);
         }
 
