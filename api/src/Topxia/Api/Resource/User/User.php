@@ -83,6 +83,10 @@ class User extends BaseResource
     {
         $file = $request->files->get('avatar');
 
+        if (empty($file)) {
+            return $this->error('not_file', '请选择图片');
+        }
+
         if (!FileToolkit::isImageFile($file)) {
             throw new \RuntimeException('您上传的不是图片文件，请重新上传。');
         }

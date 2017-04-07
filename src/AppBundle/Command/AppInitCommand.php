@@ -139,6 +139,12 @@ class AppInitCommand extends Command
             'code'   => 'thread',
             'public' => 1
         ));
+
+        $this->getFileGroupService()->createFileGroup(array(
+            'name'   => '分类',
+            'code'   => 'category',
+            'public' => 1
+        ));
     }
 
     protected function getUserService()
