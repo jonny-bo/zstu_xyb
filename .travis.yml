@@ -1,3 +1,6 @@
+branches:
+  - develop
+
 language: php
 
 php:
