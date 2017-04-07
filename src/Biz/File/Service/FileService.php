@@ -21,6 +21,8 @@ interface FileService
 
     public function deleteFile($fileId);
 
+    public function deleteFileByUri($uri);
+
     public function uploadFile($group, UploadedFile $file);
 
     public function parseFileUri($uri);

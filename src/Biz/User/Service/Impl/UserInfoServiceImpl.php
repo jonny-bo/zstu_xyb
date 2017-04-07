@@ -30,13 +30,13 @@ class UserInfoServiceImpl extends BaseService implements UserInfoService
             throw new \RuntimeException('您上传的图片超过限制，请重新上传。');
         }
 
+        $file = $this->getFileService()->uploadFile('user', $file);
+
         if (!empty($user['avatar'])) {
-            FileToolkit::remove(__DIR__.'/../../../../../web/files/'.$user['avatar']);
+            $this->getFileService()->deleteFileByUri($user['avatar']);
         }
 
-        $filename = FileToolkit::moveFile(__DIR__.'/../../../../../web/files', $file, 'user');
-
-        return $this->getUserDao()->update($user['id'], array('avatar' => $filename));
+        return $this->getUserDao()->update($user['id'], array('avatar' => $file['uri']));
     }
 
     protected function getUserDao()
@@ -47,5 +47,10 @@ class UserInfoServiceImpl extends BaseService implements UserInfoService
     protected function getUserTokenDao()
     {
         return $this->biz->dao('User:UserTokenDao');
+    }
+
+    protected function getFileService()
+    {
+        return $this->biz->service('File:FileService');
     }
 }

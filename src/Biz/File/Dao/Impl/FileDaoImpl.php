@@ -18,4 +18,9 @@ class FileDaoImpl extends GeneralDaoImpl implements FileDao
             'conditions' => array(),
         );
     }
+
+    public function deleteFileByUri($uri)
+    {
+        return $this->db()->delete($this->table, array('uri' => $uri));
+    }
 }
