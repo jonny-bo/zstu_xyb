@@ -28,7 +28,7 @@ script:
 after_script:
   - travis_retry php vendor/satooshi/php-coveralls/bin/coveralls -v
   - wget https://scrutinizer-ci.com/ocular.phar
-  - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
+  - php ocular.phar code-coverage:upload --format=php-clover build/logs/clover.xml
 
 cache:
   directories:
