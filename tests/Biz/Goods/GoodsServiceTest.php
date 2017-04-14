@@ -146,6 +146,189 @@ class GoodsServiceTest extends BaseTestCase
         $this->getGoodsService()->createGoods($goodsText);
     }
 
+    public function testSearchGoods()
+    {
+        $goodsText = array(
+            'title'  => 'test goods',
+            'category_id' => 1,
+            'body'  => 'ssss',
+            'price' => 33,
+            'files' => []
+        );
+        $goods = $this->getGoodsService()->createGoods($goodsText);
+
+        $goods = $this->getGoodsService()->searchGoods(array(), array(), 0, 100);
+
+        $this->assertNotEmpty($goods);
+
+        $goods = $this->getGoodsService()->searchGoods(array('title' => 'test'), array(), 0, 100);
+
+        $this->assertNotEmpty($goods);
+    }
+
+    public function testSearchGoodsCount()
+    {
+        $goodsText1 = array(
+            'title'  => 'test goods1',
+            'category_id' => 1,
+            'body'  => 'ssss',
+            'price' => 33,
+            'files' => []
+        );
+
+        $goodsText2 = array(
+            'title'  => 'test goods2',
+            'category_id' => 1,
+            'body'  => 'ssss',
+            'price' => 33,
+            'files' => []
+        );
+        $this->getGoodsService()->createGoods($goodsText1);
+        $this->getGoodsService()->createGoods($goodsText2);
+
+        $goods = $this->getGoodsService()->searchGoodsCount(array('title' => 'test'));
+
+        $this->assertEquals($goods, 2);
+
+        $goods = $this->getGoodsService()->searchGoodsCount(array('title' => 'goods1'));
+
+        $this->assertEquals($goods, 1);
+
+        $goods = $this->getGoodsService()->searchGoodsCount(array('title' => 'goods1dsa'));
+
+        $this->assertEquals($goods, 0);
+    }
+
+    public function testUpdateGoods()
+    {
+        $goodsText = array(
+            'title'  => 'test goods',
+            'category_id' => 1,
+            'body'  => 'ssss',
+            'price' => 33,
+            'files' => []
+        );
+        $goods = $this->getGoodsService()->createGoods($goodsText);
+
+        $newGoods = $this->getGoodsService()->updateGoods($goods['id'], array(
+            'title' => '11111',
+            'price' => 66
+        ));
+
+        $this->assertEquals($newGoods['title'], '11111');
+        $this->assertEquals($newGoods['price'], 66);
+    }
+
+    /**
+     * @expectedException Biz\Common\Exception\RuntimeException
+     * @expectedExceptionCode 0
+     */
+    public function testUpdateGoodsWithStatus()
+    {
+        $goodsText = array(
+            'title'  => 'test goods',
+            'category_id' => 1,
+            'body'  => 'ssss',
+            'price' => 33,
+            'files' => []
+        );
+        $goods = $this->getGoodsService()->createGoods($goodsText);
+        $this->getGoodsService()->publishGoods($goods['id']);
+
+        $this->getGoodsService()->updateGoods($goods['id'], array(
+            'status' => '11111',
+            'price' => 66
+        ));
+    }
+
+    /**
+     * @expectedException Biz\Common\Exception\ResourceNotFoundException
+     * @expectedExceptionCode 0
+     */
+    public function testUpdateGoodsWithNotGoods()
+    {
+        $this->getGoodsService()->updateGoods(1, array(
+            'status' => '11111',
+            'price' => 66
+        ));
+    }
+
+    /**
+     * @expectedException Biz\Common\Exception\RuntimeException
+     * @expectedExceptionCode 0
+     */
+    public function testUpdateGoodsWithUser()
+    {
+        $goodsText = array(
+            'title'  => 'test goods',
+            'category_id' => 1,
+            'body'  => 'ssss',
+            'price' => 33,
+            'files' => []
+        );
+        $goods = $this->getGoodsService()->createGoods($goodsText);
+        $user = $this->createUser('test_user2');
+        $currentUser = new CurrentUser($user);
+        self::$biz['user'] = $currentUser;
+
+        $this->getGoodsService()->updateGoods($goods['id'], array(
+            'status' => '11111',
+            'price' => 66
+        ));
+    }
+
+    public function testDeleteGoods()
+    {
+        $goodsText = array(
+            'title'  => 'test goods',
+            'category_id' => 1,
+            'body'  => 'ssss',
+            'price' => 33,
+            'files' => []
+        );
+        $goods = $this->getGoodsService()->createGoods($goodsText);
+
+        $result = $this->getGoodsService()->deleteGoods($goods['id']);
+
+        $this->assertEquals($result, 1);
+    }
+
+    public function testPublishGoods()
+    {
+        $goodsText = array(
+            'title'  => 'test goods',
+            'category_id' => 1,
+            'body'  => 'ssss',
+            'price' => 33,
+            'files' => []
+        );
+        $goods = $this->getGoodsService()->createGoods($goodsText);
+
+        $goods = $this->getGoodsService()->publishGoods($goods['id']);
+
+        $this->assertEquals($goods['status'], 1);
+    }
+
+    public function testCancelGoods()
+    {
+        $goodsText = array(
+            'title'  => 'test goods',
+            'category_id' => 1,
+            'body'  => 'ssss',
+            'price' => 33,
+            'files' => []
+        );
+        $goods = $this->getGoodsService()->createGoods($goodsText);
+
+        $goods = $this->getGoodsService()->publishGoods($goods['id']);
+
+        $this->assertEquals($goods['status'], 1);
+
+        $goods = $this->getGoodsService()->cancelGoods($goods['id']);
+
+        $this->assertEquals($goods['status'], 2);
+    }
+
     protected function getUserService()
     {
         return self::$biz->service('User:UserService');

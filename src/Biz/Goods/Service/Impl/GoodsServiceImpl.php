@@ -26,6 +26,7 @@ class GoodsServiceImpl extends BaseService implements GoodsService
 
     public function searchGoods($conditions, $orderBy, $start, $limit)
     {
+        $conditions['title'] = isset($conditions['title']) ? '%'.$conditions['title'].'%' : '';
         return $this->getGoodsDao()->search($conditions, $orderBy, $start, $limit);
     }
 
