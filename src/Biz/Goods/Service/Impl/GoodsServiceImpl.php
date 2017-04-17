@@ -76,8 +76,13 @@ class GoodsServiceImpl extends BaseService implements GoodsService
         if ($goods['status'] == 1) {
             throw new RuntimeException('该物品已经发布，不能删除');
         }
+        $res = $this->getGoodsDao()->delete($goodsId);
 
-        return $this->getGoodsDao()->delete($goodsId);
+        $fileIds = json_decode($goods['imgs'], true);
+        foreach ($fileIds as $fileId) {
+            $this->getFileService()->deleteFile($fileId);
+        }
+        return $res;
     }
 
     public function publishGoods($goodsId)

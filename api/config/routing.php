@@ -26,8 +26,9 @@ $app->get(_u('/goods/categorys'), 'res.Goods/Category:all');
 $app->get(_u('/goods'), 'res.Goods/Goods:search');
 $app->get(_u('/goods/{goodsId}'), 'res.Goods/Goods:get');
 $app->post(_u('/goods'), 'res.Goods/Goods:post');
-$app->post(_u('/goods/{goodsId}'), 'res.Goods/Goods:delete');
+$app->post(_u('/goods/{goodsId}/delete'), 'res.Goods/Goods:delete');
 $app->post(_u('/goods/{goodsId}/publish'), 'res.Goods/Goods:publish');
 $app->post(_u('/goods/{goodsId}/cancel'), 'res.Goods/Goods:cancel');
+// $app->post(_u('/goods/{goodsId}/update'), 'res.Goods/Goods:update');
 
-$app->post(_u('/upload'), 'res.File/File:upload');
+$app->post(_u('/file/upload'), 'res.File/File:upload');

@@ -25,5 +25,4 @@ src/
         UserController.php
         DashboardController.php
       UserController.php
-      CourseController.php
 ```

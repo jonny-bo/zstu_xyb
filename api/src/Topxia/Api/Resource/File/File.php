@@ -20,18 +20,20 @@ class File extends BaseResource
         $code  = $request->request->get('group');
         $group = $this->getFileGroupService()->getFileGroupByCode($code);
         if (empty($group)) {
-             return $this->error('not_group', '上传文件组不能为空');
+            return $this->error('not_group', '上传文件组不能为空或者文件组不存在！');
+        }
+
+        if (empty($file)) {
+            return $this->error('not_file', '上传文件不能为空！');
         }
         $res = $this->getFileService()->uploadFile($code, $file);
-        $parsed = $this->getFileService()->parseFileUri($res['uri']);
 
-        $url = rtrim($this->biz['upload.public_url_path'].'/'.$parsed['path']);
-
-        return array('url' => $this->getFileUrl($url));
+        return $this->filter($res);
     }
 
     public function filter($res)
     {
+        $res['url'] = $this->getFileUrl($res['uri']);
         return $res;
     }
 
