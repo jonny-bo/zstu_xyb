@@ -19,4 +19,14 @@ interface GoodsService
     public function publishGoods($goodsId);
 
     public function cancelGoods($goodsId);
+
+    public function getGoodsPost($goodsPostId);
+
+    public function searchGoodsPosts($conditions, $orderBy, $start, $limit);
+
+    public function searchGoodsPostsCount($conditions);
+
+    public function createGoodsPost($fields);
+
+    public function deleteGoodsPost($goodsPostId);
 }

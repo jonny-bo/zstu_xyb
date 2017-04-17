@@ -106,6 +106,52 @@ class GoodsServiceImpl extends BaseService implements GoodsService
         return $this->getGoodsDao()->update($goodsId, array('status' => 2));
     }
 
+    public function getGoodsPost($goodsPostId)
+    {
+        return $this->getGoodsPostDao()->get($goodsPostId);
+    }
+
+    public function searchGoodsPosts($conditions, $orderBy, $start, $limit)
+    {
+        return $this->getGoodsPostDao()->search($conditions, $orderBy, $start, $limit);
+    }
+
+    public function searchGoodsPostsCount($conditions)
+    {
+        return $this->getGoodsPostDao()->count($conditions);
+    }
+
+    public function createGoodsPost($fields)
+    {
+        if (!ArrayToolkit::requireds($fields, array('old_goods_id', 'content'))) {
+            throw new InvalidArgumentException('缺少必填字段');
+        }
+        $goods = $this->getGoods($fields['old_goods_id']);
+
+        if (!$goods) {
+            throw new ResourceNotFoundException('旧货', $fields['old_goods_id']);
+        }
+
+        if (empty($fields['content'])) {
+            throw new RuntimeException('评论内容不能为空!');
+        }
+
+        $user = $this->getCurrentUser();
+
+        if (!$user->isLogin) {
+            throw new AccessDeniedException('未登录用户不能评论!');
+        }
+
+        $fields['from_user_id'] = $user['id'];
+
+        return $this->getGoodsPostDao()->create($fields);
+    }
+
+    public function deleteGoodsPost($goodsPostId)
+    {
+        return $this->getGoodsPostDao()->delete($goodsPostId);
+    }
+
     protected function beforAction($goodsId)
     {
         $goods = $this->getGoods($goodsId);
@@ -156,5 +202,20 @@ class GoodsServiceImpl extends BaseService implements GoodsService
     protected function getFileGroupService()
     {
         return $this->biz->service('File:FileGroupService');
+    }
+
+    protected function getGoodsPostDao()
+    {
+        return $this->biz->dao('Goods:GoodsPostDao');
+    }
+
+    protected function getGoodsLikeDao()
+    {
+        return $this->biz->dao('Goods:GoodsLikeDao');
+    }
+
+    protected function getUserService()
+    {
+        return $this->biz->service('User:UserService');
     }
 }
