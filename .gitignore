@@ -27,3 +27,4 @@ chunk-manifest.json
 plugins/
 web/static-dist
 report/
+.idea/*
