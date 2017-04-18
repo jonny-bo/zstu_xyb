@@ -15,7 +15,9 @@ class GoodsPostDaoImpl extends GeneralDaoImpl implements GoodsPostDao
             'timestamps' => array('created_time'),
             'serializes' => array(),
             'orderbys' => array('created_time'),
-            'conditions' => array(),
+            'conditions' => array(
+                'old_goods_id = :old_goods_id'
+            ),
         );
     }
 }

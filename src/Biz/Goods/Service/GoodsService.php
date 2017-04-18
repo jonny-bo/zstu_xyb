@@ -26,7 +26,7 @@ interface GoodsService
 
     public function searchGoodsPostsCount($conditions);
 
-    public function createGoodsPost($fields);
+    public function createGoodsPost($goodsId, $fields);
 
     public function deleteGoodsPost($goodsPostId);
 }

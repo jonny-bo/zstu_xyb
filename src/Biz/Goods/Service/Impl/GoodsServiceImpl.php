@@ -121,16 +121,18 @@ class GoodsServiceImpl extends BaseService implements GoodsService
         return $this->getGoodsPostDao()->count($conditions);
     }
 
-    public function createGoodsPost($fields)
+    public function createGoodsPost($goodsId, $fields)
     {
-        if (!ArrayToolkit::requireds($fields, array('old_goods_id', 'content'))) {
+        if (!ArrayToolkit::requireds($fields, array('content'))) {
             throw new InvalidArgumentException('缺少必填字段');
         }
-        $goods = $this->getGoods($fields['old_goods_id']);
+        $goods = $this->getGoods($goodsId);
 
         if (!$goods) {
-            throw new ResourceNotFoundException('旧货', $fields['old_goods_id']);
+            throw new ResourceNotFoundException('旧货', $goodsId);
         }
+
+        $fields['old_goods_id'] = $goodsId;
 
         if (empty($fields['content'])) {
             throw new RuntimeException('评论内容不能为空!');
@@ -138,7 +140,7 @@ class GoodsServiceImpl extends BaseService implements GoodsService
 
         $user = $this->getCurrentUser();
 
-        if (!$user->isLogin) {
+        if (!$user->isLogin()) {
             throw new AccessDeniedException('未登录用户不能评论!');
         }
 

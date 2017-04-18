@@ -30,5 +30,7 @@ $app->post(_u('/goods/{goodsId}/delete'), 'res.Goods/Goods:delete');
 $app->post(_u('/goods/{goodsId}/publish'), 'res.Goods/Goods:publish');
 $app->post(_u('/goods/{goodsId}/cancel'), 'res.Goods/Goods:cancel');
 // $app->post(_u('/goods/{goodsId}/update'), 'res.Goods/Goods:update');
+$app->post(_u('/goods/{goodsId}/posts'), 'res.Goods/Posts:post');
+$app->get(_u('/goods/{goodsId}/posts'), 'res.Goods/Posts:get');
 
 $app->post(_u('/file/upload'), 'res.File/File:upload');

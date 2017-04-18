@@ -6,6 +6,7 @@ $resources = array(
     'Express/MyExpress',
     'Goods/Category',
     'Goods/Goods',
+    'Goods/Posts',
     'File/File'
 );
 
