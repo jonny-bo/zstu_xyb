@@ -146,12 +146,43 @@ class GoodsServiceImpl extends BaseService implements GoodsService
 
         $fields['from_user_id'] = $user['id'];
 
-        return $this->getGoodsPostDao()->create($fields);
+        $post = $this->getGoodsPostDao()->create($fields);
+
+        $this->getGoodsDao()->wave(array($goodsId), array('post_num' => 1));
+
+        return $post;
     }
 
     public function deleteGoodsPost($goodsPostId)
     {
-        return $this->getGoodsPostDao()->delete($goodsPostId);
+        $post = $this->getGoodsPostDao()->get($goodsPostId);
+        $res  = $this->getGoodsPostDao()->delete($goodsPostId);
+        $this->getGoodsDao()->wave(array($post['old_goods_id']), array('post_num' => -1));
+
+        return $res;
+    }
+
+    public function goodsLike($goodsId)
+    {
+        $user = $this->getCurrentUser();
+
+        $goodsLike = $this->getGoodsLikeDao()->getByUserIdAndGoodsId($user['id'], $goodsId);
+
+        if ($goodsLike) {
+            $goodsLike = $this->getGoodsLikeDao()->delete($goodsLike['id']);
+            $this->getGoodsDao()->wave(array($goodsId), array('ups_num' => -1));
+            return $goodsLike;
+        }
+
+        $goodsLike = $this->getGoodsLikeDao()->create(array(
+            'user_id'      => $user['id'],
+            'old_goods_id' => $goodsId,
+            'created_time' => time()
+        ));
+
+        $this->getGoodsDao()->wave(array($goodsId), array('ups_num' => 1));
+
+        return $goodsLike;
     }
 
     protected function beforAction($goodsId)

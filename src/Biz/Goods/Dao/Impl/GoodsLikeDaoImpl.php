@@ -18,4 +18,12 @@ class GoodsLikeDaoImpl extends GeneralDaoImpl implements GoodsLikeDao
             'conditions' => array(),
         );
     }
+
+    public function getByUserIdAndGoodsId($userId, $goodsId)
+    {
+        return $this->getByFields(array(
+            'old_goods_id' => $goodsId,
+            'user_id'      => $userId
+        ));
+    }
 }

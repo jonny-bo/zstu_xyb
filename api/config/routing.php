@@ -32,5 +32,6 @@ $app->post(_u('/goods/{goodsId}/cancel'), 'res.Goods/Goods:cancel');
 // $app->post(_u('/goods/{goodsId}/update'), 'res.Goods/Goods:update');
 $app->post(_u('/goods/{goodsId}/posts'), 'res.Goods/Posts:post');
 $app->get(_u('/goods/{goodsId}/posts'), 'res.Goods/Posts:get');
+$app->post(_u('/goods/{goodsId}/like'), 'res.Goods/Goods:like');
 
 $app->post(_u('/file/upload'), 'res.File/File:upload');

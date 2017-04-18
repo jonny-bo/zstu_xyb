@@ -29,4 +29,6 @@ interface GoodsService
     public function createGoodsPost($goodsId, $fields);
 
     public function deleteGoodsPost($goodsPostId);
+
+    public function goodsLike($goodsId);
 }

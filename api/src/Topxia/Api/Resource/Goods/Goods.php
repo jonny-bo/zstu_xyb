@@ -89,6 +89,14 @@ class Goods extends BaseResource
         return array('success' => 'true');
     }
 
+    public function like($goodsId)
+    {
+        $this->checkGoods($goodsId);
+        $this->getGoodsService()->goodsLike($goodsId);
+
+        return array('success' => 'true');
+    }
+
     protected function checkGoods($goodsId)
     {
         $goods = $this->getGoodsService()->getGoods($goodsId);
