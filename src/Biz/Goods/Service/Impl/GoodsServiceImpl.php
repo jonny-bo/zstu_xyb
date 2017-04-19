@@ -16,7 +16,7 @@ use Biz\Common\Exception\AccessDeniedException;
 class GoodsServiceImpl extends BaseService implements GoodsService
 {
     protected $requireFiles = array(
-        'title', 'category_id', 'body', 'price'
+        'title', 'imgs', 'category_id', 'body', 'price'
     );
 
     public function getGoods($goodsId)
@@ -43,17 +43,9 @@ class GoodsServiceImpl extends BaseService implements GoodsService
 
         $this->checkFields($fields);
 
-        $fileIds = array();
-        foreach ($fields['files'] as $file) {
-            $res = $this->getFileService()->uploadFile('goods', $file);
-            array_push($fileIds, $res['id']);
-        }
-
-        $fields['imgs'] = json_encode($fileIds);
+        $fields['imgs']         = json_encode($fields['imgs']);
         $fields['publisher_id'] = $this->getCurrentUser()['id'];
         $fields['status']       = 0;
-
-        unset($fields['files']);
 
         return $this->getGoodsDao()->create($fields);
     }
@@ -78,9 +70,9 @@ class GoodsServiceImpl extends BaseService implements GoodsService
         }
         $res = $this->getGoodsDao()->delete($goodsId);
 
-        $fileIds = json_decode($goods['imgs'], true);
-        foreach ($fileIds as $fileId) {
-            $this->getFileService()->deleteFile($fileId);
+        $imgs = json_decode($goods['imgs'], true);
+        foreach ($imgs as $img) {
+            $this->getFileService()->deleteFileByUri($img);
         }
         return $res;
     }
@@ -242,19 +234,8 @@ class GoodsServiceImpl extends BaseService implements GoodsService
         if (isset($fields['price']) && !SimpleValidator::float($fields['price'])) {
             throw new InvalidArgumentException("字段不合法");
         }
-        if (isset($fields['files']) && !empty($fields['files'])) {
-            if (count($fields['files']) >= 10) {
-                throw new \RuntimeException('上传数量超过限制。');
-            }
-            foreach ($fields['files'] as $file) {
-                if (!FileToolkit::isImageFile($file)) {
-                    throw new \RuntimeException('您上传的不是图片文件，请重新上传。');
-                }
-
-                if (FileToolkit::getMaxFilesize() <= $file->getClientSize()) {
-                    throw new \RuntimeException('您上传的图片超过限制，请重新上传。');
-                }
-            }
+        if (isset($fields['imgs']) && count($fields['imgs']) >= 10) {
+            throw new \RuntimeException('上传数量超过限制。');
         }
     }
 

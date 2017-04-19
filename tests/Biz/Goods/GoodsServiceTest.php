@@ -17,7 +17,7 @@ class GoodsServiceTest extends BaseTestCase
             'category_id' => 1,
             'body'  => 'ssss',
             'price' => 33,
-            'files' => []
+            'imgs' => []
         );
 
         $goods = $this->getGoodsService()->createGoods($goodsText);
@@ -35,7 +35,7 @@ class GoodsServiceTest extends BaseTestCase
             'category_id' => 1,
             'body'  => 'ssss',
             'price' => 33,
-            'files' => []
+            'imgs' => []
         );
         $goods = $this->getGoodsService()->createGoods($goodsText);
 
@@ -83,66 +83,12 @@ class GoodsServiceTest extends BaseTestCase
             'title'  => 'test',
             'body' => 'detail',
             'price' => 'dsa',
-            'files' => array()
+            'imgs' => array()
         );
         for ($i = 0; $i <= 10; $i++) {
-            $sourceFile = __DIR__.'/Fixtures/test.gif';
-            $testFile = __DIR__.'/Fixtures/test_test.gif';
-            copy($sourceFile, $testFile);
-            $file = new UploadedFile(
-                $testFile,
-                'original.gif',
-                'image/gif',
-                filesize($testFile),
-                UPLOAD_ERR_OK,
-                true
-            );
-
-            array_push($goodsText['files'], $file);
+            array_push($goodsText['imgs'], $i);
         }
 
-        $this->getGoodsService()->createGoods($goodsText);
-    }
-
-    /**
-     * @expectedException Biz\Common\Exception\InvalidArgumentException
-     * @expectedExceptionCode 0
-     */
-    public function testCreateExpressWithFileNoimg()
-    {
-        $goodsText = array(
-            'title'  => 'test',
-            'body' => 'detail',
-            'price' => 'dsa',
-            'files' => array(111)
-        );
-
-        $this->getGoodsService()->createGoods($goodsText);
-    }
-
-    /**
-     * @expectedException Biz\Common\Exception\InvalidArgumentException
-     * @expectedExceptionCode 0
-     */
-    public function testCreateExpressWithFileImgSize()
-    {
-        $sourceFile = __DIR__.'/Fixtures/test.gif';
-        $testFile = __DIR__.'/Fixtures/test_test.gif';
-        copy($sourceFile, $testFile);
-        $file = new UploadedFile(
-            $testFile,
-            'original.gif',
-            'image/gif',
-            FileToolkit::getMaxFilesize(),
-            UPLOAD_ERR_OK,
-            true
-        );
-        $goodsText = array(
-            'title'  => 'test',
-            'body' => 'detail',
-            'price' => 'dsa',
-            'files' => array($file)
-        );
         $this->getGoodsService()->createGoods($goodsText);
     }
 
@@ -153,7 +99,7 @@ class GoodsServiceTest extends BaseTestCase
             'category_id' => 1,
             'body'  => 'ssss',
             'price' => 33,
-            'files' => []
+            'imgs' => []
         );
         $goods = $this->getGoodsService()->createGoods($goodsText);
 
@@ -173,7 +119,7 @@ class GoodsServiceTest extends BaseTestCase
             'category_id' => 1,
             'body'  => 'ssss',
             'price' => 33,
-            'files' => []
+            'imgs' => []
         );
 
         $goodsText2 = array(
@@ -181,7 +127,7 @@ class GoodsServiceTest extends BaseTestCase
             'category_id' => 1,
             'body'  => 'ssss',
             'price' => 33,
-            'files' => []
+            'imgs' => []
         );
         $this->getGoodsService()->createGoods($goodsText1);
         $this->getGoodsService()->createGoods($goodsText2);
@@ -206,7 +152,7 @@ class GoodsServiceTest extends BaseTestCase
             'category_id' => 1,
             'body'  => 'ssss',
             'price' => 33,
-            'files' => []
+            'imgs' => []
         );
         $goods = $this->getGoodsService()->createGoods($goodsText);
 
@@ -230,7 +176,7 @@ class GoodsServiceTest extends BaseTestCase
             'category_id' => 1,
             'body'  => 'ssss',
             'price' => 33,
-            'files' => []
+            'imgs' => []
         );
         $goods = $this->getGoodsService()->createGoods($goodsText);
         $this->getGoodsService()->publishGoods($goods['id']);
@@ -264,7 +210,7 @@ class GoodsServiceTest extends BaseTestCase
             'category_id' => 1,
             'body'  => 'ssss',
             'price' => 33,
-            'files' => []
+            'imgs' => []
         );
         $goods = $this->getGoodsService()->createGoods($goodsText);
         $user = $this->createUser('test_user2');
@@ -284,7 +230,7 @@ class GoodsServiceTest extends BaseTestCase
             'category_id' => 1,
             'body'  => 'ssss',
             'price' => 33,
-            'files' => []
+            'imgs' => []
         );
         $goods = $this->getGoodsService()->createGoods($goodsText);
 
@@ -300,7 +246,7 @@ class GoodsServiceTest extends BaseTestCase
             'category_id' => 1,
             'body'  => 'ssss',
             'price' => 33,
-            'files' => []
+            'imgs' => []
         );
         $goods = $this->getGoodsService()->createGoods($goodsText);
 
@@ -316,7 +262,7 @@ class GoodsServiceTest extends BaseTestCase
             'category_id' => 1,
             'body'  => 'ssss',
             'price' => 33,
-            'files' => []
+            'imgs' => []
         );
         $goods = $this->getGoodsService()->createGoods($goodsText);
 

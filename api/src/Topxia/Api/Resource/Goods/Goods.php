@@ -16,7 +16,7 @@ use Biz\Common\FileToolkit;
 class Goods extends BaseResource
 {
     protected $requireFiles = array(
-        'title', 'category_id', 'body', 'price'
+        'title', 'imgs', 'category_id', 'body', 'price'
     );
     public function search(Request $request)
     {
@@ -43,19 +43,9 @@ class Goods extends BaseResource
     public function post(Request $request)
     {
         $goods = $request->request->all();
-        $goods['files'] = $request->files->get('files', array());
 
         if (!ArrayToolkit::requireds($goods, $this->requireFiles)) {
             throw new InvalidArgumentException('缺少必填字段');
-        }
-        foreach ($goods['files'] as $file) {
-            if (!FileToolkit::isImageFile($file)) {
-                throw new \RuntimeException('您上传的不是图片文件，请重新上传。');
-            }
-
-            if (FileToolkit::getMaxFilesize() <= $file->getClientSize()) {
-                throw new \RuntimeException('您上传的图片超过限制，请重新上传。');
-            }
         }
 
         $this->getGoodsService()->createGoods($goods);
@@ -119,9 +109,8 @@ class Goods extends BaseResource
     public function filter($res)
     {
         $res['imgs'] = json_decode($res['imgs'], true);
-        foreach ($res['imgs'] as $key => $fileId) {
-            $file   = $this->getFileService()->getFile($fileId);
-            $res['imgs'][$key] = $this->getFileUrl($file['uri']);
+        foreach ($res['imgs'] as $key => $uri) {
+            $res['imgs'][$key] = $this->getFileUrl($uri);
         }
         $res['publisher'] = $this->callSimplify('User/User', $this->getUserService()->getUser($res['publisher_id']));
         $res['category'] = $this->getCategoryService()->getCategory($res['category_id'])['name'];
