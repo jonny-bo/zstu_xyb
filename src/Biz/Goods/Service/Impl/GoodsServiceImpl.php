@@ -126,11 +126,7 @@ class GoodsServiceImpl extends BaseService implements GoodsService
         if (!ArrayToolkit::requireds($fields, array('content'))) {
             throw new InvalidArgumentException('缺少必填字段');
         }
-        $goods = $this->getGoods($goodsId);
-
-        if (!$goods) {
-            throw new ResourceNotFoundException('旧货', $goodsId);
-        }
+        $this->checkGoods($goodsId);
 
         $fields['old_goods_id'] = $goodsId;
 
@@ -162,19 +158,23 @@ class GoodsServiceImpl extends BaseService implements GoodsService
         return $res;
     }
 
-    public function goodsLike($goodsId)
+    public function like($goodsId)
     {
         $user = $this->getCurrentUser();
+
+        if (!$user->isLogin()) {
+            throw new AccessDeniedException('未登录用户不能点赞!');
+        }
+
+        $this->checkGoods($goodsId);
 
         $goodsLike = $this->getGoodsLikeDao()->getByUserIdAndGoodsId($user['id'], $goodsId);
 
         if ($goodsLike) {
-            $goodsLike = $this->getGoodsLikeDao()->delete($goodsLike['id']);
-            $this->getGoodsDao()->wave(array($goodsId), array('ups_num' => -1));
-            return $goodsLike;
+            throw new RuntimeException('您已经点赞过了!');
         }
 
-        $goodsLike = $this->getGoodsLikeDao()->create(array(
+        $this->getGoodsLikeDao()->create(array(
             'user_id'      => $user['id'],
             'old_goods_id' => $goodsId,
             'created_time' => time()
@@ -182,20 +182,56 @@ class GoodsServiceImpl extends BaseService implements GoodsService
 
         $this->getGoodsDao()->wave(array($goodsId), array('ups_num' => 1));
 
-        return $goodsLike;
+        return $this->getGoods($goodsId);
+    }
+
+    public function cancelLike($goodsId)
+    {
+        $user = $this->getCurrentUser();
+
+        if (!$user->isLogin()) {
+            throw new AccessDeniedException('未登录用户不能取消点赞!');
+        }
+
+        $this->checkGoods($goodsId);
+
+        $goodsLike = $this->getGoodsLikeDao()->getByUserIdAndGoodsId($user['id'], $goodsId);
+
+        if (!$goodsLike) {
+            throw new RuntimeException('您还没点赞过了!');
+        }
+
+        $this->getGoodsLikeDao()->delete($goodsLike['id']);
+        $this->getGoodsDao()->wave(array($goodsId), array('ups_num' => -1));
+
+        return $this->getGoods($goodsId);
+    }
+
+    public function hit($goodsId)
+    {
+        $this->getGoodsDao()->wave(array($goodsId), array('hits' => 1));
+
+        return $this->getGoods($goodsId);
     }
 
     protected function beforAction($goodsId)
+    {
+        $goods = $this->checkGoods($goodsId);
+        $user  = $this->getCurrentUser();
+
+        if (!$user->isLogin() || ($user['id'] != $goods['publisher_id'])) {
+            throw new RuntimeException("非法用户操作");
+        }
+
+        return $goods;
+    }
+
+    protected function checkGoods($goodsId)
     {
         $goods = $this->getGoods($goodsId);
 
         if (empty($goods)) {
             throw new ResourceNotFoundException('旧货', $goodsId);
-        }
-        $user = $this->getCurrentUser();
-
-        if (!$user->isLogin() || ($user['id'] != $goods['publisher_id'])) {
-            throw new RuntimeException("非法用户操作");
         }
 
         return $goods;

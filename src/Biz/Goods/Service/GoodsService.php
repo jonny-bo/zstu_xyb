@@ -30,5 +30,9 @@ interface GoodsService
 
     public function deleteGoodsPost($goodsPostId);
 
-    public function goodsLike($goodsId);
+    public function like($goodsId);
+
+    public function cancelLike($goodsId);
+
+    public function hit($goodsId);
 }
