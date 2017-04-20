@@ -4,6 +4,7 @@ namespace Biz\Common;
 
 use Codeages\Biz\Framework\Service\BaseService as ParentService;
 use Symfony\Component\EventDispatcher\GenericEvent;
+use Biz\Util\HTMLPurifierFactory;
 
 class BaseService extends ParentService
 {
@@ -33,5 +34,21 @@ class BaseService extends ParentService
         }
 
         return $this->lock;
+    }
+
+    protected function purifyHtml($html, $trusted = false)
+    {
+        if (empty($html)) {
+            return '';
+        }
+
+        $config = array(
+            'cacheDir' => $this->biz['cache_directory'].'/htmlpurifier'
+        );
+
+        $factory  = new HTMLPurifierFactory($config);
+        $purifier = $factory->create($trusted);
+
+        return $purifier->purify($html);
     }
 }

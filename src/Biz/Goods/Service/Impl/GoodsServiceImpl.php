@@ -168,8 +168,7 @@ class GoodsServiceImpl extends BaseService implements GoodsService
 
         $this->getGoodsLikeDao()->create(array(
             'user_id'      => $user['id'],
-            'old_goods_id' => $goodsId,
-            'created_time' => time()
+            'old_goods_id' => $goodsId
         ));
 
         $this->getGoodsDao()->wave(array($goodsId), array('ups_num' => 1));

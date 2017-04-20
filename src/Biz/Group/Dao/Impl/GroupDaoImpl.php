@@ -1,11 +1,11 @@
 <?php
 
-namespace Biz\Groups\Dao\Impl;
+namespace Biz\Group\Dao\Impl;
 
 use Codeages\Biz\Framework\Dao\GeneralDaoImpl;
-use Biz\Groups\Dao\GroupsDao;
+use Biz\Group\Dao\GroupDao;
 
-class GroupsDaoImpl extends GeneralDaoImpl implements GroupsDao
+class GroupDaoImpl extends GeneralDaoImpl implements GroupDao
 {
     protected $table = 'groups';
 
@@ -14,7 +14,7 @@ class GroupsDaoImpl extends GeneralDaoImpl implements GroupsDao
         return array(
             'timestamps' => array('created_time'),
             'serializes' => array(),
-            'orderbys' => array('created_time', 'member_num', 'thread_num', 'post_num'),
+            'orderbys' => array(),
             'conditions' => array(),
         );
     }
