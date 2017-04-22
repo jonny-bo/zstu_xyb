@@ -96,8 +96,56 @@ class GroupServiceImpl extends BaseService implements GroupService
         return $this->getGroupDao()->updateGroup($groupId, $fields);
     }
 
+    public function joinGroup($groupId, $userId)
+    {
+        $group = $this->getGroup($groupId);
+        if (empty($group)) {
+            throw new ResourceNotFoundException('小组', $groupId);
+        }
+        $user = $this->UserService()->getUser($userId);
+
+        if (empty($user)) {
+            throw new ResourceNotFoundException('用户', $userId);
+        }
+        // if($this->isMember($groupId, $user['id'])){
+        //     throw $this->createServiceException($this->getKernel()->trans('您已加入小组！！'));
+        // }
+
+        $member = array(
+            'groupId' => $groupId,
+            'userId' => $user['id']
+        );
+
+        return $this->getGroupMemberDao()->create($member);
+    }
+
+    public function exitGroup($groupId, $userId)
+    {
+        $group = $this->getGroup($groupId);
+        if (empty($group)) {
+            throw new ResourceNotFoundException('小组', $groupId);
+        }
+        $user = $this->UserService()->getUser($userId);
+
+        if (empty($user)) {
+            throw new ResourceNotFoundException('用户', $userId);
+        }
+        $member = $this->getGroupMemberDao()->getByGroupIdAndUserId($groupId, $user['id']);
+
+        if (empty($member)) {
+            throw new RuntimeException('您不是该小组成员，退出失败！');
+        }
+
+        return $this->getGroupMemberDao()->delete($member['id']);
+    }
+
     protected function getGroupDao()
     {
         return $this->biz->dao('Group:GroupDao');
+    }
+
+    protected function getGroupMemberDao()
+    {
+        return $this->biz->dao('Group:GroupMemberDao');
     }
 }

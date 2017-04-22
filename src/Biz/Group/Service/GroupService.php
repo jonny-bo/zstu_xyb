@@ -22,9 +22,9 @@ interface GroupService
 
     public function changeGroupImg($groupId, $field, $data);
 
-    // public function joinGroup($groupId, $userId);
+    public function joinGroup($groupId, $userId);
 
-    // public function exitGroup($groupId, $userId);
+    public function exitGroup($groupId, $userId);
 
     // public function findGroupsByUserId($userId);
 

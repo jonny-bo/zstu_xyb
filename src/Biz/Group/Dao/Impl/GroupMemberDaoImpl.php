@@ -18,4 +18,12 @@ class GroupMemberDaoImpl extends GeneralDaoImpl implements GroupMemberDao
             'conditions' => array(),
         );
     }
+
+    public function getByGroupIdAndUserId($groupId, $userId)
+    {
+        return $this->getByFields(array(
+            'group_id' => $groupId,
+            'user_id'      => $userId
+        ));
+    }
 }
