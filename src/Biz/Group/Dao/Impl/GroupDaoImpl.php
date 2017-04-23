@@ -18,4 +18,14 @@ class GroupDaoImpl extends GeneralDaoImpl implements GroupDao
             'conditions' => array(),
         );
     }
+
+    public function findByUserId($userId)
+    {
+        return $this->findByFields(array('user_id' => $userId));
+    }
+
+    public function findByIds($ids)
+    {
+        return $this->findInField(array('id' => $ids));
+    }
 }

@@ -6,4 +6,7 @@ use Codeages\Biz\Framework\Dao\GeneralDaoInterface;
 
 interface GroupDao extends GeneralDaoInterface
 {
+    public function findByUserId($userId);
+
+    public function findByIds($ids);
 }

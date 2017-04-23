@@ -26,27 +26,23 @@ interface GroupService
 
     public function exitGroup($groupId, $userId);
 
-    // public function findGroupsByUserId($userId);
+    public function findGroupsByUserId($userId);
 
-    // public function searchMembers($conditions, $orderBy, $start, $limit);
+    public function searchMembers($conditions, $orderBy, $start, $limit);
 
-    // public function searchMembersCount($conditions);
+    public function searchMembersCount($conditions);
 
-    // public function isOwner($groupId, $userId);
+    public function isOwner($groupId, $userId);
 
-    // public function isAdmin($groupId, $userId);
+    public function isAdmin($groupId, $userId);
 
-    // public function isMember($groupId, $userId);
+    public function isMember($groupId, $userId);
 
-    // public function addOwner($groupId, $userId);
+    public function updateMember($memberId, $fields);
 
-    // public function updateMember($memberId, $fields);
+    public function getMemberByGroupIdAndUserId($groupId, $userId);
 
-    // public function getMembersCountByGroupId($groupId);
-
-    // public function getMemberByGroupIdAndUserId($groupId, $userId);
-
-    // public function deleteMemberByGroupIdAndUserId($groupId, $userId);
+    public function deleteMemberByGroupIdAndUserId($groupId, $userId);
 
     // public function waveGroup($groupId, $field, $diff);
 

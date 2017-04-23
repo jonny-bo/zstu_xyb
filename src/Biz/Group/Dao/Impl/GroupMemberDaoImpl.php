@@ -26,4 +26,11 @@ class GroupMemberDaoImpl extends GeneralDaoImpl implements GroupMemberDao
             'user_id'      => $userId
         ));
     }
+
+    public function findByUserId($userId)
+    {
+        return $this->findByFields(array(
+            'user_id' => $userId
+        ));
+    }
 }

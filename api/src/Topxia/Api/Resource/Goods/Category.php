@@ -22,6 +22,7 @@ class Category extends BaseResource
 
     public function filter($res)
     {
+        $data = array();
         $data['id']   = $res['id'];
         $data['name'] = $res['name'];
         $data['icon'] = $this->getFileUrl($res['icon']);
@@ -31,6 +32,7 @@ class Category extends BaseResource
 
     public function simplify($res)
     {
+        $data = array();
         $data['id'] = $res['id'];
         $data['name'] = $res['name'];
 

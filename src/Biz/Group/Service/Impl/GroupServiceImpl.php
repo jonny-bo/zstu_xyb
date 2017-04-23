@@ -31,7 +31,27 @@ class GroupServiceImpl extends BaseService implements GroupService
 
     public function createGroup($fields)
     {
-        return $this->getGroupDao()->create($fields);
+        if (!isset($fields['title']) || empty($fields['title'])) {
+            throw new InvalidArgumentException('小组名称不能为空！');
+        }
+        $fields['title'] = trim($fields['title']);
+
+        if (isset($fields['about'])) {
+            $fields['about'] = $this->purifyHtml($fields['about']);
+        }
+
+        $user                 = $this->getCurrentUser();
+        $fields['owner_id']   = $user['id'];
+        $fields['member_num'] = 1;
+
+        $group  = $this->getGroupDao()->create($fields);
+        $member = array(
+            'group_id' => $group['id'],
+            'user_id' => $user['id'],
+            'role' => 'owner',
+        );
+        $this->getGroupMemberDao()->create($member);
+        return $group;
     }
 
     public function updateGroup($groupId, $fields)
@@ -107,16 +127,17 @@ class GroupServiceImpl extends BaseService implements GroupService
         if (empty($user)) {
             throw new ResourceNotFoundException('用户', $userId);
         }
-        // if($this->isMember($groupId, $user['id'])){
-        //     throw $this->createServiceException($this->getKernel()->trans('您已加入小组！！'));
-        // }
+        if ($this->isMember($groupId, $user['id'])) {
+            throw new RuntimeException('您已加入小组！');
+        }
 
         $member = array(
             'groupId' => $groupId,
             'userId' => $user['id']
         );
-
-        return $this->getGroupMemberDao()->create($member);
+        $member = $this->getGroupMemberDao()->create($member);
+        $this->getGroupDao()->wave(array($groupId), array('member_num' => 1));
+        return $member;
     }
 
     public function exitGroup($groupId, $userId)
@@ -136,6 +157,67 @@ class GroupServiceImpl extends BaseService implements GroupService
             throw new RuntimeException('您不是该小组成员，退出失败！');
         }
 
+        $res = $this->getGroupMemberDao()->delete($member['id']);
+
+        $this->getGroupDao()->wave(array($groupId), array('member_num' => -1));
+
+        return $res;
+    }
+
+    public function findGroupsByUserId($userId)
+    {
+        $members=$this->getGroupMemberDao()->findByUserId($userId);
+        if ($members) {
+            $ids = ArrayToolkit::column($members, 'id');
+            return $this->getGroupDao()->findByIds($ids);
+        }
+        return array();
+    }
+
+    public function searchMembers($conditions, $orderBy, $start, $limit)
+    {
+        return $this->getGroupMemberDao()->search($conditions, $orderBy, $start, $limit);
+    }
+
+    public function isOwner($groupId, $userId)
+    {
+        $group = $this->getGroup($groupId);
+
+        return $group['owner_id'] == $userId ? true : false;
+    }
+
+    public function isAdmin($groupId, $userId)
+    {
+        $member = $this->getMemberByGroupIdAndUserId($groupId, $userId);
+
+        return $member['role'] == 'admin' ? true : false;
+    }
+
+    public function isMember($groupId, $userId)
+    {
+        $member = $this->getMemberByGroupIdAndUserId($groupId, $userId);
+
+        return !empty($member) ? true : false;
+    }
+
+    public function getMemberByGroupIdAndUserId($groupId, $userId)
+    {
+        return $this->getGroupMemberDao()->getByGroupIdAndUserId($groupId, $userId);
+    }
+
+    public function searchMembersCount($conditions)
+    {
+        return $this->getGroupMemberDao()->count($conditions);
+    }
+
+    public function updateMember($memberId, $fields)
+    {
+        return $this->getGroupMemberDao()->update($memberId, $fields);
+    }
+
+    public function deleteMemberByGroupIdAndUserId($groupId, $userId)
+    {
+        $member = $this->getMemberByGroupIdAndUserId($groupId, $userId);
         return $this->getGroupMemberDao()->delete($member['id']);
     }
 
