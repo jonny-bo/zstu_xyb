@@ -44,7 +44,7 @@ interface GroupService
 
     public function deleteMemberByGroupIdAndUserId($groupId, $userId);
 
-    // public function waveGroup($groupId, $field, $diff);
+    public function waveGroup(array $ids, array $diffs);
 
-    // public function waveMember($groupId, $userId, $field, $diff);
+    public function waveMemberByGroupIdAndUserId(array $ids, array $diffs);
 }

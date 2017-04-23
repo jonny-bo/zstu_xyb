@@ -18,4 +18,12 @@ class ThreadCollectDaoImpl extends GeneralDaoImpl implements ThreadCollectDao
             'conditions' => array(),
         );
     }
+
+    public function getByUserIdAndThreadId($userId, $threadId)
+    {
+        return $this->getByFields(array(
+            'user_id'   => $userId,
+            'thread_id' => $threadId
+        ));
+    }
 }

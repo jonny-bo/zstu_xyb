@@ -18,4 +18,11 @@ class ThreadDaoImpl extends GeneralDaoImpl implements ThreadDao
             'conditions' => array(),
         );
     }
+
+    public function findByIds($ids)
+    {
+        return $this->findInField(array(
+            'id' => $ids
+        ));
+    }
 }

@@ -221,6 +221,19 @@ class GroupServiceImpl extends BaseService implements GroupService
         return $this->getGroupMemberDao()->delete($member['id']);
     }
 
+    public function waveGroup(array $ids, array $diffs)
+    {
+        $this->getGroupDao()->wave($ids, $diffs);
+    }
+
+    public function waveMemberByGroupIdAndUserId($groupId, $userId, array $diffs)
+    {
+        $member = $this->getGroupMemberDao()->getByGroupIdAndUserId($groupId, $userId);
+        if ($member) {
+            $this->getGroupMemberDao()->wave(array($member['id']), $diffs);
+        }
+    }
+
     protected function getGroupDao()
     {
         return $this->biz->dao('Group:GroupDao');
@@ -229,5 +242,10 @@ class GroupServiceImpl extends BaseService implements GroupService
     protected function getGroupMemberDao()
     {
         return $this->biz->dao('Group:GroupMemberDao');
+    }
+
+    protected function getUserService()
+    {
+        return $this->biz->service('User:UserService');
     }
 }

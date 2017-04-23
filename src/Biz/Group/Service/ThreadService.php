@@ -15,4 +15,18 @@ interface ThreadService
     public function updateThread($threadId, $fields);
 
     public function deleteThread($threadId);
+
+    public function isCollected($userId, $threadId);
+
+    public function threadCollect($userId, $threadId);
+    
+    public function unThreadCollect($userId, $threadId);
+
+    public function findThreadsByIds($ids);
+
+    public function closeThread($threadId);
+
+    public function openThread($threadId);
+
+    public function postThread($threadId, $fields);
 }
