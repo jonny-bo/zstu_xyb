@@ -122,7 +122,7 @@ class GroupServiceImpl extends BaseService implements GroupService
         if (empty($group)) {
             throw new ResourceNotFoundException('小组', $groupId);
         }
-        $user = $this->UserService()->getUser($userId);
+        $user = $this->getUserService()->getUser($userId);
 
         if (empty($user)) {
             throw new ResourceNotFoundException('用户', $userId);
@@ -132,8 +132,8 @@ class GroupServiceImpl extends BaseService implements GroupService
         }
 
         $member = array(
-            'groupId' => $groupId,
-            'userId' => $user['id']
+            'group_id' => $groupId,
+            'user_id' => $user['id']
         );
         $member = $this->getGroupMemberDao()->create($member);
         $this->getGroupDao()->wave(array($groupId), array('member_num' => 1));
@@ -146,7 +146,7 @@ class GroupServiceImpl extends BaseService implements GroupService
         if (empty($group)) {
             throw new ResourceNotFoundException('小组', $groupId);
         }
-        $user = $this->UserService()->getUser($userId);
+        $user = $this->getUserService()->getUser($userId);
 
         if (empty($user)) {
             throw new ResourceNotFoundException('用户', $userId);

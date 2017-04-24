@@ -15,7 +15,9 @@ class GroupMemberDaoImpl extends GeneralDaoImpl implements GroupMemberDao
             'timestamps' => array('created_time'),
             'serializes' => array(),
             'orderbys' => array('created_time'),
-            'conditions' => array(),
+            'conditions' => array(
+                'group_id = :group_id'
+            ),
         );
     }
 

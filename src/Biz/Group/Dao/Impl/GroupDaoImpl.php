@@ -20,7 +20,9 @@ class GroupDaoImpl extends GeneralDaoImpl implements GroupDao
                 'thread_num',
                 'post_num'
             ),
-            'conditions' => array(),
+            'conditions' => array(
+                'title LIKE :title'
+            ),
         );
     }
 

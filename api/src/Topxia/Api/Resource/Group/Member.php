@@ -9,9 +9,14 @@ use Biz\Common\ArrayToolkit;
 
 class Member extends BaseResource
 {
-    public function search(Request $request)
+    public function search(Request $request, $groupId)
     {
+        $group = $this->getGroupService()->getGroup($groupId);
+        if (!$group) {
+            return $this->error('not_group', '小组不存在！');
+        }
         $conditions = $request->query->all();
+        $conditions['group_id'] = $groupId;
 
         $start   = $request->query->get('start', 0);
         $limit   = $request->query->get('limit', 10);
@@ -25,6 +30,34 @@ class Member extends BaseResource
         $total = $this->getGroupService()->searchMembersCount($conditions);
 
         return $this->wrap($this->multiFilter($members), $total);
+    }
+
+    public function join($groupId)
+    {
+        $group = $this->getGroupService()->getGroup($groupId);
+        if (!$group) {
+            return $this->error('not_group', '小组不存在！');
+        }
+
+        $user = $this->getCurrentUser();
+
+        $this->getGroupService()->joinGroup($groupId, $user['id']);
+
+        return array('success' => 'ture');
+    }
+
+    public function quit($groupId)
+    {
+        $group = $this->getGroupService()->getGroup($groupId);
+        if (!$group) {
+            return $this->error('not_group', '小组不存在！');
+        }
+
+        $user = $this->getCurrentUser();
+
+        $this->getGroupService()->exitGroup($groupId, $user['id']);
+
+        return array('success' => 'ture');
     }
 
     public function filter($res)
