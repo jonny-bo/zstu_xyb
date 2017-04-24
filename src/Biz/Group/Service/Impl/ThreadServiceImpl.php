@@ -166,11 +166,11 @@ class ThreadServiceImpl extends BaseService implements ThreadService
         $fields['thread_id']    = $thread['id'];
         $post                   = $this->getThreadPostDao()->create($fields);
         $this->getThreadDao()->update($threadId, array('last_post_memberId' => $user['id'], 'last_post_time' => time()));
-        $this->getGroupService()->waveGroup(array($groupId), array('post_num' => 1));
-        $this->getGroupService()->waveMemberByGroupIdAndUserId($groupId, $user['id'], array('post_num' => 1));
+        $this->getGroupService()->waveGroup(array($thread['group_id']), array('post_num' => 1));
+        $this->getGroupService()->waveMemberByGroupIdAndUserId($thread['group_id'], $user['id'], array('post_num' => 1));
 
         if ($fields['post_id'] == 0) {
-            $this->getThreadDao->wave(array($threadId), array('post_num' => 1));
+            $this->getThreadDao()->wave(array($threadId), array('post_num' => 1));
         }
 
         return $post;
@@ -199,8 +199,18 @@ class ThreadServiceImpl extends BaseService implements ThreadService
         return $this->biz->dao('Group:ThreadCollectDao');
     }
 
+    protected function getThreadPostDao()
+    {
+        return $this->biz->dao('Group:ThreadPostDao');
+    }
+
     protected function getUserService()
     {
         return $this->biz->service('User:UserService');
+    }
+
+    protected function getGroupService()
+    {
+        return $this->biz->service('Group:GroupService');
     }
 }
