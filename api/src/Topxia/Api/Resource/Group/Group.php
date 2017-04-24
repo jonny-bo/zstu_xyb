@@ -45,6 +45,17 @@ class Group extends BaseResource
         return array('success' => 'true');
     }
 
+    public function update(Request $request, $groupId)
+    {
+        $fields = $request->request->all();
+
+        $this->checkRequiredFields($this->requireFiles, $fields);
+
+        $this->getGroupService()->updateGroup($groupId, $fields);
+
+        return array('success' => 'true');
+    }
+
     public function filter($res)
     {
         $res['created_time'] = date('c', $res['created_time']);

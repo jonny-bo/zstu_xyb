@@ -44,6 +44,8 @@ class ExpressServiceImpl extends BaseService implements ExpressService
         }
 
         $fields['publisher_id'] = $user['id'];
+        $fields['title']        = $this->purifyHtml($fields['title']);
+        $fields['detail']       = $this->purifyHtml($fields['detail']);
 
         return $this->getExpressDao()->create($fields);
     }
@@ -72,6 +74,9 @@ class ExpressServiceImpl extends BaseService implements ExpressService
     public function updateExpress($expressId, $fields)
     {
         $this->checkExpressById($expressId);
+
+        $fields['title']        = $this->purifyHtml($fields['title']);
+        $fields['detail']       = $this->purifyHtml($fields['detail']);
 
         return $this->getExpressDao()->update($expressId, $fields);
     }

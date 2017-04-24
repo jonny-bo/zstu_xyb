@@ -21,6 +21,9 @@ class ThreadServiceImpl extends BaseService implements ThreadService
 
     public function searchThreads($conditions, $orderBy, $start, $limit)
     {
+        if (isset($conditions['title']) && !empty($conditions['title'])) {
+            $conditions['title'] = '%'.$conditions['title'].'%';
+        }
         return $this->getThreadDao()->search($conditions, $orderBy, $start, $limit);
     }
 
@@ -182,7 +185,7 @@ class ThreadServiceImpl extends BaseService implements ThreadService
             throw new InvalidArgumentException('缺少必填字段');
         }
         
-        $group = $this->getGroupService()-getGroup($fields['group_id']);
+        $group = $this->getGroupService()->getGroup($fields['group_id']);
         
         if (empty($group)) {
             throw new ResourceNotFoundException('小组', $fields['group_id']);

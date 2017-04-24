@@ -46,6 +46,8 @@ class GoodsServiceImpl extends BaseService implements GoodsService
         $fields['imgs']         = json_encode($fields['imgs']);
         $fields['publisher_id'] = $this->getCurrentUser()['id'];
         $fields['status']       = 0;
+        $fields['title']        = $this->purifyHtml($fields['title']);
+        $fields['body']         = $this->purifyHtml($fields['body']);
 
         return $this->getGoodsDao()->create($fields);
     }
@@ -58,6 +60,9 @@ class GoodsServiceImpl extends BaseService implements GoodsService
         if ($goods['status'] == 1) {
             throw new RuntimeException('已发布物品不能进行修改');
         }
+
+        $fields['title']        = $this->purifyHtml($fields['title']);
+        $fields['body']         = $this->purifyHtml($fields['body']);
 
         return $this->getGoodsDao()->update($goodsId, $fields);
     }
