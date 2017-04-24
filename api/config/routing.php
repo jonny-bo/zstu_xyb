@@ -36,3 +36,12 @@ $app->post(_u('/goods/{goodsId}/like'), 'res.Goods/Goods:like');
 $app->post(_u('/goods/{goodsId}/cancelLike'), 'res.Goods/Goods:cancelLike');
 
 $app->post(_u('/file/upload'), 'res.File/File:upload');
+
+$app->get(_u('/group'), 'res.Group/Group:search');
+$app->get(_u('/group/{groupId}'), 'res.Group/Group:get');
+$app->post(_u('/group'), 'res.Group/Group:post');
+$app->get(_u('/group/{groupId}/member'), 'res.Group/Member:search');
+// $app->post(_u('/group/{groupId}'), 'res.Group/Group:update');
+// $app->post(_u('/group/{groupId}/delete'), 'res.Group/Group:delete');
+// $app->post(_u('/group/{groupId}/open'), 'res.Group/Group:open');
+// $app->post(_u('/group/{groupId}/close'), 'res.Group/Group:close');

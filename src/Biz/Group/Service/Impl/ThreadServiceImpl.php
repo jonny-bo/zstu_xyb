@@ -134,22 +134,52 @@ class ThreadServiceImpl extends BaseService implements ThreadService
         return $this->getThreadDao()->findByIds($ids);
     }
 
+    public function closeThread($threadId)
+    {
+        $thread = $this->getThreadDao()->update($threadId, array('status' => 'close'));
+
+        return $thread;
+    }
+
+    public function openThread($threadId)
+    {
+        $thread = $this->getThreadDao()->update($threadId, array('status' => 'open'));
+
+        return $thread;
+    }
+
+    public function postThread($threadId, $fields)
+    {
+        $thread = $this->getThread($threadId);
+
+        if (empty($thread)) {
+            throw new ResourceNotFoundException('话题', $threadId);
+        }
+
+        if (!isset($fields['content']) || empty($fields['content'])) {
+            throw new InvalidArgumentException('回复内容不能为空！');
+        }
+        $user                   =  $this->getCurrentUser();
+        $fields['user_id']      = $user['id'];
+        $fields['from_user_id'] = isset($fields['from_user_id']) ? $fields['from_user_id'] : 0;
+        $fields['post_id']      = isset($fields['post_id']) ? $fields['post_id'] : 0;
+        $fields['thread_id']    = $thread['id'];
+        $post                   = $this->getThreadPostDao()->create($fields);
+        $this->getThreadDao()->update($threadId, array('last_post_memberId' => $user['id'], 'last_post_time' => time()));
+        $this->getGroupService()->waveGroup(array($groupId), array('post_num' => 1));
+        $this->getGroupService()->waveMemberByGroupIdAndUserId($groupId, $user['id'], array('post_num' => 1));
+
+        if ($fields['post_id'] == 0) {
+            $this->getThreadDao->wave(array($threadId), array('post_num' => 1));
+        }
+
+        return $post;
+    }
+
     protected function checkFields($fields)
     {
-        if (!ArrayToolkit::requireds($fields, array('title', 'content', 'group_id'))) {
+        if (!ArrayToolkit::requireds($fields, array('title', 'content', 'group_id'), true)) {
             throw new InvalidArgumentException('缺少必填字段');
-        }
-
-        if (isset($fields['title']) && empty($fields['title'])) {
-            throw new InvalidArgumentException('标题名称不能为空！');
-        }
-
-        if (isset($fields['content']) && empty($fields['content'])) {
-            throw new InvalidArgumentException('话题内容不能为空！');
-        }
-
-        if (isset($fields['group_id']) && empty($fields['group_id'])) {
-            throw new InvalidArgumentException('小组Id不能为空！');
         }
         
         $group = $this->getGroupService()-getGroup($fields['group_id']);

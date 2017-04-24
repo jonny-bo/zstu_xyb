@@ -46,5 +46,5 @@ interface GroupService
 
     public function waveGroup(array $ids, array $diffs);
 
-    public function waveMemberByGroupIdAndUserId(array $ids, array $diffs);
+    public function waveMemberByGroupIdAndUserId($groupId, $userId, array $diffs);
 }

@@ -7,7 +7,11 @@ $resources = array(
     'Goods/Category',
     'Goods/Goods',
     'Goods/Posts',
-    'File/File'
+    'File/File',
+    'Group/Group',
+    'Group/Member',
+    'Thread/Thread',
+    'Thread/Posts'
 );
 
 foreach ($resources as $res) {
