@@ -34,7 +34,7 @@ class ThreadServiceImpl extends BaseService implements ThreadService
 
     public function createThread($fields)
     {
-        $this->checkFields($fields);
+        $fields = $this->checkFields($fields);
 
         // $event = $this->dispatchEvent('group.thread.before_create', $thread);
 
@@ -48,6 +48,8 @@ class ThreadServiceImpl extends BaseService implements ThreadService
         $fields['title']   = $this->purifyHtml($fields['title']);
         $fields['content'] = $this->purifyHtml($fields['content']);
         $fields['user_id'] = $this->getCurrentUser()['id'];
+
+        $fields['imgs']    = json_encode($fields['imgs']);
 
         $thread            = $this->getThreadDao()->create($fields);
 
@@ -184,12 +186,20 @@ class ThreadServiceImpl extends BaseService implements ThreadService
         if (!ArrayToolkit::requireds($fields, array('title', 'content', 'group_id'), true)) {
             throw new InvalidArgumentException('缺少必填字段');
         }
+
+        if (isset($fields['imgs']) && count($fields['imgs']) >= 10) {
+            throw new RuntimeException('上传数量超过限制。');
+        }
         
         $group = $this->getGroupService()->getGroup($fields['group_id']);
         
         if (empty($group)) {
             throw new ResourceNotFoundException('小组', $fields['group_id']);
         }
+
+        $fields['imgs'] = isset($fields['imgs']) ? $fields['imgs'] : array();
+
+        return $fields;
     }
 
     protected function getThreadDao()

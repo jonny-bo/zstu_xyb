@@ -52,7 +52,7 @@ class ExpressServiceImpl extends BaseService implements ExpressService
 
     public function orderExpress($expressId)
     {
-        $express = $this->checkExpressById($expressId);
+        $express = $this->checkExpress($expressId);
 
         $user = $this->getCurrentUser();
 
@@ -73,17 +73,21 @@ class ExpressServiceImpl extends BaseService implements ExpressService
 
     public function updateExpress($expressId, $fields)
     {
-        $this->checkExpressById($expressId);
+        $this->checkExpress($expressId);
+        if (isset($fields['title'])) {
+            $fields['title']  = $this->purifyHtml($fields['title']);
+        }
 
-        $fields['title']        = $this->purifyHtml($fields['title']);
-        $fields['detail']       = $this->purifyHtml($fields['detail']);
+        if (isset($fields['detail'])) {
+            $fields['detail'] = $this->purifyHtml($fields['detail']);
+        }
 
         return $this->getExpressDao()->update($expressId, $fields);
     }
 
     public function deleteExpress($expressId)
     {
-        $this->checkExpressById($expressId);
+        $this->checkExpress($expressId);
 
         return $this->getExpressDao()->delete($expressId);
     }
@@ -120,7 +124,7 @@ class ExpressServiceImpl extends BaseService implements ExpressService
         return $this->getExpressDao()->update($expressId, array('status' => 2));
     }
 
-    protected function checkExpressById($expressId)
+    protected function checkExpress($expressId)
     {
         $express = $this->getExpress($expressId);
 

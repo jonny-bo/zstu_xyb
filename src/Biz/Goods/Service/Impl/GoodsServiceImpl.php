@@ -41,13 +41,11 @@ class GoodsServiceImpl extends BaseService implements GoodsService
             throw new InvalidArgumentException('缺少必填字段');
         }
 
-        $this->checkFields($fields);
+        $fields = $this->checkFields($fields);
 
         $fields['imgs']         = json_encode($fields['imgs']);
         $fields['publisher_id'] = $this->getCurrentUser()['id'];
         $fields['status']       = 0;
-        $fields['title']        = $this->purifyHtml($fields['title']);
-        $fields['body']         = $this->purifyHtml($fields['body']);
 
         return $this->getGoodsDao()->create($fields);
     }
@@ -55,14 +53,11 @@ class GoodsServiceImpl extends BaseService implements GoodsService
     public function updateGoods($goodsId, $fields)
     {
         $goods = $this->beforAction($goodsId);
-        $this->checkFields($fields);
+        $fields = $this->checkFields($fields);
 
         if ($goods['status'] == 1) {
             throw new RuntimeException('已发布物品不能进行修改');
         }
-
-        $fields['title']        = $this->purifyHtml($fields['title']);
-        $fields['body']         = $this->purifyHtml($fields['body']);
 
         return $this->getGoodsDao()->update($goodsId, $fields);
     }
@@ -238,9 +233,20 @@ class GoodsServiceImpl extends BaseService implements GoodsService
         if (isset($fields['price']) && !SimpleValidator::float($fields['price'])) {
             throw new InvalidArgumentException("字段不合法");
         }
+
         if (isset($fields['imgs']) && count($fields['imgs']) >= 10) {
-            throw new \RuntimeException('上传数量超过限制。');
+            throw new RuntimeException('上传数量超过限制。');
         }
+
+        if (isset($fields['title'])) {
+            $fields['title']        = $this->purifyHtml($fields['title']);
+        }
+
+        if (isset($fields['body'])) {
+            $fields['body']         = $this->purifyHtml($fields['body']);
+        }
+
+        return $fields;
     }
 
     protected function getGoodsDao()
