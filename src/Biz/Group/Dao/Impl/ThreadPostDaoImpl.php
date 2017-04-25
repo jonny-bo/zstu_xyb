@@ -14,8 +14,12 @@ class ThreadPostDaoImpl extends GeneralDaoImpl implements ThreadPostDao
         return array(
             'timestamps' => array('created_time'),
             'serializes' => array(),
-            'orderbys' => array(),
-            'conditions' => array(),
+            'orderbys' => array('created_time', 'updated_time'),
+            'conditions' => array(
+                'id = :id',
+                'thread_id = :thread_id',
+                'post_id = :post_id'
+            ),
         );
     }
 }

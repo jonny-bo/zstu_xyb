@@ -59,7 +59,7 @@ class Posts extends BaseResource
     public function filter($res)
     {
         $res['from_user'] = $this->callSimplify('User/User', $this->getUserService()->getUser($res['from_user_id']));
-        // $res['to_user'] = !empty($res['to_user_id']) ? $this->callSimplify('User/User', $this->getUserService->getUser($res['to_user_id'])) : '';
+        $res['to_user'] = !empty($res['to_user_id']) ? $this->callSimplify('User/User', $this->getUserService()->getUser($res['to_user_id'])) : '';
         $res['created_time'] = date('c', $res['created_time']);
 
         unset($res['old_goods_id']);

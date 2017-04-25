@@ -153,7 +153,7 @@ class ThreadServiceImpl extends BaseService implements ThreadService
         return $thread;
     }
 
-    public function postThread($threadId, $fields)
+    public function postThread($groupId, $threadId, $fields)
     {
         $thread = $this->getThread($threadId);
 
@@ -164,15 +164,17 @@ class ThreadServiceImpl extends BaseService implements ThreadService
         if (!isset($fields['content']) || empty($fields['content'])) {
             throw new InvalidArgumentException('回复内容不能为空！');
         }
+
+        $fields['content']      = $this->purifyHtml($fields['content']);
         $user                   =  $this->getCurrentUser();
         $fields['user_id']      = $user['id'];
         $fields['from_user_id'] = isset($fields['from_user_id']) ? $fields['from_user_id'] : 0;
         $fields['post_id']      = isset($fields['post_id']) ? $fields['post_id'] : 0;
         $fields['thread_id']    = $thread['id'];
         $post                   = $this->getThreadPostDao()->create($fields);
-        $this->getThreadDao()->update($threadId, array('last_post_memberId' => $user['id'], 'last_post_time' => time()));
-        $this->getGroupService()->waveGroup(array($thread['group_id']), array('post_num' => 1));
-        $this->getGroupService()->waveMemberByGroupIdAndUserId($thread['group_id'], $user['id'], array('post_num' => 1));
+        $this->getThreadDao()->update($threadId, array('last_post_member_id' => $user['id'], 'last_post_time' => time()));
+        $this->getGroupService()->waveGroup(array($groupId), array('post_num' => 1));
+        $this->getGroupService()->waveMemberByGroupIdAndUserId($groupId, $user['id'], array('post_num' => 1));
 
         if ($fields['post_id'] == 0) {
             $this->getThreadDao()->wave(array($threadId), array('post_num' => 1));
@@ -200,6 +202,16 @@ class ThreadServiceImpl extends BaseService implements ThreadService
         $fields['imgs'] = isset($fields['imgs']) ? $fields['imgs'] : array();
 
         return $fields;
+    }
+
+    public function searchThreadPosts($conditions, $orderBy, $start, $limit)
+    {
+        return $this->getThreadPostDao()->search($conditions, $orderBy, $start, $limit);
+    }
+
+    public function searchThreadPostsCount($conditions)
+    {
+        return $this->getThreadPostDao()->count($conditions);
     }
 
     protected function getThreadDao()
