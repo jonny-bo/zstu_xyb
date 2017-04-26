@@ -1,0 +1,11 @@
+<div class="list-group">     
+  <a title="用户管理" class="list-group-item{% if page == 'user' %} active {% endif %}" href="{{path('admin_user')}}">
+    用户管理
+  </a>  
+  <a title="实名认证管理" class="list-group-item{% if page == 'approve' %} active {% endif %}" href="#">
+    实名认证管理
+  </a>    
+  <a title="私信管理" class="list-group-item{% if page == 'message' %} active {% endif %}" href="#">
+    私信管理
+  </a>
+</div>
