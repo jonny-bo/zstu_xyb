@@ -13,7 +13,7 @@ class ThreadDaoImpl extends GeneralDaoImpl implements ThreadDao
     {
         return array(
             'timestamps' => array('created_time', 'updated_time'),
-            'serializes' => array(),
+            'serializes' => array('imgs' => 'json'),
             'orderbys' => array('created_time', 'updated_time', 'post_num', 'hit_num'),
             'conditions' => array(
                 'group_id = :group_id',

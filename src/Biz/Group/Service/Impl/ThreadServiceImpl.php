@@ -49,8 +49,6 @@ class ThreadServiceImpl extends BaseService implements ThreadService
         $fields['content'] = $this->purifyHtml($fields['content']);
         $fields['user_id'] = $this->getCurrentUser()['id'];
 
-        $fields['imgs']    = json_encode($fields['imgs']);
-
         $thread            = $this->getThreadDao()->create($fields);
 
         $this->getGroupService()->waveGroup(array($fields['group_id']), array('thread_num' => 1));

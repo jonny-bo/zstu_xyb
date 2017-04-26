@@ -13,7 +13,7 @@ class GoodsDaoImpl extends GeneralDaoImpl implements GoodsDao
     {
         return array(
             'timestamps' => array('created_time', 'updated_time'),
-            'serializes' => array(),
+            'serializes' => array('imgs' => 'json'),
             'orderbys' => array('created_time', 'updated_time', 'post_num', 'hits', 'price'),
             'conditions' => array(
                 'id = :id',

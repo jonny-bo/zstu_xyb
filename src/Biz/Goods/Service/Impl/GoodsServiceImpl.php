@@ -43,7 +43,6 @@ class GoodsServiceImpl extends BaseService implements GoodsService
 
         $fields = $this->checkFields($fields);
 
-        $fields['imgs']         = json_encode($fields['imgs']);
         $fields['publisher_id'] = $this->getCurrentUser()['id'];
         $fields['status']       = 0;
 

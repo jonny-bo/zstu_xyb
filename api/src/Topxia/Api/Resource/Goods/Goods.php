@@ -108,7 +108,6 @@ class Goods extends BaseResource
 
     public function filter($res)
     {
-        $res['imgs'] = json_decode($res['imgs'], true);
         foreach ($res['imgs'] as $key => $uri) {
             $res['imgs'][$key] = $this->getFileUrl($uri);
         }
