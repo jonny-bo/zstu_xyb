@@ -53,6 +53,7 @@
     "datatables": "^1.10.13",
     "es-ckeditor": "^1.0.1",
     "es-webpack-engine": "^2.1.0",
+    "file": "^0.2.2",
     "font-awesome": "^4.6.3",
     "html5shiv": "^3.7.3",
     "jquery": "^1.12.4",

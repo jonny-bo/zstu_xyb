@@ -6,9 +6,8 @@ use AppBundle\Controller\BaseController;
 
 class DefaultController extends BaseController
 {
-    public function indexAction(Request $request)
+    public function indexAction()
     {
-        return $this->render('admin/default/index.html.twig', array());
+        return $this->render('AppBundle:admin/default:index.html.twig', array());
     }
-    
 }

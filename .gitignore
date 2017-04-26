@@ -22,7 +22,7 @@
 npm-debug.log
 composer.lock
 .DS_Store
-
+./happypack
 chunk-manifest.json
 plugins/
 web/static-dist

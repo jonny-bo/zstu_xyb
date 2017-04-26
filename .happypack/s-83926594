@@ -1,0 +1,7 @@
+'use strict';
+
+require('admin-lte');
+
+require('../../less/admin/main.less');
+
+console.log('admin-main');

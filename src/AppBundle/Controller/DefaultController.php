@@ -8,7 +8,7 @@ class DefaultController extends BaseController
 {
     public function indexAction()
     {
-        return $this->render('default/index.html.twig', array());
+        return $this->render('AppBundle:default:index.html.twig', array());
     }
 
     protected function getUserService()
