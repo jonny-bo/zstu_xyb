@@ -48,5 +48,6 @@ $app->post(_u('/group/{groupId}'), 'res.Group/Group:update');
 // $app->post(_u('/group/{groupId}/open'), 'res.Group/Group:open');
 // $app->post(_u('/group/{groupId}/close'), 'res.Group/Group:close');
 $app->get(_u('/group/{groupId}/thread'), 'res.Thread/Thread:search');
+$app->get(_u('/group/{groupId}/thread/{threadId}'), 'res.Thread/Thread:get');
 $app->post(_u('/group/{groupId}/thread/{threadId}/post'), 'res.Thread/Posts:post');
 $app->get(_u('/group/{groupId}/thread/{threadId}/post'), 'res.Thread/Posts:get');

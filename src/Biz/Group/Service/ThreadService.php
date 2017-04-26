@@ -28,6 +28,8 @@ interface ThreadService
 
     public function openThread($threadId);
 
+    public function hitThread($threadId);
+
     public function postThread($groupId, $threadId, $fields);
 
     public function searchThreadPosts($conditions, $orderBy, $start, $limit);

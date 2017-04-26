@@ -38,6 +38,15 @@ class Thread extends BaseResource
         return $this->wrap($this->multiFilter($threds), $total);
     }
 
+    public function get($threadId)
+    {
+        $thread = $this->getThreadService()->getThread($threadId);
+
+        $this->getThreadService()->hitThread($threadId);
+
+        return $this->filter($thread);
+    }
+
     public function post(Request $request, $groupId)
     {
         $group = $this->getGroupService()->getGroup($groupId);

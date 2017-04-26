@@ -44,7 +44,7 @@ $biz = new \Codeages\Biz\Framework\Context\Biz(array(
     'plugin.config_file' => ROOT_DIR . '/app/config/plugin_installed.php',
     'upload.public_directory' => ROOT_DIR . '/web/files',
     'upload.public_url_path'  => '/files',
-    'upload.private_directory' => '/var/data/private_files',
+    'upload.private_directory' => ROOT_DIR .'/var/data/private_files',
 ));
 
 $biz['migration.directories'][] = dirname(__DIR__) . '/migrations';

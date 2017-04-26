@@ -153,6 +153,11 @@ class ThreadServiceImpl extends BaseService implements ThreadService
         return $thread;
     }
 
+    public function hitThread($threadId)
+    {
+        $this->getThreadDao()->wave(array($threadId), array('hit_num' => 1));
+    }
+
     public function postThread($groupId, $threadId, $fields)
     {
         $thread = $this->getThread($threadId);
