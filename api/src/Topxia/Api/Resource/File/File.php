@@ -34,6 +34,10 @@ class File extends BaseResource
     public function filter($res)
     {
         $res['url'] = $this->getFileUrl($res['uri']);
+        $res['created_time'] = date('c', $res['created_time']);
+
+        unset($res['upload_file_id']);
+
         return $res;
     }
 
