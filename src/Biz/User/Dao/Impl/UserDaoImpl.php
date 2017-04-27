@@ -16,9 +16,17 @@ class UserDaoImpl extends GeneralDaoImpl implements UserDao
             'serializes' => array('roles' => 'delimiter'),
             'orderbys' => array('created_time', 'updated_time'),
             'conditions' => array(
-                'username = :username',
-                'nickname = :nickname',
-                'updated_time >= :updated_time_GE'
+                'UPPER(nickname) LIKE :nickname',
+                'UPPER(username) LIKE :username',
+                'updated_time >= :updated_time_GE',
+                'login_time >= :loginStartTime',
+                'login_time <= :loginEndTime',
+                'created_time >= :startTime',
+                'created_time >= :endTime',
+                'roles = :role',
+                'roles LIKE :roles',
+                'login_ip = :loginIp',
+                'UPPER(email) LIKE :email',
             ),
         );
     }

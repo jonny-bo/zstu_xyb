@@ -1,0 +1,1 @@
+{"version":3,"sources":["app/Resources/static-src/app/js/admin/user/index.js"],"names":["console","log","notify"],"mappings":";;AAAA;;AAEAA,QAAQC,GAAR,CAAYC,MAAZ","file":"index.js","sourceRoot":"/var/www/zstu_xyb","sourcesContent":["// $('.top-left').notify('success', 'okkkkkkkkkkkkkkkk');\n\nconsole.log(notify);"]}

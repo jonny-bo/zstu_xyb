@@ -1,6 +1,8 @@
 <?php
 namespace AppBundle\Twig;
 
+use Biz\Common\ConvertIpToolkit;
+
 class HelperExtension extends \Twig_Extension
 {
     protected $container;
@@ -18,7 +20,7 @@ class HelperExtension extends \Twig_Extension
             new \Twig_SimpleFunction('checkboxs', array($this, 'checkboxs'), array('is_safe' => array('html'))),
             new \Twig_SimpleFunction('parameter', array($this, 'getParameter')),
             new \Twig_SimpleFunction('form_csrf_token', array($this, 'rendorFormCsrfToken'), array('is_safe' => array('html'))),
-            
+            new \Twig_SimpleFunction('convertIP', array($this, 'getConvertIP')),
         );
     }
 
@@ -118,5 +120,20 @@ class HelperExtension extends \Twig_Extension
     public function getName()
     {
         return 'app_helper';
+    }
+
+    public function getConvertIP($ip)
+    {
+        if (!empty($ip)) {
+            $location = ConvertIpToolkit::convertIp($ip);
+
+            if ($location === 'INNA') {
+                return '未知区域';
+            }
+
+            return $location;
+        }
+
+        return '';
     }
 }

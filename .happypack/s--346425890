@@ -1,0 +1,5 @@
+'use strict';
+
+require('common/notify');
+
+console.log(notify); // $('.top-left').notify('success', 'okkkkkkkkkkkkkkkk');

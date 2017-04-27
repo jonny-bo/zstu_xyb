@@ -1,0 +1,7 @@
+'use strict';
+
+console.log('admin-user-index');
+
+var Notify = require('common/notify');
+
+Notify.success('指定班级成功');

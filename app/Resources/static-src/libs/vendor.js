@@ -2,6 +2,8 @@ import './vendor.less';
 
 import 'jquery';
 import 'bootstrap';
+import 'common/script';
+import 'bootstrap-datepicker';
 
 $(document).ajaxSend(function(a, b, c) {
   if (c.type == 'POST') {

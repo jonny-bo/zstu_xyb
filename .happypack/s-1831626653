@@ -1,0 +1,4 @@
+// import notify from 'common/notify';
+
+// notify('danger', '这里是用户管理模块');
+"use strict";

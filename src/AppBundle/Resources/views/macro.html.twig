@@ -12,17 +12,42 @@
       <ul class="pagination">
         {% if paginator.currentPage != paginator.firstPage %}
           <li><a  href="{{ paginator.getPageUrl(paginator.firstPage) }}">首页</a></li>
-          <li><a  href="{{ paginator.getPageUrl(paginator.previousPage) }}"><i class="iconfont icon-chevronleft"></i></a></li>
+          <li><a  href="{{ paginator.getPageUrl(paginator.previousPage) }}"><i class="glyphicon glyphicon-chevron-left"></i></a></li>
         {% endif %}
         {% for page in paginator.pages %}
           <li {% if page == paginator.currentPage %}class="active"{% endif %}><a href="{{ paginator.getPageUrl(page) }}">{{ page }}</a></li>
         {% endfor %}
 
         {% if paginator.currentPage != paginator.lastPage %}
-          <li><a  href="{{ paginator.getPageUrl(paginator.nextPage) }}"><i class="iconfont icon-chevronright"></i></a></li>
+          <li><a  href="{{ paginator.getPageUrl(paginator.nextPage) }}"><i class="glyphicon glyphicon-chevron-right"></i></a></li>
           <li><a  href="{{ paginator.getPageUrl(paginator.getLastPage()) }}">尾页</a></li>
         {% endif %}
       </ul>
     </nav>
   {% endif %}
 {% endmacro %}
+
+{# options 可以传card(显示卡片), _blank(新开窗口), null_link(空链接) #}
+{%- macro user_avatar_link(user, size, options = []) -%}
+  {% if user %}
+    <a
+      class="avatar-link-{size} {% if 'card' in options %}js-user-card{% endif %}"
+      {% if '_blank' in options %}
+        target="_blank"
+      {% endif %}
+      href="{% if 'null_link' in options %}javascript:;{% else %}{{ path('user_show', {id:user.id}) }}{% endif %}"
+      data-card-url="{{ path('user_card_show', {userId:user.id}) }}"
+      data-user-id="{{ user.id }}">
+      {{ _self.user_avater_img(user, size) }}
+    </a>
+  {% else %}
+    <a class="avatar-link-{size}" href="javascript:;">
+      {{ _self.user_avater_img(user, size) }}
+    </a>
+  {% endif %}
+{%- endmacro -%}
+
+{%- macro user_avater_img(user, size) -%}
+  {% set userAvatar = user[size~'Avatar']|default('') %}
+  <img class="avatar-{size}"  src="{{ userAvatar }}">
+{%- endmacro -%}

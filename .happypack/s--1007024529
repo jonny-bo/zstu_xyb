@@ -1,0 +1,5 @@
+"use strict";
+
+// $('.top-left').notify('success', 'okkkkkkkkkkkkkkkk');
+
+console.log(notify);

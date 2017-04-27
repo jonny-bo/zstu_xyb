@@ -1,0 +1,1 @@
+{"version":3,"sources":["app/Resources/static-src/app/js/admin/user/index.js"],"names":["$","notify"],"mappings":";;AACAA,EAAE,WAAF,EAAeC,MAAf,CAAsB,SAAtB,EAAiC,mBAAjC","file":"index.js","sourceRoot":"/var/www/zstu_xyb","sourcesContent":["\n$('.top-left').notify('success', 'okkkkkkkkkkkkkkkk');"]}

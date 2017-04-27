@@ -1,0 +1,5 @@
+'use strict';
+
+console.log('admin-user-index');
+
+var Notify = require('common/bootstrap-notify');s;

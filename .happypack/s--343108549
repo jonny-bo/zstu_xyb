@@ -1,0 +1,31 @@
+'use strict';
+
+// import notify from 'common/notify';
+
+// notify('danger', '这里是用户管理模块');
+var $start_time = $('#startDate');
+var $end_time = $('#endDate');
+
+$start_time.datepicker({
+  language: "zh-CN",
+  autoclose: true,
+  clearBtn: true,
+  todayBtn: "linked",
+  format: "yyyy-mm-dd",
+  endDate: $end_time.val()
+}).on('changeDate', function (e) {
+  if ($(this).val()) {
+    $end_time.datepicker('setStartDate', new Date(e.date));
+  } else {
+    $end_time.datepicker('setStartDate', new Date());
+  }
+});
+
+$end_time.datepicker({
+  language: "zh-CN",
+  autoclose: true,
+  clearBtn: true,
+  todayBtn: "linked",
+  format: "yyyy-mm-dd",
+  endDate: $end_time.val()
+});

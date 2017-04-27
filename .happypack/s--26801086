@@ -1,0 +1,7 @@
+'use strict';
+
+require('bootstrap-notify');
+
+$('.top-left').notify({
+    message: { text: 'Aw yeah, It works!' }
+}).show();

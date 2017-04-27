@@ -12,6 +12,9 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 class BaseController extends Controller
 {
     protected $biz;
+    const DEFAULT_PAGE_COUNT = 10;
+    const START = 0;
+    const LIMIT = 10;
 
     public function login($user, $request)
     {
@@ -38,5 +41,21 @@ class BaseController extends Controller
     protected function createJsonResponse($data)
     {
         return new JsonResponse($data);
+    }
+
+    protected function getOrderBy($conditions, $default = array())
+    {
+        $orderbys = array();
+        $orderByStr = isset($conditions['orderby']) ? $conditions['orderby'] : '';
+        if ($orderByStr) {
+            $orderbyTemp = explode(',', trim($orderByStr, ','));
+            foreach ($orderbyTemp as $orderby) {
+                list($field, $indicator) = explode(' ', $orderby);
+                $orderbys[$field] = strtoupper($indicator);
+            }
+            return $orderbys;
+        } else {
+            return $default;
+        }
     }
 }

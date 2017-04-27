@@ -29,11 +29,13 @@ class UserServiceImpl extends BaseService implements UserService
 
     public function searchUsers($conditions, $orderbys, $start, $limit)
     {
+        $conditions = $this->perConditions($conditions);
         return $this->getUserDao()->search($conditions, $orderbys, $start, $limit);
     }
 
     public function searchUsersCount($conditions)
     {
+        $conditions = $this->perConditions($conditions);
         return $this->getUserDao()->count($conditions);
     }
 
@@ -95,6 +97,48 @@ class UserServiceImpl extends BaseService implements UserService
         $user['created_time']   = time();
 
         return $this->getUserDao()->create($user);
+    }
+
+    protected function perConditions($conditions)
+    {
+        $conditions =  array_filter($conditions);
+
+        if (isset($conditions['roles'])) {
+            $conditions['roles'] = "%{$conditions['roles']}%";
+        }
+
+        if (isset($conditions['keywordType']) && isset($conditions['keyword'])) {
+            if ($conditions['keywordType'] == 'loginIp') {
+                $conditions[$conditions['keywordType']] = "{$conditions['keyword']}";
+            } else {
+                $conditions[$conditions['keywordType']] = "%{$conditions['keyword']}%";
+            }
+
+            unset($conditions['keywordType']);
+            unset($conditions['keyword']);
+        }
+
+        if (isset($conditions['datePicker']) && $conditions['datePicker'] == 'longinDate') {
+            if (isset($conditions['startDate'])) {
+                $conditions['loginStartTime'] = strtotime($conditions['startDate']);
+            }
+
+            if (isset($conditions['endDate'])) {
+                $conditions['loginEndTime'] = strtotime($conditions['endDate']);
+            }
+        }
+
+        if (isset($conditions['datePicker']) && $conditions['datePicker'] == 'registerDate') {
+            if (isset($conditions['startDate'])) {
+                $conditions['startTime'] = strtotime($conditions['startDate']);
+            }
+
+            if (isset($conditions['endDate'])) {
+                $conditions['endTime'] = strtotime($conditions['endDate']);
+            }
+        }
+
+        return $conditions;
     }
 
     protected function vilidateUser($registration)

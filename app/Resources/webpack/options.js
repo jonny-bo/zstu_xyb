@@ -51,6 +51,7 @@ const options = {
   noParseDeps: [ //使用一个dist版本加快编译速度
     'jquery/dist/jquery.js',
     'bootstrap/dist/js/bootstrap.js',
+    'bootstrap-datepicker/dist/js/bootstrap-datepicker.js',
     // 'admin-lte/dist/js/app.js',
     'jquery-validation/dist/jquery.validate.js',
     'jquery-form/jquery.form.js',
