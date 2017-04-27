@@ -1,1 +1,0 @@
-{"version":3,"sources":["app/Resources/static-src/app/js/admin/user/index.js"],"names":["console","log","Notify","require","s"],"mappings":";;AAAAA,QAAQC,GAAR,CAAY,kBAAZ;;AAEA,IAAIC,SAASC,QAAQ,yBAAR,CAAb,CAAgDC","file":"index.js","sourceRoot":"/var/www/zstu_xyb","sourcesContent":["console.log('admin-user-index');\n\nvar Notify = require('common/bootstrap-notify');s"]}

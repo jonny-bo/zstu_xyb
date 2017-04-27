@@ -1,5 +1,0 @@
-'use strict';
-
-require('../less/main.less');
-
-console.log('web-main');

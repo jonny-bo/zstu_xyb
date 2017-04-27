@@ -1,3 +1,0 @@
-'use strict';
-
-var Notify = require('common/notify');

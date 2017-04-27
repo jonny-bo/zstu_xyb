@@ -1,1 +1,0 @@
-{"version":3,"sources":["app/Resources/static-src/app/js/user/index.js"],"names":["console","log"],"mappings":";;AAAAA,QAAQC,GAAR,CAAY,MAAZ","file":"index.js","sourceRoot":"/var/www/zstu_xyb","sourcesContent":["console.log('user')\n"]}

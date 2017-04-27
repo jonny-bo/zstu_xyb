@@ -1,31 +1,41 @@
 {% extends 'AppBundle::layout.html.twig' %}
-
+{% do css(['libs/vendor.css', 'app/css/admin/main.css'], 100) %}
+{% set body_class = 'hold-transition login-page' %}
 {% block body %}
-
 {% if error %}
   <div class="alert alert-error">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
 {% endif %}
-
-<h2>登录</h2>
-
-<form action="{{ path('login_check') }}" method="post">
-  <div class="form-group">
-    <label>用户名</label>
-    <input type="text" name="_username" value="{{ last_username }}" class="form-control" />
+<div class="login-box">
+  <div class="login-logo"> 浙江理工大学－校园帮</div>
+  <div class="login-box-body">
+       <h4 class="text-center text-position">登录</h4>
+       <form action="{{ path('login_check') }}" method="post">
+          <div class="form-group has-feedback">
+            <input type="text" class="form-control" placeholder="用户名" name="_username" value="{{ last_username }}" >
+            <span class="glyphicon glyphicon-user form-control-feedback"></span>
+          </div>
+          <div class="form-group has-feedback">
+            <input type="password" class="form-control" name="_password" placeholder="密码">
+            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+          </div>
+          <div class="row checklogin">
+            <div class="col-xs-1"></div>
+            <div class="col-xs-6">
+              <div class="checkcode">
+               <div class="checkbox icheck">
+                <label>
+                  <input type="checkbox" checked>记住密码
+                </label>
+              </div>
+              </div>
+            </div>
+            <div class="col-xs-4">
+              <button type="submit" class="btn btn-primary btn-block btn-flat">登录</button>
+            </div>
+          </div>
+          {{ form_csrf_token() }}
+      </form>
   </div>
-  <div class="form-group">
-    <label>密码</label>
-    <input type="password" name="_password" class="form-control" />
-  </div>
-  <div class="checkbox">
-    <label>
-      <input type="checkbox" name="_remember_me" checked /> 记住密码
-    </label>
-  </div>
-  {{ form_csrf_token() }}
-  <button type="submit" class="btn btn-primary">登录</button>
-</form>
-
-
+</div>
 
 {% endblock %}

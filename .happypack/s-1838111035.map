@@ -1,1 +1,0 @@
-{"version":3,"sources":["app/Resources/static-src/app/js/main.js"],"names":["console","log"],"mappings":";;AAEA;;AAFAA,QAAQC,GAAR,CAAY,UAAZ","file":"main.js","sourceRoot":"/var/www/zstu_xyb","sourcesContent":["console.log('web-main');\n\nimport '../less/main.less';"]}

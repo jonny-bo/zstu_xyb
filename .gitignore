@@ -28,3 +28,4 @@ plugins/
 web/static-dist
 report/
 .idea/*
+.happypack/*

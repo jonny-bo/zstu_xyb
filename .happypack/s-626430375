@@ -1,7 +1,0 @@
-'use strict';
-
-require('bootstrap-datepicker');
-
-console.log('admin-user-index');
-
-var Notify = require('common/notify');

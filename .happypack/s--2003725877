@@ -1,3 +1,0 @@
-'use strict';
-
-$('.top-left').notify('success', 'okkkkkkkkkkkkkkkk');

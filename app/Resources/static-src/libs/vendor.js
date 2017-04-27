@@ -2,8 +2,9 @@ import './vendor.less';
 
 import 'jquery';
 import 'bootstrap';
-import 'common/script';
 import 'bootstrap-datepicker';
+import 'common/script';
+// import 'common/bootstrap-modal-hack';
 
 $(document).ajaxSend(function(a, b, c) {
   if (c.type == 'POST') {

@@ -1,1 +1,0 @@
-{"version":3,"sources":["app/Resources/static-src/app/js/admin/user/index.js"],"names":["Notify","require"],"mappings":";;AAAA,IAAIA,SAASC,QAAQ,eAAR,CAAb","file":"index.js","sourceRoot":"/var/www/zstu_xyb","sourcesContent":["var Notify = require('common/notify');\n\n"]}

@@ -1,1 +1,0 @@
-{"version":3,"sources":["app/Resources/static-src/app/js/admin/user/index.js"],"names":[],"mappings":";;AACA;;;;;;AAEA,sBAAO,SAAP,EAAkB,0BAAlB,E,CAHA","file":"index.js","sourceRoot":"/var/www/zstu_xyb","sourcesContent":["// $('.top-left').notify('success', 'okkkkkkkkkkkkkkkk');\nimport notify from 'common/notify';\n\nnotify('success', 'kkkkkkkkkkkkkkkkkkkkkkkk');"]}
