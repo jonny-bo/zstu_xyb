@@ -9,3 +9,15 @@ admin_user:
 admin_user_show:
   path:      /user/{id}/show
   defaults:  { _controller: AppBundle:Admin/User:show }
+
+admin_user_create:
+  path:      /user/create
+  defaults:  { _controller: AppBundle:Admin/User:create }
+
+admin_user_create_username_check:
+  path:      /user/create/check/username
+  defaults:  { _controller: AppBundle:Admin/User:checkUsername }
+
+admin_user_create_email_check:
+  path:      /user/create/chcek/email
+  defaults:  { _controller: AppBundle:Admin/User:checkEmail }

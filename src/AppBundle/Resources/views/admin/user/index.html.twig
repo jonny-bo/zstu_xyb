@@ -12,7 +12,7 @@
 {% endblock %}
 
 {% block page_buttons %}
-    <a class="btn btn-success btn-sm" href="#" target="blank">{{ '创建用户' }}</a>
+    <a href="#modal" data-toggle="modal" data-url="{{ path('admin_user_create') }}"  class="btn btn-success btn-sm">添加新用户</a>
 {% endblock %}
 
 {% block page_flash_message %}
