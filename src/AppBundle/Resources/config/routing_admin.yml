@@ -21,3 +21,11 @@ admin_user_create_username_check:
 admin_user_create_email_check:
   path:      /user/create/chcek/email
   defaults:  { _controller: AppBundle:Admin/User:checkEmail }
+
+admin_express:
+  path:      /express
+  defaults:  { _controller: AppBundle:Admin/Express:index }
+
+admin_express_show:
+  path:      /express/{id}/show
+  defaults:  { _controller: AppBundle:Admin/Express:show }

@@ -11,4 +11,6 @@ interface UserDao extends GeneralDaoInterface
     public function getByEmail($email);
 
     public function getByMobile($mobile);
+
+    public function findByIds($ids);
 }

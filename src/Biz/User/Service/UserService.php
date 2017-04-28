@@ -33,4 +33,6 @@ interface UserService
     public function isMobileAvaliable($mobile);
 
     public function register($registration);
+
+    public function findUsersByIds($ids);
 }

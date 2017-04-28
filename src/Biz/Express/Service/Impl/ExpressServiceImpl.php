@@ -23,11 +23,13 @@ class ExpressServiceImpl extends BaseService implements ExpressService
 
     public function searchExpress($conditions, $orderBy, $start, $limit)
     {
+        $conditions = $this->perConditions($conditions);
         return $this->getExpressDao()->search($conditions, $orderBy, $start, $limit);
     }
 
     public function searchExpressCount($conditions)
     {
+        $conditions = $this->perConditions($conditions);
         return $this->getExpressDao()->count($conditions);
     }
 
@@ -124,6 +126,31 @@ class ExpressServiceImpl extends BaseService implements ExpressService
         return $this->getExpressDao()->update($expressId, array('status' => 2));
     }
 
+    protected function perConditions($conditions)
+    {
+        $conditions =  array_filter($conditions);
+
+        if (isset($conditions['keywordType']) && isset($conditions['keyword'])) {
+            if ($conditions['keywordType'] == 'nickname') {
+                $users = $this->getUserService()->searchUsers(array('nickname' => $conditions['keyword']), array(), 0, PHP_INT_MAX);
+                $conditions['publishIds'] = ArrayToolkit::column($users, 'id');
+            }
+
+            unset($conditions['keywordType']);
+            unset($conditions['keyword']);
+        }
+
+        if (isset($conditions['startDate'])) {
+            $conditions['startTime'] = strtotime($conditions['startDate']);
+        }
+
+        if (isset($conditions['endDate'])) {
+            $conditions['endTime'] = strtotime($conditions['endDate']);
+        }
+
+        return $conditions;
+    }
+
     protected function checkExpress($expressId)
     {
         $express = $this->getExpress($expressId);
@@ -142,5 +169,10 @@ class ExpressServiceImpl extends BaseService implements ExpressService
     protected function getExpressDao()
     {
         return $this->biz->dao('Express:ExpressDao');
+    }
+
+    protected function getUserService()
+    {
+        return $this->biz->service('User:UserService');
     }
 }

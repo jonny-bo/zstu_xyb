@@ -28,7 +28,43 @@ class HelperExtension extends \Twig_Extension
     {
         return [
             new \Twig_SimpleFilter('money', [$this, 'formatMoney']),
+            new \Twig_SimpleFilter('smart_time', [$this, 'smarttimeFilter']),
         ];
+    }
+
+    public function smarttimeFilter($time)
+    {
+        $diff = time() - $time;
+
+        if ($diff < 0) {
+            return '未来';
+        }
+
+        if ($diff == 0) {
+            return '刚刚';
+        }
+
+        if ($diff < 60) {
+            return '秒前';
+        }
+
+        if ($diff < 3600) {
+            return round($diff / 60).'分钟前';
+        }
+
+        if ($diff < 86400) {
+            return round($diff / 3600).'小时前';
+        }
+
+        if ($diff < 2592000) {
+            return round($diff / 86400).'天前';
+        }
+
+        if ($diff < 31536000) {
+            return date('m-d H:i:s', $time);
+        }
+
+        return date('Y-n-d H:i:s', $time);
     }
 
     public function selectOptions($choices, $selected = null, $empty = null)

@@ -1,0 +1,25 @@
+<tr id="express-table-tr-{{ express.id }}">
+  <td>
+    <strong>{{ express.title|raw }}</strong>
+  </td>
+  <td>
+    {{ dict_text('expressType', express.type) }}
+  </td>
+  <td>
+    {{ express.offer }}
+  </td>
+  <td>
+    {{ dict_text('expressStatus', express.status) }}
+  </td>
+  <td>
+    {{ admin_macro.user_link(users[express.publisher_id]) }}
+  </td>
+  <td>
+    {{ express.created_time|smart_time }}
+  </td>
+  <td>
+    <div class="btn-group">
+      <a href="#modal" data-toggle="modal" data-url="{{ path('admin_express_show', {id:express.id}) }}" data-url="" class="btn btn-default btn-sm">查看</a>
+    </div>
+  </td>
+</tr>

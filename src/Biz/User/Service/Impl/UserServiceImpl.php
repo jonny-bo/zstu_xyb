@@ -99,6 +99,11 @@ class UserServiceImpl extends BaseService implements UserService
         return $this->getUserDao()->create($user);
     }
 
+    public function findUsersByIds($ids)
+    {
+        return $this->getUserDao()->findByIds($ids);
+    }
+
     protected function perConditions($conditions)
     {
         $conditions =  array_filter($conditions);

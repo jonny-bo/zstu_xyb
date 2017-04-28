@@ -38,7 +38,7 @@
   </td>
 
   <td>
-    <span class="text-sm">{{ user.created_time|date('Y-n-d H:i:s') }}</span>
+    <span class="text-sm">{{ user.created_time|smart_time }}</span>
     <br>
     {% if user.created_ip %}
       <span class="text-muted text-sm">
@@ -53,7 +53,7 @@
       {% if user.login_time == 0 %}
        --
       {% else %}
-        {{ user.login_time|date('Y-n-d H:i:s') }}
+        {{ user.login_time|smart_time }}
       {% endif %}
     </span>
     <br>

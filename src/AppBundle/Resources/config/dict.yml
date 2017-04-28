@@ -7,3 +7,14 @@ userKeyWordType:
     nickname: 昵称
     email: 邮件地址
     loginIp: 登录IP
+expressType:
+    1: 小包裹
+    2: 中包裹
+    3: 大包裹
+expressStatus:
+    0: 待认领
+    1: 被认领
+    2: 已送达
+    3: 已确认
+expressKeyWordType:
+    nickname: 发布人昵称

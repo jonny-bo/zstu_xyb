@@ -22,7 +22,7 @@ class UserDaoImpl extends GeneralDaoImpl implements UserDao
                 'login_time >= :loginStartTime',
                 'login_time <= :loginEndTime',
                 'created_time >= :startTime',
-                'created_time >= :endTime',
+                'created_time <= :endTime',
                 'roles = :role',
                 'roles LIKE :roles',
                 'login_ip = :loginIp',
@@ -44,5 +44,10 @@ class UserDaoImpl extends GeneralDaoImpl implements UserDao
     public function getByMobile($mobile)
     {
         return $this->getByFields(array('mobile' => $mobile));
+    }
+
+    public function findByIds($ids)
+    {
+        return $this->findInField('id', $ids);
     }
 }
