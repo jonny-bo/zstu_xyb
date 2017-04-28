@@ -1,7 +1,7 @@
 {% extends 'AppBundle::bootstrap-modal-layout.html.twig' %}
 
 {% set modalSize = 'large' %}
-{% do script(['app/js/admin/user/index.js']) %}
+{% do script(['app/js/admin/user/create/index.js']) %}
 
 {% block title %}{{'添加新用户'|trans}}{% endblock %}
 {% block body %}
@@ -12,7 +12,7 @@
       <label for="username">{{'用户名'|trans}}</label>
     </div>
     <div class="col-md-7 controls">
-      <input type="text" id="username" name="username" data-url="{{path('admin_user_create_username_check')}}" class="form-control" >
+      <input type="text" id="username" name="username" data-url="{{path('admin_user_create_username_check')}}" class="form-control" required>
     </div>
   </div>
   <div class="row form-group">
@@ -49,11 +49,11 @@
       <input type="text" id="email" name="email" data-url="{{path('admin_user_create_email_check')}}" class="form-control" >
     </div>
   </div>
-  <input type="hidden" name="_csrf_token" value="{{ csrf_token('site') }}">
+  {{ form_csrf_token() }}
 </form>
 {% endblock %}
 
 {% block footer %}
-  <button id="user-create-btn" data-submiting-text="{{'正在提交'|trans}}" type="submit" class="btn btn-primary pull-right" data-toggle="form-submit" data-target="#user-create-form">{{'提交'|trans}}</button>
+  <button id="user-create-btn" type="submit" class="btn btn-primary pull-right" form="user-create-form">{{'提交'|trans}}</button>
   <button type="button" class="btn btn-link pull-right" data-dismiss="modal">{{'取消'|trans}}</button>
 {% endblock %}

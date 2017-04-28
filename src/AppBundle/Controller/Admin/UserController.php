@@ -41,7 +41,10 @@ class UserController extends BaseController
     {
         if ($request->getMethod() == 'POST') {
             $fields = $request->request->all();
-            $this->getUserService->register($fields);
+            $fields['created_ip'] = $request->getClientIp();
+
+            $this->getUserService()->register($fields);
+            $this->setFlashMessage('success', '添加用户成功');
 
             return $this->redirect($this->generateUrl('admin_user'));
         }
@@ -54,7 +57,7 @@ class UserController extends BaseController
 
         $res = $this->getUserService()->isUsernameAvaliable($username);
 
-        return $this->createJsonResponse(array('success' => $res));
+        return $this->createJsonResponse($res);
     }
 
     public function checkEmailAction(Request $request)
@@ -63,7 +66,7 @@ class UserController extends BaseController
 
         $res = $this->getUserService()->isEmailAvaliable($email);
 
-        return $this->createJsonResponse(array('success' => $res));
+        return $this->createJsonResponse($res);
     }
 
     protected function getUserService()

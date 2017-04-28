@@ -1,6 +1,4 @@
-// import notify from 'common/notify';
 
-// notify('danger', '这里是用户管理模块');
 let $start_time = $('#startDate');
 let $end_time = $('#endDate');
 

@@ -43,3 +43,11 @@
   line-height: 32px;
   margin: 0 0;
 }
+input.error {
+  border: 1px solid red;
+}
+label.error {
+  padding-top: 2px;
+  padding-bottom: 2px;
+  color: #EA5200;
+}
