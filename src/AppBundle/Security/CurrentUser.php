@@ -52,7 +52,7 @@ class CurrentUser implements CurrentUserInterface, AdvancedUserInterface, Equata
 
     public function isAccountNonLocked()
     {
-        return true;
+        return !$this->fields['locked'];
     }
 
     public function isCredentialsNonExpired()
@@ -93,6 +93,14 @@ class CurrentUser implements CurrentUserInterface, AdvancedUserInterface, Equata
             return true;
         }
 
+        return false;
+    }
+
+    public function isSuperAdmin()
+    {
+        if (count(array_intersect($this->getRoles(), array('ROLE_SUPER_ADMIN'))) > 0) {
+            return true;
+        }
         return false;
     }
 

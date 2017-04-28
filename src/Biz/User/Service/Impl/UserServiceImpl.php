@@ -33,6 +33,11 @@ class UserServiceImpl extends BaseService implements UserService
         return $this->getUserDao()->search($conditions, $orderbys, $start, $limit);
     }
 
+    public function findTokensByUserIdAndType($userId, $type)
+    {
+        return $this->getUserTokenDao()->findByUserIdAndType($userId, $type);
+    }
+
     public function searchUsersCount($conditions)
     {
         $conditions = $this->perConditions($conditions);
@@ -102,6 +107,58 @@ class UserServiceImpl extends BaseService implements UserService
     public function findUsersByIds($ids)
     {
         return $this->getUserDao()->findByIds($ids);
+    }
+
+    public function changeUserRoles($id, array $roles)
+    {
+        if (empty($roles)) {
+            throw new InvalidArgumentException('用户角色不能为空');
+        }
+
+        $user = $this->getUser($id);
+
+        if (empty($user)) {
+            throw new ResourceNotFoundException('User', $id, '设置用户角色失败');
+        }
+
+        if (!in_array('ROLE_USER', $roles)) {
+            throw new UnexpectedValueException('用户角色必须包含ROLE_USER');
+        }
+        $currentUser     = $this->getCurrentUser();
+        $allowedRoles    = $currentUser['roles'];
+        $notAllowedRoles = array_diff($roles, $allowedRoles);
+
+        if (!empty($notAllowedRoles) && !in_array('ROLE_SUPER_ADMIN', $currentUser['roles'], true)) {
+            throw new UnexpectedValueException('用户角色不正确，设置用户角色失败。');
+        }
+
+        return $this->getUserDao()->update($id, array('roles' => $roles));
+    }
+
+    public function lockUser($id)
+    {
+        $user = $this->getUser($id);
+
+        if (empty($user)) {
+            throw new ResourceNotFoundException('User', $id);
+        }
+
+        $this->getUserDao()->update($user['id'], array('locked' => 1));
+
+        return true;
+    }
+
+    public function unlockUser($id)
+    {
+        $user = $this->getUser($id);
+
+        if (empty($user)) {
+            throw new ResourceNotFoundException('User', $id);
+        }
+
+        $this->getUserDao()->update($user['id'], array('locked' => 0));
+
+        return true;
     }
 
     protected function perConditions($conditions)

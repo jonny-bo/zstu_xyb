@@ -20,6 +20,8 @@ interface UserService
 
     public function deleteToken($type, $token);
 
+    public function findTokensByUserIdAndType($userId, $type);
+
     public function verifyPassword($id, $password);
 
     public function verifyInSaltOut($password, $salt, $out);
@@ -35,4 +37,10 @@ interface UserService
     public function register($registration);
 
     public function findUsersByIds($ids);
+
+    public function changeUserRoles($id, array $roles);
+
+    public function lockUser($id);
+
+    public function unlockUser($id);
 }

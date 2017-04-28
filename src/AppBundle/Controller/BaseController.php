@@ -18,7 +18,9 @@ class BaseController extends Controller
 
     public function login($user, $request)
     {
+        $user['login_ip'] = $request->getClientIp();
         $currentUser = new CurrentUser($user);
+        $this->getUserService()->markLoginInfo();
 
         $token = new UsernamePasswordToken($currentUser, null, 'main', $currentUser->getRoles());
         $this->get('security.token_storage')->setToken($token);
@@ -57,5 +59,15 @@ class BaseController extends Controller
         } else {
             return $default;
         }
+    }
+
+    protected function getCurrentUser()
+    {
+        return $this->biz['user'];
+    }
+
+    protected function getUserService()
+    {
+        return $this->biz->service('User:UserService');
     }
 }

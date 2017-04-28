@@ -22,6 +22,18 @@ admin_user_create_email_check:
   path:      /user/create/chcek/email
   defaults:  { _controller: AppBundle:Admin/User:checkEmail }
 
+admin_user_roles:
+  path:      /user/{id}/roles
+  defaults:  { _controller: AppBundle:Admin/User:roles }
+
+admin_user_lock:
+  path:      /user/{id}/lock
+  defaults:  { _controller: AppBundle:Admin/User:lock }
+
+admin_user_unlock:
+  path:      /user/{id}/unlock
+  defaults:  { _controller: AppBundle:Admin/User:unlock }
+
 admin_express:
   path:      /express
   defaults:  { _controller: AppBundle:Admin/Express:index }

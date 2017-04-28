@@ -69,6 +69,55 @@ class UserController extends BaseController
         return $this->createJsonResponse($res);
     }
 
+    public function rolesAction(Request $request, $id)
+    {
+        $user        = $this->getUserService()->getUser($id);
+
+        if ($request->getMethod() == 'POST') {
+            $roles = $request->request->get('roles');
+
+            $this->getUserService()->changeUserRoles($user['id'], $roles);
+
+            $user = $this->getUserService()->getUser($id);
+
+            return $this->render('AppBundle::admin/user/table-tr.html.twig', array(
+                'user'    => $user
+            ));
+        }
+
+        return $this->render('AppBundle:admin/user:roles-modal.html.twig', array(
+            'user' => $user
+        ));
+    }
+
+    public function lockAction($id)
+    {
+        $this->getUserService()->lockUser($id);
+        $this->kickUserLogout($id);
+        return $this->render('AppBundle::admin/user/table-tr.html.twig', array(
+            'user'    => $this->getUserService()->getUser($id),
+        ));
+    }
+
+    public function unlockAction($id)
+    {
+        $this->getUserService()->unlockUser($id);
+
+        return $this->render('AppBundle::admin/user/table-tr.html.twig', array(
+            'user'    => $this->getUserService()->getUser($id),
+        ));
+    }
+
+    protected function kickUserLogout($userId)
+    {
+        $tokens = $this->getUserService()->findTokensByUserIdAndType($userId, 'mobile_login');
+        if (!empty($tokens)) {
+            foreach ($tokens as $token) {
+                $this->getUserService()->deleteToken($token['type'], $token['token']);
+            }
+        }
+    }
+
     protected function getUserService()
     {
         return $this->biz->service('User:UserService');

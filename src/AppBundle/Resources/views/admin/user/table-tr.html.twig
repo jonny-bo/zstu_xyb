@@ -1,11 +1,10 @@
+{% import "AppBundle::admin/macro.html.twig" as admin_macro %}
 <tr id="user-table-tr-{{ user.id }}">
   <td>
     <strong>{{ admin_macro.user_link(user) }}</strong>
-    {#
-      {% if user.locked %}
-        <label class="label label-danger">{{'禁'|trans}}</label>
-      {% endif %}
-    #}
+    {% if user.locked %}
+      <label class="label label-danger">{{'禁'|trans}}</label>
+    {% endif %}
     <br>
     <span class="text-muted text-sm">
       {% for role in user.roles %}
@@ -65,6 +64,25 @@
   <td>
     <div class="btn-group">
       <a href="#modal" data-toggle="modal" data-url="{{ path('admin_user_show', {id:user.id}) }}" data-url="" class="btn btn-default btn-sm">查看</a>
+      <a href="#" type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+        <span class="caret"></span> 
+      </a>
+      <ul class="dropdown-menu">
+        <li>
+          <a title="设置用户组" data-url="{{ path('admin_user_roles', {id:user.id}) }}" data-toggle="modal" data-target="#modal" href="#modal">
+            设置用户组
+          </a>
+        </li>
+        {% if not user.locked %}
+          <li>
+            <a title="封禁用户" class="lock-user" data-url="{{ path('admin_user_lock', {id:user.id}) }}" href="javascript:;">封禁用户</a>
+          </li>
+        {% else %}
+            <li>
+              <a title="解禁用户" class="unlock-user" data-url="{{ path('admin_user_unlock', {id:user.id}) }}" href="javascript:;">解禁用户</a>
+            </li>
+        {% endif %}
+      </ul>
     </div>
   </td>
 </tr>
