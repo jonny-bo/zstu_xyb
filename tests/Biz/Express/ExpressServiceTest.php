@@ -112,7 +112,7 @@ class ExpressServiceTest extends BaseTestCase
 
         $express = $this->getExpressService()->createExpress($expressText);
     
-        $this->assertEquals($express['status'], 0);
+        $this->assertEquals($express['status'], 1);
 
         $user = $this->createUser('test_user2');
         $currentUser = new CurrentUser($user);
@@ -120,7 +120,7 @@ class ExpressServiceTest extends BaseTestCase
 
         $express = $this->getExpressService()->orderExpress($express['id']);
 
-        $this->assertEquals($express['status'], 1);
+        $this->assertEquals($express['status'], 2);
         $this->assertEquals($express['receiver_id'], $user['id']);
     }
 
@@ -143,12 +143,15 @@ class ExpressServiceTest extends BaseTestCase
             'title'  => 'test',
             'detail' => 'detail',
             'offer'  => 3,
-            'status' => 1
         );
 
         $express = $this->getExpressService()->createExpress($expressText);
     
         $this->assertEquals($express['status'], 1);
+
+        $this->getExpressService()->orderExpress($express['id']);
+
+        $this->assertEquals($express['status'], 2);
 
         $this->getExpressService()->orderExpress($express['id']);
     }
@@ -167,7 +170,7 @@ class ExpressServiceTest extends BaseTestCase
 
         $express = $this->getExpressService()->createExpress($expressText);
     
-        $this->assertEquals($express['status'], 0);
+        $this->assertEquals($express['status'], 1);
 
         $this->getExpressService()->orderExpress($express['id']);
     }
@@ -185,7 +188,7 @@ class ExpressServiceTest extends BaseTestCase
 
         $express = $this->getExpressService()->createExpress($expressText);
 
-        $this->assertEquals($express['status'], 0);
+        $this->assertEquals($express['status'], 1);
 
         $user2 = $this->createUser('test_user2');
         $currentUser2 = new CurrentUser($user2);
@@ -193,16 +196,16 @@ class ExpressServiceTest extends BaseTestCase
 
         $express = $this->getExpressService()->orderExpress($express['id']);
 
-        $this->assertEquals($express['status'], 1);
+        $this->assertEquals($express['status'], 2);
 
         $express = $this->getExpressService()->confirmMyReceiveExpress($express['id']);
 
-        $this->assertEquals($express['status'], 2);
+        $this->assertEquals($express['status'], 3);
 
         self::$biz['user'] = $currentUser1;
 
         $express = $this->getExpressService()->confirmMyPublishExpress($express['id']);
-        $this->assertEquals($express['status'], 3);
+        $this->assertEquals($express['status'], 4);
     }
 
     /**
@@ -222,7 +225,7 @@ class ExpressServiceTest extends BaseTestCase
 
         $express = $this->getExpressService()->createExpress($expressText);
 
-        $this->assertEquals($express['status'], 0);
+        $this->assertEquals($express['status'], 1);
 
         $user2 = $this->createUser('test_user2');
         $currentUser2 = new CurrentUser($user2);
@@ -230,7 +233,7 @@ class ExpressServiceTest extends BaseTestCase
 
         $express = $this->getExpressService()->orderExpress($express['id']);
 
-        $this->assertEquals($express['status'], 1);
+        $this->assertEquals($express['status'], 2);
 
         self::$biz['user'] = $currentUser1;
 
@@ -254,7 +257,7 @@ class ExpressServiceTest extends BaseTestCase
 
         $express = $this->getExpressService()->createExpress($expressText);
 
-        $this->assertEquals($express['status'], 0);
+        $this->assertEquals($express['status'], 1);
 
         $user2 = $this->createUser('test_user2');
         $currentUser2 = new CurrentUser($user2);
@@ -262,11 +265,11 @@ class ExpressServiceTest extends BaseTestCase
 
         $express = $this->getExpressService()->orderExpress($express['id']);
 
-        $this->assertEquals($express['status'], 1);
+        $this->assertEquals($express['status'], 2);
 
         $express = $this->getExpressService()->confirmMyReceiveExpress($express['id']);
 
-        $this->assertEquals($express['status'], 2);
+        $this->assertEquals($express['status'], 3);
 
         $express = $this->getExpressService()->confirmMyPublishExpress($express['id']);
     }
@@ -288,13 +291,13 @@ class ExpressServiceTest extends BaseTestCase
 
         $express = $this->getExpressService()->createExpress($expressText);
 
-        $this->assertEquals($express['status'], 0);
+        $this->assertEquals($express['status'], 1);
 
         $user2 = $this->createUser('test_user2');
         $currentUser2 = new CurrentUser($user2);
         self::$biz['user'] = $currentUser2;
 
-        $this->assertEquals($express['status'], 0);
+        $this->assertEquals($express['status'], 1);
 
         $express = $this->getExpressService()->confirmMyReceiveExpress($express['id']);
     }
@@ -316,13 +319,13 @@ class ExpressServiceTest extends BaseTestCase
 
         $express = $this->getExpressService()->createExpress($expressText);
 
-        $this->assertEquals($express['status'], 0);
+        $this->assertEquals($express['status'], 1);
 
         $user2 = $this->createUser('test_user2');
         $currentUser2 = new CurrentUser($user2);
         self::$biz['user'] = $currentUser2;
 
-        $this->assertEquals($express['status'], 0);
+        $this->assertEquals($express['status'], 1);
 
         self::$biz['user'] = $currentUser1;
 

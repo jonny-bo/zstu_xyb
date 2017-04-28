@@ -26,12 +26,13 @@ class GoodsServiceImpl extends BaseService implements GoodsService
 
     public function searchGoods($conditions, $orderBy, $start, $limit)
     {
-        $conditions['title'] = isset($conditions['title']) ? '%'.$conditions['title'].'%' : '';
+        $conditions = $this->perConditions($conditions);
         return $this->getGoodsDao()->search($conditions, $orderBy, $start, $limit);
     }
 
     public function searchGoodsCount($conditions)
     {
+        $conditions = $this->perConditions($conditions);
         return $this->getGoodsDao()->count($conditions);
     }
 
@@ -44,7 +45,7 @@ class GoodsServiceImpl extends BaseService implements GoodsService
         $fields = $this->checkFields($fields);
 
         $fields['publisher_id'] = $this->getCurrentUser()['id'];
-        $fields['status']       = 0;
+        $fields['status']       = 1;
 
         return $this->getGoodsDao()->create($fields);
     }
@@ -54,7 +55,7 @@ class GoodsServiceImpl extends BaseService implements GoodsService
         $goods = $this->beforAction($goodsId);
         $fields = $this->checkFields($fields);
 
-        if ($goods['status'] == 1) {
+        if ($goods['status'] == 2) {
             throw new RuntimeException('已发布物品不能进行修改');
         }
 
@@ -64,13 +65,12 @@ class GoodsServiceImpl extends BaseService implements GoodsService
     public function deleteGoods($goodsId)
     {
         $goods = $this->beforAction($goodsId);
-        if ($goods['status'] == 1) {
+        if ($goods['status'] == 2) {
             throw new RuntimeException('该物品已经发布，不能删除');
         }
         $res = $this->getGoodsDao()->delete($goodsId);
 
-        $imgs = json_decode($goods['imgs'], true);
-        foreach ($imgs as $img) {
+        foreach ($goods['imgs'] as $img) {
             $this->getFileService()->deleteFileByUri($img);
         }
         return $res;
@@ -80,21 +80,21 @@ class GoodsServiceImpl extends BaseService implements GoodsService
     {
         $goods = $this->beforAction($goodsId);
 
-        if ($goods['status'] == 1) {
+        if ($goods['status'] == 2) {
             throw new RuntimeException('该物品已经发布，不要重复发布');
         }
 
-        return $this->getGoodsDao()->update($goodsId, array('status' => 1));
+        return $this->getGoodsDao()->update($goodsId, array('status' => 2));
     }
 
     public function cancelGoods($goodsId)
     {
         $goods = $this->beforAction($goodsId);
 
-        if ($goods['status'] != 1) {
+        if ($goods['status'] != 2) {
             throw new RuntimeException('未发布的物品不能取消发布');
         }
-        return $this->getGoodsDao()->update($goodsId, array('status' => 2));
+        return $this->getGoodsDao()->update($goodsId, array('status' => 3));
     }
 
     public function getGoodsPost($goodsPostId)
@@ -202,6 +202,33 @@ class GoodsServiceImpl extends BaseService implements GoodsService
         $this->getGoodsDao()->wave(array($goodsId), array('hits' => 1));
 
         return $this->getGoods($goodsId);
+    }
+
+    protected function perConditions($conditions)
+    {
+        $conditions =  array_filter($conditions);
+
+        if (isset($conditions['keywordType']) && isset($conditions['keyword'])) {
+            if ($conditions['keywordType'] == 'nickname') {
+                $users = $this->getUserService()->searchUsers(array('nickname' => $conditions['keyword']), array(), 0, PHP_INT_MAX);
+                $conditions['publishIds'] = ArrayToolkit::column($users, 'id');
+            } elseif ($conditions['keywordType'] == 'title') {
+                $conditions['title'] = '%'.$conditions['keyword'].'%';
+            }
+
+            unset($conditions['keywordType']);
+            unset($conditions['keyword']);
+        }
+
+        if (isset($conditions['startDate'])) {
+            $conditions['startTime'] = strtotime($conditions['startDate']);
+        }
+
+        if (isset($conditions['endDate'])) {
+            $conditions['endTime'] = strtotime($conditions['endDate']);
+        }
+
+        return $conditions;
     }
 
     protected function beforAction($goodsId)

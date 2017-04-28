@@ -252,7 +252,7 @@ class GoodsServiceTest extends BaseTestCase
 
         $goods = $this->getGoodsService()->publishGoods($goods['id']);
 
-        $this->assertEquals($goods['status'], 1);
+        $this->assertEquals($goods['status'], 2);
     }
 
     public function testCancelGoods()
@@ -268,11 +268,11 @@ class GoodsServiceTest extends BaseTestCase
 
         $goods = $this->getGoodsService()->publishGoods($goods['id']);
 
-        $this->assertEquals($goods['status'], 1);
+        $this->assertEquals($goods['status'], 2);
 
         $goods = $this->getGoodsService()->cancelGoods($goods['id']);
 
-        $this->assertEquals($goods['status'], 2);
+        $this->assertEquals($goods['status'], 3);
     }
 
     protected function getUserService()

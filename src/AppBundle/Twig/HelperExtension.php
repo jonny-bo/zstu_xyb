@@ -61,10 +61,10 @@ class HelperExtension extends \Twig_Extension
         }
 
         if ($diff < 31536000) {
-            return date('m-d H:i:s', $time);
+            return date('m-d', $time);
         }
 
-        return date('Y-n-d H:i:s', $time);
+        return date('Y-n-d H:i', $time);
     }
 
     public function selectOptions($choices, $selected = null, $empty = null)

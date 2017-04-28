@@ -18,10 +18,12 @@ class GoodsDaoImpl extends GeneralDaoImpl implements GoodsDao
             'conditions' => array(
                 'id = :id',
                 'category_id = :category_id',
-                'updated_time >= :start_time',
-                'updated_time <= :end_time',
+                'status = :status',
+                'created_time >= :startTime',
+                'created_time <= :endTime',
                 'title LIKE :title',
-                'status = :status'
+                'status = :status',
+                'publish_id IN (publishIds)',
             ),
         );
     }

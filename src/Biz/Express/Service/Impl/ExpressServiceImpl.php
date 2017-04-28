@@ -48,6 +48,7 @@ class ExpressServiceImpl extends BaseService implements ExpressService
         $fields['publisher_id'] = $user['id'];
         $fields['title']        = $this->purifyHtml($fields['title']);
         $fields['detail']       = $this->purifyHtml($fields['detail']);
+        $fields['status']       = 1;
 
         return $this->getExpressDao()->create($fields);
     }
@@ -66,7 +67,7 @@ class ExpressServiceImpl extends BaseService implements ExpressService
         $lock     = $this->getLock();
         $lock->get($lockName, 10);
 
-        $express = $this->updateExpress($expressId, array('status' => 1, 'receiver_id' => $user['id']));
+        $express = $this->updateExpress($expressId, array('status' => 2, 'receiver_id' => $user['id']));
 
         $lock->release($lockName);
 
@@ -103,11 +104,11 @@ class ExpressServiceImpl extends BaseService implements ExpressService
             throw new UnexpectedValueException('不是发布者，不能确认收货');
         }
 
-        if ($express['status'] != 2) {
-            throw new UnexpectedValueException('该订单不能确认收货');
+        if ($express['status'] != 3) {
+            throw new UnexpectedValueException('该订单未送达，不能确认收货');
         }
 
-        return $this->getExpressDao()->update($expressId, array('status' => 3));
+        return $this->getExpressDao()->update($expressId, array('status' => 4));
     }
 
     public function confirmMyReceiveExpress($expressId)
@@ -119,11 +120,11 @@ class ExpressServiceImpl extends BaseService implements ExpressService
             throw new UnexpectedValueException('不是订单接收人，不能确认送到');
         }
 
-        if ($express['status'] != 1) {
+        if ($express['status'] != 2) {
             throw new UnexpectedValueException('该订单不能确认送到');
         }
 
-        return $this->getExpressDao()->update($expressId, array('status' => 2));
+        return $this->getExpressDao()->update($expressId, array('status' => 3));
     }
 
     protected function perConditions($conditions)
@@ -159,7 +160,7 @@ class ExpressServiceImpl extends BaseService implements ExpressService
             throw new ResourceNotFoundException('订单', $expressId);
         }
 
-        if ($express['status'] != 0) {
+        if ($express['status'] != 1) {
             throw new UnexpectedValueException('该订单已经被别人接收');
         }
 

@@ -29,3 +29,11 @@ admin_express:
 admin_express_show:
   path:      /express/{id}/show
   defaults:  { _controller: AppBundle:Admin/Express:show }
+
+admin_goods:
+  path:      /goods
+  defaults:  { _controller: AppBundle:Admin/Goods:index }
+
+admin_goods_show:
+  path:      /goods/{id}/show
+  defaults:  { _controller: AppBundle:Admin/Goods:show }
