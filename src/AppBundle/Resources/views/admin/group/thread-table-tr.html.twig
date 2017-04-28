@@ -1,0 +1,33 @@
+<tr id="group-table-tr-{{ thread.id }}">
+  <td>
+    {{ thread.id }}
+  </td>
+  <td>
+    <strong>{{ thread.title|raw }}</strong>
+  </td>
+  <td nowrap="nowrap">
+    <a href="javascript:;" data-url="" class="promoted-label">
+      <span class="label{% if thread.is_elite %} label-success {% else %} label-default {% endif %}">精</span>
+    </a>
+    <a href="javascript:;" data-url="" class="promoted-label">
+      <span class="label{% if thread.is_stick %} label-success {% else %} label-default {% endif %}">顶</span>
+    </a>
+  </td>
+  <td>
+    {{ admin_macro.user_link(users[thread.user_id]) }}
+  </td>
+  <td>
+    {{ groups[thread.group_id]['title'] }}
+  </td>
+  <td>
+    {{ thread.post_num }}
+  </td> 
+  <td>
+    {{ dict_text('threadStatus', thread.status) }}
+  </td>
+  <td>
+    <div class="btn-group">
+      <a href="#modal" data-toggle="modal" data-url="{{ path('admin_goods_show', {id:thread.id}) }}" data-url="" class="btn btn-default btn-sm">查看</a>
+    </div>
+  </td>
+</tr>

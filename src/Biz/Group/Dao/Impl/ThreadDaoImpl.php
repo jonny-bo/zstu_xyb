@@ -18,7 +18,10 @@ class ThreadDaoImpl extends GeneralDaoImpl implements ThreadDao
             'conditions' => array(
                 'group_id = :group_id',
                 'title LIKE :title',
-                'status = :status'
+                'status = :status',
+                'is_stick = :isStick',
+                'is_elite = :isElite',
+                'group_id IN (:groupIds)',
             ),
         );
     }

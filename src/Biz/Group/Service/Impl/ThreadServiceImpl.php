@@ -21,14 +21,13 @@ class ThreadServiceImpl extends BaseService implements ThreadService
 
     public function searchThreads($conditions, $orderBy, $start, $limit)
     {
-        if (isset($conditions['title']) && !empty($conditions['title'])) {
-            $conditions['title'] = '%'.$conditions['title'].'%';
-        }
+        $conditions = $this->perConditions($conditions);
         return $this->getThreadDao()->search($conditions, $orderBy, $start, $limit);
     }
 
     public function searchThreadsCount($conditions)
     {
+        $conditions = $this->perConditions($conditions);
         return $this->getThreadDao()->count($conditions);
     }
 
@@ -184,6 +183,29 @@ class ThreadServiceImpl extends BaseService implements ThreadService
         }
 
         return $post;
+    }
+
+    protected function perConditions($conditions)
+    {
+        $conditions =  array_filter($conditions);
+
+        if (isset($conditions['title'])) {
+            $conditions['title'] = '%'.$conditions['title'].'%';
+        }
+
+        if (isset($conditions['groupName'])) {
+            $groups = $this->getGroupService()->searchGroups(array('title' => $conditions['groupName']), array(), 0, PHP_INT_MAX);
+            $conditions['groupIds'] = ArrayToolkit::column($groups, 'id');
+
+            unset($conditions['groupName']);
+        }
+
+        if (isset($conditions['threadType'])) {
+            $conditions[$conditions['threadType']] = 1;
+            unset($conditions['threadType']);
+        }
+
+        return $conditions;
     }
 
     protected function checkFields($fields)

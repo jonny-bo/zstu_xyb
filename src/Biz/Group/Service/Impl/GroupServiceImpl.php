@@ -21,11 +21,14 @@ class GroupServiceImpl extends BaseService implements GroupService
 
     public function searchGroups($conditions, $orderBy, $start, $limit)
     {
+        $conditions = $this->perConditions($conditions);
+
         return $this->getGroupDao()->search($conditions, $orderBy, $start, $limit);
     }
 
     public function searchGroupsCount($conditions)
     {
+        $conditions = $this->perConditions($conditions);
         return $this->getGroupDao()->count($conditions);
     }
 
@@ -174,6 +177,11 @@ class GroupServiceImpl extends BaseService implements GroupService
         return array();
     }
 
+    public function findGroupsByIds($ids)
+    {
+        return $this->getGroupDao()->findByIds($ids);
+    }
+
     public function searchMembers($conditions, $orderBy, $start, $limit)
     {
         return $this->getGroupMemberDao()->search($conditions, $orderBy, $start, $limit);
@@ -232,6 +240,24 @@ class GroupServiceImpl extends BaseService implements GroupService
         if ($member) {
             $this->getGroupMemberDao()->wave(array($member['id']), $diffs);
         }
+    }
+
+    protected function perConditions($conditions)
+    {
+        $conditions =  array_filter($conditions);
+
+        if (isset($conditions['title'])) {
+            $conditions['title'] = '%'.$conditions['title'].'%';
+        }
+
+        if (isset($conditions['nickname'])) {
+            $users = $this->getUserService()->searchUsers(array('nickname' => $conditions['nickname']), array(), 0, PHP_INT_MAX);
+            $conditions['ownerIds'] = ArrayToolkit::column($users, 'id');
+
+            unset($conditions['nickname']);
+        }
+
+        return $conditions;
     }
 
     protected function getGroupDao()

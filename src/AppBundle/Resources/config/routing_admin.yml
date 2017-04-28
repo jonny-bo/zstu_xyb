@@ -37,3 +37,11 @@ admin_goods:
 admin_goods_show:
   path:      /goods/{id}/show
   defaults:  { _controller: AppBundle:Admin/Goods:show }
+
+admin_group:
+  path:      /group
+  defaults:  { _controller: AppBundle:Admin/Group:group }
+
+admin_group_thread:
+  path:      /group/thread
+  defaults:  { _controller: AppBundle:Admin/Group:thread }

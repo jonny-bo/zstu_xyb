@@ -28,6 +28,8 @@ interface GroupService
 
     public function findGroupsByUserId($userId);
 
+    public function findGroupsByIds($ids);
+
     public function searchMembers($conditions, $orderBy, $start, $limit);
 
     public function searchMembersCount($conditions);

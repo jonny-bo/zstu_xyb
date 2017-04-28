@@ -26,3 +26,12 @@ goodsStatus:
 goodsKeyWordType:
     nickname: 发布人昵称
     title: 标题
+groupStatus:
+    open: 开启
+    close: 关闭
+threadStatus:
+    open: 开启
+    close: 关闭
+threadType:
+    isStick: 置顶
+    isElite: 加精

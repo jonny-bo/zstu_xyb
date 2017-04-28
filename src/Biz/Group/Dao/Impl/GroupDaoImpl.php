@@ -21,7 +21,9 @@ class GroupDaoImpl extends GeneralDaoImpl implements GroupDao
                 'post_num'
             ),
             'conditions' => array(
-                'title LIKE :title'
+                'title LIKE :title',
+                'owner_id IN (:ownerIds)',
+                'status = :status',
             ),
         );
     }
@@ -33,6 +35,6 @@ class GroupDaoImpl extends GeneralDaoImpl implements GroupDao
 
     public function findByIds($ids)
     {
-        return $this->findInField(array('id' => $ids));
+        return $this->findInField('id', $ids);
     }
 }
