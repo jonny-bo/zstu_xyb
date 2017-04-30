@@ -252,7 +252,7 @@ class GroupServiceImpl extends BaseService implements GroupService
 
         if (isset($conditions['nickname'])) {
             $users = $this->getUserService()->searchUsers(array('nickname' => $conditions['nickname']), array(), 0, PHP_INT_MAX);
-            $conditions['ownerIds'] = ArrayToolkit::column($users, 'id');
+            $conditions['ownerIds'] = empty($users) ? array(0) : ArrayToolkit::column($users, 'id');
 
             unset($conditions['nickname']);
         }

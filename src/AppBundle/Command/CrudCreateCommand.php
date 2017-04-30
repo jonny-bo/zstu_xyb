@@ -102,9 +102,9 @@ interface '.$className.'Service
 {
     public function get'.$className.'($'.$name.'Id);
 
-    public function search'.$className.'s($conditions, $orderBy, $start, $limit);
+    public function search'.$className.'($conditions, $orderBy, $start, $limit);
 
-    public function search'.$className.'sCount($conditions);
+    public function search'.$className.'Count($conditions);
 
     public function create'.$className.'($fields);
 
@@ -133,12 +133,12 @@ class '.$className.'ServiceImpl extends BaseService implements '.$className.'Ser
         return $this->get'.$className.'Dao()->get($'.$name.'Id);
     }
 
-    public function search'.$className.'s($conditions, $orderBy, $start, $limit)
+    public function search'.$className.'($conditions, $orderBy, $start, $limit)
     {
         return $this->get'.$className.'Dao()->search($conditions, $orderBy, $start, $limit);
     }
 
-    public function search'.$className.'sCount($conditions)
+    public function search'.$className.'Count($conditions)
     {
         return $this->get'.$className.'Dao()->count($conditions);
     }

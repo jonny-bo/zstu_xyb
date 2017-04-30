@@ -8,23 +8,22 @@ use Topxia\Api\Resource\BaseResource;
 
 class Posts extends BaseResource
 {
-    public function post(Request $request, $groupId, $threadId)
+    public function post(Request $request, $threadId)
     {
         $fields = $request->request->all();
 
-        $post = $this->getThreadService()->postThread($groupId, $threadId, $fields);
+        $post = $this->getThreadService()->postThread($threadId, $fields);
 
         return $this->filter($post);
     }
 
-    public function get(Request $request, $groupId, $threadId)
+    public function get(Request $request, $threadId)
     {
         $conditions = $request->query->all();
 
         $start = $request->query->get('start', 0);
         $limit = $request->query->get('limit', 10);
 
-        $conditions['group_id']  = $groupId;
         $conditions['thread_id'] = $threadId;
         $conditions['post_id'] = isset($conditions['post_id']) ? $conditions['post_id'] : 0;
 

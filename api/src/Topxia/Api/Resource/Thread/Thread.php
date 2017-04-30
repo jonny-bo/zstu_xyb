@@ -12,14 +12,9 @@ class Thread extends BaseResource
     protected $requireFiles = array(
         'title', 'content', 'group_id'
     );
-    public function search(Request $request, $groupId)
+    public function search(Request $request)
     {
-        $group = $this->getGroupService()->getGroup($groupId);
-        if (!$group) {
-            return $this->error('not_group', '小组不存在！');
-        }
         $conditions = $request->query->all();
-        $conditions['group_id'] = $groupId;
         $conditions['status']   = isset($conditions['status']) ? $conditions['status'] : 'open';
 
         $ordeyBy = $this->getOrderBy($conditions, array('updated_time' => 'DESC'));
@@ -47,16 +42,9 @@ class Thread extends BaseResource
         return $this->filter($thread);
     }
 
-    public function post(Request $request, $groupId)
+    public function post(Request $request)
     {
-        $group = $this->getGroupService()->getGroup($groupId);
-        if (!$group) {
-            return $this->error('not_group', '小组不存在！');
-        }
-
         $fields             = $request->request->all();
-        $fields['group_id'] = $groupId;
-
         $this->checkRequiredFields($this->requireFiles, $fields);
         $this->getThreadService()->createThread($fields);
 

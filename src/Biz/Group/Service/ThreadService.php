@@ -30,7 +30,7 @@ interface ThreadService
 
     public function hitThread($threadId);
 
-    public function postThread($groupId, $threadId, $fields);
+    public function postThread($threadId, $fields);
 
     public function searchThreadPosts($conditions, $orderBy, $start, $limit);
 

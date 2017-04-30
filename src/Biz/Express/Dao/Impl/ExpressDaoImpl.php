@@ -23,6 +23,7 @@ class ExpressDaoImpl extends GeneralDaoImpl implements ExpressDao
                 'publisher_id IN (:publishIds)',
                 'created_time >= :startTime',
                 'created_time <= :endTime',
+                'title LIKE :title',
             ),
         );
     }

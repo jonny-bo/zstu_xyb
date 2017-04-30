@@ -211,9 +211,9 @@ class GoodsServiceImpl extends BaseService implements GoodsService
         if (isset($conditions['keywordType']) && isset($conditions['keyword'])) {
             if ($conditions['keywordType'] == 'nickname') {
                 $users = $this->getUserService()->searchUsers(array('nickname' => $conditions['keyword']), array(), 0, PHP_INT_MAX);
-                $conditions['publishIds'] = ArrayToolkit::column($users, 'id');
-            } elseif ($conditions['keywordType'] == 'title') {
-                $conditions['title'] = '%'.$conditions['keyword'].'%';
+                $conditions['publishIds'] = empty($users) ? array(0) : ArrayToolkit::column($users, 'id');
+            } else {
+                $conditions[$conditions['keywordType']] = "%{$conditions['keyword']}%";
             }
 
             unset($conditions['keywordType']);
@@ -227,7 +227,7 @@ class GoodsServiceImpl extends BaseService implements GoodsService
         if (isset($conditions['endDate'])) {
             $conditions['endTime'] = strtotime($conditions['endDate']);
         }
-
+        
         return $conditions;
     }
 

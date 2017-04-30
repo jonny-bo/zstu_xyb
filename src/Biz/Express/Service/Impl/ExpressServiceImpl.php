@@ -24,12 +24,14 @@ class ExpressServiceImpl extends BaseService implements ExpressService
     public function searchExpress($conditions, $orderBy, $start, $limit)
     {
         $conditions = $this->perConditions($conditions);
+
         return $this->getExpressDao()->search($conditions, $orderBy, $start, $limit);
     }
 
     public function searchExpressCount($conditions)
     {
         $conditions = $this->perConditions($conditions);
+
         return $this->getExpressDao()->count($conditions);
     }
 
@@ -134,7 +136,9 @@ class ExpressServiceImpl extends BaseService implements ExpressService
         if (isset($conditions['keywordType']) && isset($conditions['keyword'])) {
             if ($conditions['keywordType'] == 'nickname') {
                 $users = $this->getUserService()->searchUsers(array('nickname' => $conditions['keyword']), array(), 0, PHP_INT_MAX);
-                $conditions['publishIds'] = ArrayToolkit::column($users, 'id');
+                $conditions['publishIds'] = empty($users) ? array(0) : ArrayToolkit::column($users, 'id');
+            } else {
+                $conditions[$conditions['keywordType']] = "%{$conditions['keyword']}%";
             }
 
             unset($conditions['keywordType']);
