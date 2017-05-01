@@ -25,8 +25,12 @@ $table.on('click', '.open-thread, .close-thread, .delete-thread', function() {
 });
 
 $table.on('click', ".promoted-label", function() {
+    let title = $(this).attr('title');
     $.post($(this).data('url'), function(html) {
+        notify('success', title+'成功！');
         var $tr = $(html);
         $('#' + $tr.attr('id')).replaceWith(html);
-    })
+    }).error(function() {
+        notify('danger', title+'失败!');
+    });
 });

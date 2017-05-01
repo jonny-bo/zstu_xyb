@@ -10,10 +10,10 @@
     {% endif %}
   </td>
   <td nowrap="nowrap">
-    <a href="javascript:;" data-url="{% if thread.is_elite %} {{ path('admin_thread_cancel_elite', {id:thread.id}) }} {% else %} {{ path('admin_thread_set_elite', {id:thread.id}) }} {% endif %}" class="promoted-label">
+    <a href="javascript:;" title="{% if thread.is_elite %} 取消加精 {% else %} 加精 {% endif %}" data-url="{% if thread.is_elite %} {{ path('admin_thread_cancel_elite', {id:thread.id}) }} {% else %} {{ path('admin_thread_set_elite', {id:thread.id}) }} {% endif %}" class="promoted-label">
       <span class="label{% if thread.is_elite %} label-success {% else %} label-default {% endif %}">精</span>
     </a>
-    <a href="javascript:;" data-url="{% if thread.is_stick %} {{ path('admin_thread_cancel_stick', {id:thread.id}) }} {% else %} {{ path('admin_thread_set_stick', {id:thread.id}) }} {% endif %}" class="promoted-label">
+    <a href="javascript:;" title="{% if thread.is_stick %} 取消置顶 {% else %} 置顶 {% endif %}" data-url="{% if thread.is_stick %} {{ path('admin_thread_cancel_stick', {id:thread.id}) }} {% else %} {{ path('admin_thread_set_stick', {id:thread.id}) }} {% endif %}" class="promoted-label">
       <span class="label{% if thread.is_stick %} label-success {% else %} label-default {% endif %}">顶</span>
     </a>
   </td>
