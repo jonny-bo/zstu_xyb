@@ -50,6 +50,18 @@ admin_goods_show:
   path:      /goods/{id}/show
   defaults:  { _controller: AppBundle:Admin/Goods:show }
 
+admin_goods_publish:
+  path:      /goods/{id}/publish
+  defaults:  { _controller: AppBundle:Admin/Goods:publish }
+  requirements:
+    _method: POST
+
+admin_goods_close:
+  path:      /goods/{id}/close
+  defaults:  { _controller: AppBundle:Admin/Goods:close }
+  requirements:
+    _method: POST
+
 admin_group:
   path:      /group
   defaults:  { _controller: AppBundle:Admin/Group:group }

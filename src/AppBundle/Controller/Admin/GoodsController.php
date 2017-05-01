@@ -48,6 +48,32 @@ class GoodsController extends BaseController
         ));
     }
 
+    public function publishAction($id)
+    {
+        $goods     = $this->getGoodsService()->publishGoods($id);
+        $category = $this->getCategoryService()->getCategory($goods['category_id']);
+        $user     = $this->getUserService()->getUser($goods['publisher_id']);
+
+        return $this->render('AppBundle::admin/goods/table-tr.html.twig', array(
+            'goods'    => $goods,
+            'category' => $category['name'],
+            'user'     => $user
+        ));
+    }
+
+    public function closeAction($id)
+    {
+        $goods     = $this->getGoodsService()->cancelGoods($id);
+        $category = $this->getCategoryService()->getCategory($goods['category_id']);
+        $user     = $this->getUserService()->getUser($goods['publisher_id']);
+
+        return $this->render('AppBundle::admin/goods/table-tr.html.twig', array(
+            'goods'    => $goods,
+            'category' => $category['name'],
+            'user'     => $user
+        ));
+    }
+
     protected function getUserService()
     {
         return $this->biz->service('User:UserService');

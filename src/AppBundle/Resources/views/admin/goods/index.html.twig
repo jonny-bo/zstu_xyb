@@ -3,7 +3,7 @@
 {% set page = 'goods' %}
 {% set menu = 'goods' %}
 
-{% do script(['app/js/admin/express/index.js']) %}
+{% do script(['app/js/admin/goods/index.js']) %}
 
 {% block page_title %}
     {{ '旧货交易' }}
@@ -56,7 +56,7 @@
 
     <button class="btn btn-primary">搜索</button>
   </form>
-  <table id="user-table" class="table table-striped table-hover" data-search-form="#user-search-form">
+  <table id="goods-table" class="table table-striped table-hover" data-search-form="#goods-search-form">
     <thead>
     <tr>
       <th width="40%">{{ '标题'|trans }}</th>
@@ -74,7 +74,9 @@
       <span class="mrl">{{ '旧货总数：'|trans }}<strong class="inflow-num">{{ goodsCount }}</strong></span>
     </p>
     {% for goods in goodses %}
-      {% include 'AppBundle::admin/goods/table-tr.html.twig' with {goods:goods, users:users, categorys:categorys} %}
+      {% set category = categorys[goods.category_id] %}
+      {% set user = users[goods.publisher_id] %}
+      {% include 'AppBundle::admin/goods/table-tr.html.twig' with {goods:goods, user:user, category:category} %}
     {% endfor %}
     </tbody>
   </table>

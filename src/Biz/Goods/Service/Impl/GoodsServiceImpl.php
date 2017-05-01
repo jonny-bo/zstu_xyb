@@ -235,6 +235,9 @@ class GoodsServiceImpl extends BaseService implements GoodsService
     {
         $goods = $this->checkGoods($goodsId);
         $user  = $this->getCurrentUser();
+        if ($user->isAdmin()) {
+            return $goods;
+        }
 
         if (!$user->isLogin() || ($user['id'] != $goods['publisher_id'])) {
             throw new RuntimeException("非法用户操作");
