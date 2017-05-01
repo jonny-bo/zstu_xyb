@@ -59,24 +59,29 @@ class ThreadServiceImpl extends BaseService implements ThreadService
 
     public function updateThread($threadId, $fields)
     {
-        $this->checkFields($fields);
-
         // $fields['title']   = $this->sensitiveFilter($fields['title'], 'group-thread-update');
         // $fields['content'] = $this->sensitiveFilter($fields['content'], 'group-thread-update');
 
         // $this->getThreadGoodsDao()->deleteGoodsByThreadId($id, 'content');
         // $this->hideThings($fields['content'], $id);
 
-        $fields['title']   = $this->purifyHtml($fields['title']);
-        $fields['content'] = $this->purifyHtml($fields['content']);
+        if (isset($fields['title'])) {
+            $fields['title']   = $this->purifyHtml($fields['title']);
+        }
 
-        $thread = $this->getThreadDao()->updateThread($threadId, $fields);
+        if (isset($fields['content'])) {
+            $fields['content'] = $this->purifyHtml($fields['content']);
+        }
+
+        $thread = $this->getThreadDao()->update($threadId, $fields);
         // $this->dispatchEvent('group.thread.update', $thread);
         return $thread;
     }
 
     public function deleteThread($threadId)
     {
+        $thread = $this->getThread($threadId);
+        $this->getGroupService()->waveGroup(array($thread['group_id']), array('thread_num' => -1));
         return $this->getThreadDao()->delete($threadId);
     }
 

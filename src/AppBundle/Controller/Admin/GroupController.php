@@ -127,6 +127,91 @@ class GroupController extends BaseController
         return $this->createJsonResponse($response);
     }
 
+    public function openThreadAction($id)
+    {
+        $thread = $this->getThreadService()->openThread($id);
+        $user   = $this->getUserService()->getUser($thread['user_id']);
+        $group  = $this->getGroupService()->getGroup($thread['group_id']);
+
+        return $this->render('AppBundle::admin/group/thread-table-tr.html.twig', array(
+            'thread' => $thread,
+            'user'   => $user,
+            'group'  => $group
+        ));
+    }
+
+    public function closeThreadAction($id)
+    {
+        $thread = $this->getThreadService()->closeThread($id);
+        $user   = $this->getUserService()->getUser($thread['user_id']);
+        $group  = $this->getGroupService()->getGroup($thread['group_id']);
+
+        return $this->render('AppBundle::admin/group/thread-table-tr.html.twig', array(
+            'thread' => $thread,
+            'user'  => $user,
+            'group'  => $group
+        ));
+    }
+
+    public function deleteThreadAction($id)
+    {
+        $this->getThreadService()->deleteThread($id);
+
+        return $this->createJsonResponse('success');
+    }
+
+    public function cancelStickAction($id)
+    {
+        $thread = $this->getThreadService()->updateThread($id, array('is_stick' => 0));
+        $user   = $this->getUserService()->getUser($thread['user_id']);
+        $group  = $this->getGroupService()->getGroup($thread['group_id']);
+
+        return $this->render('AppBundle::admin/group/thread-table-tr.html.twig', array(
+            'thread' => $thread,
+            'user'   => $user,
+            'group'  => $group
+        ));
+    }
+
+    public function setStickAction($id)
+    {
+        $thread = $this->getThreadService()->updateThread($id, array('is_stick' => 1));
+        $user   = $this->getUserService()->getUser($thread['user_id']);
+        $group  = $this->getGroupService()->getGroup($thread['group_id']);
+
+        return $this->render('AppBundle::admin/group/thread-table-tr.html.twig', array(
+            'thread' => $thread,
+            'user'   => $user,
+            'group'  => $group
+        ));
+    }
+
+    public function cancelEliteAction($id)
+    {
+        $thread = $this->getThreadService()->updateThread($id, array('is_elite' => 0));
+        $user   = $this->getUserService()->getUser($thread['user_id']);
+        $group  = $this->getGroupService()->getGroup($thread['group_id']);
+
+        return $this->render('AppBundle::admin/group/thread-table-tr.html.twig', array(
+            'thread' => $thread,
+            'user'   => $user,
+            'group'  => $group
+        ));
+    }
+
+    public function setEliteAction($id)
+    {
+        $thread = $this->getThreadService()->updateThread($id, array('is_elite' => 1));
+        $user   = $this->getUserService()->getUser($thread['user_id']);
+        $group  = $this->getGroupService()->getGroup($thread['group_id']);
+
+        return $this->render('AppBundle::admin/group/thread-table-tr.html.twig', array(
+            'thread' => $thread,
+            'user'   => $user,
+            'group'  => $group
+        ));
+    }
+
     protected function getUserService()
     {
         return $this->biz->service('User:UserService');

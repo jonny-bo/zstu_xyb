@@ -2,6 +2,9 @@
 <tr id="goods-table-tr-{{ goods.id }}">
   <td>
     <strong>{{ goods.title|raw }}</strong>
+    {% if goods.status == 3 %}
+      <label class="label label-danger">关闭</label>
+    {% endif %}
   </td>
   <td>
     {{ category }}

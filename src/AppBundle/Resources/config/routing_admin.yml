@@ -86,6 +86,48 @@ admin_group_checkuser:
   path:      /group/checkuser
   defaults:  { _controller: AppBundle:Admin/Group:checkUser }  
 
-admin_group_thread:
-  path:      /group/thread
+admin_thread:
+  path:      /thread
   defaults:  { _controller: AppBundle:Admin/Group:thread }
+
+admin_thread_delete:
+  path:      /thread/{id}/delete
+  defaults:  { _controller: AppBundle:Admin/Group:deleteThread }
+  requirements:
+    _method: POST
+
+admin_thread_open:
+  path:      /thread/{id}/open
+  defaults:  { _controller: AppBundle:Admin/Group:openThread}
+  requirements:
+    _method: POST 
+
+admin_thread_close:
+  path:      /thread/{id}/close
+  defaults:  { _controller: AppBundle:Admin/Group:closeThread }
+  requirements:
+    _method: POST
+
+admin_thread_cancel_stick:
+  path:      /thread/{id}/cancelStick
+  defaults:  { _controller: AppBundle:Admin/Group:cancelStick }
+  requirements:
+    _method: POST
+
+admin_thread_set_stick:
+  path:      /thread/{id}/setStick
+  defaults:  { _controller: AppBundle:Admin/Group:setStick }
+  requirements:
+    _method: POST
+
+admin_thread_cancel_elite:
+  path:      /thread/{id}/cancelElite
+  defaults:  { _controller: AppBundle:Admin/Group:cancelElite }
+  requirements:
+    _method: POST
+
+admin_thread_set_elite:
+  path:      /thread/{id}/setElite
+  defaults:  { _controller: AppBundle:Admin/Group:setElite }
+  requirements:
+    _method: POST  
