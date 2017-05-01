@@ -2,6 +2,7 @@
 
 {% set page = 'group' %}
 {% set menu = 'group' %}
+{% do script(['app/js/admin/group/index.js']) %}
 
 {% block sidebar %}
   {% include 'AppBundle::admin/group/side-bar.html.twig' %}
@@ -42,7 +43,7 @@
 
     <button class="btn btn-primary">搜索</button>
   </form>
-  <table id="user-table" class="table table-striped table-hover" data-search-form="#user-search-form">
+  <table id="group-table" class="table table-striped table-hover" data-search-form="#group-search-form">
     <thead>
     <tr>
       <th>{{ '编号'|trans }}</th>
@@ -60,7 +61,8 @@
       <span class="mrl">{{ '小组总数：'|trans }}<strong class="inflow-num">{{ groupCount }}</strong></span>
     </p>
     {% for group in groups %}
-      {% include 'AppBundle::admin/group/group-table-tr.html.twig' with {group:group} %}
+      {% set user = users[group.owner_id] %}
+      {% include 'AppBundle::admin/group/group-table-tr.html.twig' with {group:group, user:user} %}
     {% endfor %}
     </tbody>
   </table>

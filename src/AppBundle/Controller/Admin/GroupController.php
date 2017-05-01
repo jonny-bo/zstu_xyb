@@ -64,6 +64,69 @@ class GroupController extends BaseController
         ));
     }
 
+    public function openAction($id)
+    {
+        $group = $this->getGroupService()->openGroup($id);
+        $user  = $this->getUserService()->getUser($group['owner_id']);
+
+        return $this->render('AppBundle::admin/group/group-table-tr.html.twig', array(
+            'group' => $group,
+            'user'  => $user
+        ));
+    }
+
+    public function closeAction($id)
+    {
+        $group = $this->getGroupService()->closeGroup($id);
+        $user  = $this->getUserService()->getUser($group['owner_id']);
+
+        return $this->render('AppBundle::admin/group/group-table-tr.html.twig', array(
+            'group' => $group,
+            'user'  => $user
+        ));
+    }
+
+    public function transferAction(Request $request, $id)
+    {
+        if ($request->getMethod() == 'POST') {
+            $data   = $request->request->all();
+            $user   = $this->getUserService()->getUserByUsername($data['username']);
+            $group  = $this->getGroupService()->getGroup($id);
+            $member = $this->getGroupService()->getMemberByGroupIdAndUserId($id, $group['owner_id']);
+
+            $this->getGroupService()->updateMember($member['id'], array('role'=>'member'));
+            $this->getGroupService()->updateGroup($id, array('owner_id'=>$user['id']));
+
+            $member = $this->getGroupService()->getMemberByGroupIdAndUserId($id, $user['id']);
+
+            if ($member) {
+                $this->getGroupService()->updateMember($member['id'], array('role'=>'owner'));
+            } else {
+                $this->getGroupService()->joinGroup($id, $user['id']);
+            }
+
+            return $this->redirect($this->generateUrl('admin_group'));
+        }
+
+        return $this->render('AppBundle:admin/group:transfer-modal.html.twig', array(
+            'id' => $id
+        ));
+    }
+
+    public function checkUserAction(Request $request)
+    {
+        $username = $request->query->get('value');
+        $result   = $this->getUserService()->getUserByUsername($username);
+
+        if ($result) {
+            $response = true;
+        } else {
+            $response = false;
+        }
+
+        return $this->createJsonResponse($response);
+    }
+
     protected function getUserService()
     {
         return $this->biz->service('User:UserService');

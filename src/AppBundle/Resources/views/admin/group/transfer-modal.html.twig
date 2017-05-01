@@ -1,0 +1,25 @@
+{% extends 'AppBundle::bootstrap-modal-layout.html.twig' %}
+
+{% set modalSize = 'large' %}
+{% do script(['app/js/admin/group/transfer/index.js']) %}
+
+{% block title %}{{'请输入用户名'|trans}}{% endblock %}
+{% block body %}
+
+<form id="transfer-group-form" class="form-horizontal" method="post" action="{{ url('admin_group_transfer', {id:id}) }}">
+  <div class="form-group">
+    <label class="col-xs-2 control-label" for="user_nickname">转移给</label>
+    <div class="col-xs-7 controls">
+      <input type="text" id="username" name="username" class="form-control" data-url="{{ path('admin_group_checkuser') }}" data-display="用户名" placeholder="请输入用户名" data-widget-cid="widget-1" data-explain="">
+      <div class="help-block" style="display:none;"></div>
+    </div>
+  </div>
+
+  {{ form_csrf_token() }}
+</form>
+{% endblock %}
+
+{% block footer %}
+  <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+  <button type="submit" form="transfer-group-form" class="btn btn-primary">确认转移小组</button>
+{% endblock %}

@@ -66,6 +66,26 @@ admin_group:
   path:      /group
   defaults:  { _controller: AppBundle:Admin/Group:group }
 
+admin_group_open:
+  path:      /group/{id}/open
+  defaults:  { _controller: AppBundle:Admin/Group:open }
+  requirements:
+    _method: POST
+
+admin_group_close:
+  path:      /group/{id}/close
+  defaults:  { _controller: AppBundle:Admin/Group:close }
+  requirements:
+    _method: POST
+
+admin_group_transfer:
+  path:      /group/{id}/transfer
+  defaults:  { _controller: AppBundle:Admin/Group:transfer }
+
+admin_group_checkuser:
+  path:      /group/checkuser
+  defaults:  { _controller: AppBundle:Admin/Group:checkUser }  
+
 admin_group_thread:
   path:      /group/thread
   defaults:  { _controller: AppBundle:Admin/Group:thread }

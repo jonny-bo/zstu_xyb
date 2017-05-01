@@ -30,11 +30,17 @@
       <ul class="dropdown-menu">
         {% if goods.status != 2 %}
           <li>
-            <a title="发布" class="publish-goods" data-url="{{ path('admin_goods_publish', {id:goods.id}) }}" href="javascript:;">发布</a>
+            <a title="发布" class="publish-goods" data-url="{{ path('admin_goods_publish', {id:goods.id}) }}" href="javascript:;">
+              <span class="glyphicon glyphicon-ok-circle"></span>
+              发布
+            </a>
           </li>
         {% elseif goods.status == 2 %}
             <li>
-              <a title="关闭" class="close-goods" data-url="{{ path('admin_goods_close', {id:goods.id}) }}" href="javascript:;">关闭</a>
+              <a title="关闭" class="close-goods" data-url="{{ path('admin_goods_close', {id:goods.id}) }}" href="javascript:;">
+                <span class="glyphicon glyphicon-off"></span>
+                关闭
+              </a>
             </li>
         {% endif %}
       </ul>

@@ -30,7 +30,7 @@ interface UserService
 
     public function isEmailAvaliable($email);
 
-    public function isUsernameAvaliable($nickname);
+    public function isUsernameAvaliable($username);
 
     public function isMobileAvaliable($mobile);
 
