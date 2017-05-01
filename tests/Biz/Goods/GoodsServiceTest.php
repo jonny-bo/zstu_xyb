@@ -213,12 +213,12 @@ class GoodsServiceTest extends BaseTestCase
             'imgs' => []
         );
         $goods = $this->getGoodsService()->createGoods($goodsText);
-        $user = $this->createUser('test_user2');
+        $user = $this->createUser('test_user2', array('ROLE_USER'));
         $currentUser = new CurrentUser($user);
         self::$biz['user'] = $currentUser;
 
         $this->getGoodsService()->updateGoods($goods['id'], array(
-            'status' => '11111',
+            'status' => 2,
             'price' => 66
         ));
     }

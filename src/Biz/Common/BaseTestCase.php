@@ -31,7 +31,7 @@ class BaseTestCase extends ParentTestCase
         self::$biz['user'] = $currentUser;
     }
 
-    protected function createUser($username)
+    protected function createUser($username, $roles = array('ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN'))
     {
         $user = array(
             'username' => $username,
@@ -39,7 +39,7 @@ class BaseTestCase extends ParentTestCase
             "phone"    => '13582654789',
             "email"    => "{$username}@test.com",
             'password' => '12345',
-            'roles'    => array('ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN')
+            'roles'    => $roles
         );
         return $this->getUserService()->register($user);
     }
