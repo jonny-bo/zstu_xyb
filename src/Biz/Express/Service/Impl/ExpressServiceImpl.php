@@ -129,6 +129,12 @@ class ExpressServiceImpl extends BaseService implements ExpressService
 
     protected function perConditions($conditions)
     {
+        if (isset($conditions['is_urgent']) && !empty($conditions['is_urgent'])) {
+            $isUrgent = $conditions['is_urgent'];
+        } else {
+            $isUrgent = null;
+        }
+
         $conditions =  array_filter($conditions);
 
         if (isset($conditions['keywordType']) && isset($conditions['keyword'])) {
@@ -149,6 +155,10 @@ class ExpressServiceImpl extends BaseService implements ExpressService
 
         if (isset($conditions['endDate'])) {
             $conditions['endTime'] = strtotime($conditions['endDate']);
+        }
+
+        if ($isUrgent != null) {
+            $conditions['is_urgent'] = $isUrgent;
         }
 
         return $conditions;
