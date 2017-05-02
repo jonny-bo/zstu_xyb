@@ -1,0 +1,73 @@
+{% extends 'AppBundle::admin/layout.html.twig' %}
+
+{% set page = 'category' %}
+{% set menu = 'goods' %}
+
+{% block page_title %}
+    {{ '分类管理' }}
+{% endblock %}
+
+{% block sidebar %}
+  {% include 'AppBundle::admin/goods/side-bar.html.twig' %}
+{% endblock %}
+
+{% block page_buttons %}
+    <a href="#modal" data-toggle="modal" data-url="{{ path('admin_goods_category_create', {groupId:group.id}) }}"  class="btn btn-success btn-sm">添加分类</a>
+{% endblock %}
+
+{% block page_flash_message %}
+  {{ web_macro.flash_messages() }}
+{% endblock %}
+
+{% block main %}
+  <ul class="list-table" id="category-table" style="margin-bottom: 0">
+    <li class="th">
+      <div class="row">
+        <div class="td col-md-7">{{'名称'|trans}}</div>
+        <div class="td col-md-2">{{'编码'|trans}}</div>
+        <div class="td col-md-3">{{'操作'|trans}}</div>
+      </div>
+    </li>
+    <li id="category-table-body">
+        {% if categories is not empty %}
+            {{ _self.showCategoryTree(categories, group, false) }}
+        {% else %}
+            <div class="row empty">{{'暂无分类记录'|trans}}</div>
+        {% endif %}
+    </li>
+  </ul>
+{% endblock %}
+
+{% macro showCategoryTree(categories, group, isCollapseChildren) %}
+    <ul class="list-table sortable-list" data-group-id="{{ categories[0]['parent_id'] }}">
+        {% for category in categories %}
+            {% set isParent = category.children|default(null) is not empty %}
+            {% set isRoot = category.depth == 1 %}
+            <li id="{{ category.id }}" class="tr" data-name="{{ category.name }}" data-id="{{ category.id }}" data-parent-id="{{ category.parent_id }}" style="display: {{ (not isRoot and isCollapseChildren) ? 'none' : 'block' }}">
+                <div class="row{{ (isParent and isCollapseChildren) ? ' row-collapse' : ' row-expand' }}">
+                    <div class="td col-md-7 name sort-handle" style="padding-left: {{ 24 * (category.depth - 1 ) }}px; overflow: hidden">
+                        {% if isParent %}
+                            <i class="list-table-tree-icon glyphicon glyphicon-chevron-{{ isCollapseChildren ? 'right' : 'down' }}"></i>
+                        {% else %}
+                            <i class="list-table-tree-icon"></i>
+                        {% endif %}
+                        {{ category.name }}
+                    </div>
+                    <div class="td col-md-2 code">{{ category.code }}</div>
+                    <div class="td col-md-3 operation">
+                        <a href="javascript:;" class="btn btn-default btn-sm " data-url="{{ path('admin_goods_category_edit', {id:category.id}) }}" data-toggle="modal" data-target="#modal">
+                            <i class="glyphicon glyphicon-edit"></i> {{'编辑'|trans}}
+                        </a>
+                        {% if group.depth > category.depth %}
+                            <a href="javascript:;" class="btn btn-default btn-sm" data-url="{{ path('admin_goods_category_create', {parentId:category.id, groupId:group.id}) }}" data-toggle="modal" data-target="#modal"><i class="glyphicon glyphicon-plus"></i> {{'添加子分类'|trans}}</a>
+                        {% endif %}
+
+                    </div>
+                </div>
+                {% if isParent %}
+                    {{ _self.showCategoryTree(category.children, group, isCollapseChildren) }}
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endmacro %}

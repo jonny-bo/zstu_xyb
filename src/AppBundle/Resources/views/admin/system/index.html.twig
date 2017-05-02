@@ -1,0 +1,20 @@
+{% extends 'AppBundle::admin/layout.html.twig' %}
+
+{% set page = 'site' %}
+{% set menu = 'system' %}
+
+{% block page_title %}
+    {{ '站点设置' }}
+{% endblock %}
+
+{% block sidebar %}
+  {% include 'AppBundle::admin/system/side-bar.html.twig' %}
+{% endblock %}
+
+{% block page_flash_message %}
+  {{ web_macro.flash_messages() }}
+{% endblock %}
+
+{% block main %}
+
+{% endblock %}

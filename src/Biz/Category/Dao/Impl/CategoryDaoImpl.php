@@ -23,4 +23,9 @@ class CategoryDaoImpl extends GeneralDaoImpl implements CategoryDao
     {
         return $this->findByFields(array('group_id' => $groupId));
     }
+
+    public function getByCode($code)
+    {
+        return $this->getByFields(array('code' => $code));
+    }
 }

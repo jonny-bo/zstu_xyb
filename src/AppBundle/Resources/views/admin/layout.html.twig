@@ -30,7 +30,7 @@
         <li class="{% if menu == 'express' %} active {% endif %}"><a title="{{'快递'|trans}}" href="{{ path('admin_express') }}">{{'快递'|trans}}</a></li>
         <li class="{% if menu == 'goods' %} active {% endif %}"><a title="{{'旧货'|trans}}" href="{{ path('admin_goods') }}">{{'旧货'|trans}}</a></li>
         <li class="{% if menu == 'group' %} active {% endif %}"><a title="{{'论坛'|trans}}" href="{{ path('admin_group') }}">{{'论坛'|trans}}</a></li>
-        <li class="{% if menu == 'system' %} active {% endif %}"><a title="{{'系统'|trans}}" href="#">{{'系统'|trans}}</a></li>
+        <li class="{% if menu == 'system' %} active {% endif %}"><a title="{{'系统'|trans}}" href="{{ path('admin_setting_site') }}">{{'系统'|trans}}</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><a href="{{ path('homepage') }}"><i class="glyphicon glyphicon-home"></i> {{'回首页'|trans}}</a></li>

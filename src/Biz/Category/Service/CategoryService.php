@@ -17,4 +17,6 @@ interface CategoryService
     public function deleteCategory($categoryId);
 
     public function findCategoryByGroupCode($code);
+
+    public function getCategoryStructureTree($code);
 }

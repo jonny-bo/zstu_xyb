@@ -62,6 +62,26 @@ admin_goods_close:
   requirements:
     _method: POST
 
+admin_goods_category:
+  path:  /goods/category
+  defaults: { _controller: AppBundle:Admin/Goods:category }
+
+admin_goods_category_create:
+  path:  /goods/category/create
+  defaults: { _controller: AppBundle:Admin/Goods:createCategory }
+
+admin_goods_category_edit:
+  path:  /goods/category/{id}/edit
+  defaults: { _controller: AppBundle:Admin/Goods:editCategory }
+
+admin_goods_category_delete:
+  path:  /goods/category/{id}/delete
+  defaults: { _controller: AppBundle:Admin/Goods:deleteCategory }
+
+admin_goods_category_checkcode:
+  path:  /goods/category/checkcode
+  defaults: { _controller: AppBundle:Admin/Goods:checkcode }
+
 admin_group:
   path:      /group
   defaults:  { _controller: AppBundle:Admin/Group:group }
@@ -130,4 +150,8 @@ admin_thread_set_elite:
   path:      /thread/{id}/setElite
   defaults:  { _controller: AppBundle:Admin/Group:setElite }
   requirements:
-    _method: POST  
+    _method: POST
+
+admin_setting_site:
+  path:  /setting/site
+  defaults: { _controller: AppBundle:Admin/Setting:site }
