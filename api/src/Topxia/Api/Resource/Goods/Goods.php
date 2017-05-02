@@ -48,6 +48,11 @@ class Goods extends BaseResource
             throw new InvalidArgumentException('缺少必填字段');
         }
 
+        if (!empty($goods['imgs'])) {
+            $goods['imgs'] = json_decode($goods['imgs'], true);
+            $goods['imgs'] = array_values($goods['imgs']);
+        }
+
         $this->getGoodsService()->createGoods($goods);
 
         return array('success' => 'true');

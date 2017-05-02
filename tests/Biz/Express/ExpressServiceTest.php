@@ -118,7 +118,7 @@ class ExpressServiceTest extends BaseTestCase
         $currentUser = new CurrentUser($user);
         self::$biz['user'] = $currentUser;
 
-        $express = $this->getExpressService()->orderExpress($express['id']);
+        $express = $this->getExpressService()->orderExpress($express['id'], $currentUser['id']);
 
         $this->assertEquals($express['status'], 2);
         $this->assertEquals($express['receiver_id'], $user['id']);
@@ -130,7 +130,8 @@ class ExpressServiceTest extends BaseTestCase
      */
     public function testOrderExpressWithNotExpress()
     {
-        $this->getExpressService()->orderExpress(11);
+        $user = $this->createUser('test_user2');
+        $this->getExpressService()->orderExpress(11, $user['id']);
     }
 
     /**
@@ -145,15 +146,16 @@ class ExpressServiceTest extends BaseTestCase
             'offer'  => 3,
         );
 
+        $user = $this->createUser('test_user2');
         $express = $this->getExpressService()->createExpress($expressText);
     
         $this->assertEquals($express['status'], 1);
 
-        $this->getExpressService()->orderExpress($express['id']);
+        $express = $this->getExpressService()->orderExpress($express['id'], $user['id']);
 
         $this->assertEquals($express['status'], 2);
 
-        $this->getExpressService()->orderExpress($express['id']);
+        $this->getExpressService()->orderExpress($express['id'], $user['id']);
     }
 
     /**
@@ -167,12 +169,13 @@ class ExpressServiceTest extends BaseTestCase
             'detail' => 'detail',
             'offer'  => 3
         );
+        $user = self::$biz['user'];
 
         $express = $this->getExpressService()->createExpress($expressText);
     
         $this->assertEquals($express['status'], 1);
 
-        $this->getExpressService()->orderExpress($express['id']);
+        $this->getExpressService()->orderExpress($express['id'], $user['id']);
     }
 
     public function confirmMyExpressTest()
@@ -194,7 +197,7 @@ class ExpressServiceTest extends BaseTestCase
         $currentUser2 = new CurrentUser($user2);
         self::$biz['user'] = $currentUser2;
 
-        $express = $this->getExpressService()->orderExpress($express['id']);
+        $express = $this->getExpressService()->orderExpress($express['id'], $user2['id']);
 
         $this->assertEquals($express['status'], 2);
 
@@ -231,7 +234,7 @@ class ExpressServiceTest extends BaseTestCase
         $currentUser2 = new CurrentUser($user2);
         self::$biz['user'] = $currentUser2;
 
-        $express = $this->getExpressService()->orderExpress($express['id']);
+        $express = $this->getExpressService()->orderExpress($express['id'], $user2['id']);
 
         $this->assertEquals($express['status'], 2);
 
@@ -263,7 +266,7 @@ class ExpressServiceTest extends BaseTestCase
         $currentUser2 = new CurrentUser($user2);
         self::$biz['user'] = $currentUser2;
 
-        $express = $this->getExpressService()->orderExpress($express['id']);
+        $express = $this->getExpressService()->orderExpress($express['id'], $user2['id']);
 
         $this->assertEquals($express['status'], 2);
 

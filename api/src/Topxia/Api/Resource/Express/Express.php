@@ -56,9 +56,18 @@ class Express extends BaseResource
         return array('success' => 'true');
     }
 
+    public function apply($expressId)
+    {
+        $user = $this->getCurrentUser();
+        $this->getExpressApplyService()->apply($expressId, $user['id']);
+
+        return array('success' => 'true');
+    }
+
     public function order($expressId)
     {
-        $this->getExpressService()->orderExpress($expressId);
+        $user = $this->getCurrentUser();
+        $this->getExpressService()->orderExpress($expressId, $user['id']);
 
         return array('success' => 'true');
     }
@@ -99,5 +108,10 @@ class Express extends BaseResource
     protected function getUserService()
     {
         return $this->biz->service('User:UserService');
+    }
+
+    protected function getExpressApplyService()
+    {
+        return $this->biz->service('Express:ExpressApplyService');
     }
 }

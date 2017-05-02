@@ -55,13 +55,11 @@ class ExpressServiceImpl extends BaseService implements ExpressService
         return $this->getExpressDao()->create($fields);
     }
 
-    public function orderExpress($expressId)
+    public function orderExpress($expressId, $userId)
     {
         $express = $this->checkExpress($expressId);
 
-        $user = $this->getCurrentUser();
-
-        if ($express['publisher_id'] == $user['id']) {
+        if ($express['publisher_id'] == $userId) {
             throw new UnexpectedValueException('自己不能接自己的订单');
         }
 
@@ -69,7 +67,7 @@ class ExpressServiceImpl extends BaseService implements ExpressService
         $lock     = $this->getLock();
         $lock->get($lockName, 10);
 
-        $express = $this->updateExpress($expressId, array('status' => 2, 'receiver_id' => $user['id']));
+        $express = $this->updateExpress($expressId, array('status' => 2, 'receiver_id' => $userId));
 
         $lock->release($lockName);
 

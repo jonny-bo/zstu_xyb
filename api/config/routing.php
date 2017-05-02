@@ -12,11 +12,14 @@ $app->post(_u('/users/register'), 'res.User/User:register');  // 用户注册
 $app->post(_u('/users/avatar'), 'res.User/User:setAvatar');
 
 $app->get(_u('/my/expresses'), 'res.Express/MyExpress:get');
+$app->get(_u('/my/publish_expresses/{expressId}'), 'res.Express/MyExpress:myPublish');
+$app->post(_u('/my/publish_expresses/{expressId}/auth'), 'res.Express/MyExpress:auth');
 $app->post(_u('/my/publish_expresses/{expressId}'), 'res.Express/MyExpress:publishedConfirm');
 $app->post(_u('/my/recive_expresses/{expressId}'), 'res.Express/MyExpress:recivedConfirm');
 
 $app->get(_u('/expresses/{expressId}'), 'res.Express/Express:get');
 $app->post(_u('/expresses/{expressId}'), 'res.Express/Express:update');
+$app->post(_u('/expresses/{expressId}/apply'), 'res.Express/Express:apply');
 $app->post(_u('/expresses/{expressId}/order'), 'res.Express/Express:order');
 $app->post(_u('/expresses/{expressId}/cancel'), 'res.Express/Express:cancel');
 $app->get(_u('/expresses'), 'res.Express/Express:search');

@@ -55,6 +55,22 @@ class MyExpress extends BaseResource
         return $this->wrap($this->multicallFilter('Express/Express', $expresses), $total);
     }
 
+    public function auth(Request $request, $expressId)
+    {
+        $this->checkRequiredFields(array('user_id'), $request->request->all());
+        $userId = $request->request->get('user_id');
+        $this->getExpressApplyService()->auth($expressId, $userId);
+
+        return array('success' => 'true');
+    }
+
+    public function myPublish($expressId)
+    {
+        $express = $this->getExpressService()->getExpress($expressId);
+
+        return $this->filter($express);
+    }
+
     public function publishedConfirm($expressId)
     {
         $this->getExpressService()->confirmMyPublishExpress($expressId);
@@ -71,12 +87,28 @@ class MyExpress extends BaseResource
 
     public function filter($res)
     {
+        $res = $this->callFilter('Express/Express', $res);
+
+        if ($res['status'] == 1) {
+            $res['applys'] = $this->findApplyUsers($res[id]);
+        }
+
         return $res;
     }
 
     public function simplify($res)
     {
         return $res;
+    }
+
+    protected function findApplyUsers($expressId)
+    {
+        $applys = $this->getExpressApplyService()->findExpressApplyByExpressId($expressId);
+
+        $userIds = ArrayToolkit::column($applys, 'user_id');
+        $users   = $this->getUserService()->findUsersByIds($userIds);
+
+        return  $this->multicallSimplify('User/User', $users);
     }
 
     protected function getExpressService()
@@ -87,5 +119,10 @@ class MyExpress extends BaseResource
     protected function getUserService()
     {
         return $this->biz->service('User:UserService');
+    }
+
+    protected function getExpressApplyService()
+    {
+        return $this->biz->service('Express:ExpressApplyService');
     }
 }
