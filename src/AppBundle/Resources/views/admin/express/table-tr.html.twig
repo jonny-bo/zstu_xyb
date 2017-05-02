@@ -1,6 +1,9 @@
 <tr id="express-table-tr-{{ express.id }}">
   <td>
     <strong>{{ express.title|raw }}</strong>
+    {% if express.status == 2 %}
+      <label class="label label-danger">急</label>
+    {% endif %}
   </td>
   <td>
     {{ dict_text('expressType', express.type) }}

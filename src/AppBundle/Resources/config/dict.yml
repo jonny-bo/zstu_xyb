@@ -15,7 +15,7 @@ expressStatus:
     1: 待认领
     2: 被认领
     3: 已送达
-    4: 已确认
+    4: 已确认  
 expressKeyWordType:
     nickname: 发布人昵称
     title: 标题

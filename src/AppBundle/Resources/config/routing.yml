@@ -11,3 +11,11 @@ login_check:
 
 logout:
   path: /logout
+
+file_upload:
+  path:      /file/upload
+  defaults:  { _controller: AppBundle:File:upload }
+
+file_img_crop:
+  path:      /file/crop
+  defaults:  { _controller: AppBundle:File:crop }

@@ -2,14 +2,17 @@
 namespace AppBundle\Twig;
 
 use Biz\Common\ConvertIpToolkit;
+use Codeages\Biz\Framework\Context\Biz;
 
 class HelperExtension extends \Twig_Extension
 {
     protected $container;
+    protected $biz;
 
-    public function __construct($container)
+    public function __construct($container, Biz $biz)
     {
         $this->container = $container;
+        $this->biz = $biz;
     }
 
     public function getFunctions()
@@ -21,6 +24,7 @@ class HelperExtension extends \Twig_Extension
             new \Twig_SimpleFunction('parameter', array($this, 'getParameter')),
             new \Twig_SimpleFunction('form_csrf_token', array($this, 'rendorFormCsrfToken'), array('is_safe' => array('html'))),
             new \Twig_SimpleFunction('convertIP', array($this, 'getConvertIP')),
+            new \Twig_SimpleFunction('file_path', array($this, 'getFilePath')),
         );
     }
 
@@ -171,5 +175,49 @@ class HelperExtension extends \Twig_Extension
         }
 
         return '';
+    }
+
+    public function getFilePath($uri, $default = '', $absolute = false)
+    {
+        $assets  = $this->container->get('templating.helper.assets');
+        $request = $this->container->get('request');
+
+        if (empty($uri)) {
+            $url = $assets->getUrl('assets/img/default/'.$default);
+
+            if ($absolute) {
+                $url = $request->getSchemeAndHttpHost().$url;
+            }
+
+            return $url;
+        }
+
+        if (strpos($uri, "http://") !== false) {
+            return $uri;
+        }
+
+        $uri = $this->parseFileUri($uri);
+
+        if ($uri['access'] == 'public') {
+            $url = rtrim($this->biz['upload.public_url_path'], ' /').'/'.$uri['path'];
+            $url = ltrim($url, ' /');
+            $url = $assets->getUrl($url);
+
+            if ($absolute) {
+                $url = $request->getSchemeAndHttpHost().$url;
+            }
+
+            return $url;
+        }
+    }
+
+    public function parseFileUri($uri)
+    {
+        return $this->getFileService()->parseFileUri($uri);
+    }
+
+    protected function getFileService()
+    {
+        return $this->biz->service('File:FileService');
     }
 }

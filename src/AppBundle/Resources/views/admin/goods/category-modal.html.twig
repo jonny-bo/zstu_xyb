@@ -34,16 +34,16 @@
       <div class="col-md-8 controls">
         <div id="category-icon-field">
           {% if category.icon %}
-            <img class="mbm" src="{{ category.icon }}">
+            <img class="mbm" src="{{ file_path(category.icon) }}" width="132">
           {% endif %}
         </div>
         <input type="hidden" name="icon" value="{{ category.icon }}">
-        <button id="category-icon-uploader" class="btn btn-sm btn-default webuploader-container" type="button" data-target="#category-icon-field"><i class="glyphicon glyphicon-picture"></i></button>
-        <button {% if not category.icon %}style="display:none;"{% endif %} id="category-icon-delete" class="btn btn-sm btn-default webuploader-container" type="button"><i class="glyphicon glyphicon-trash"></i></button>
+        <a class="btn btn-fat btn-primary upload-picture-btn" id="upload-picture-btn" data-upload-token="thumb">
+          {{'上传新图片'|trans}}
+        </a>
         <div class="help-block">{{'允许上传的图标文件格式为'|trans}}'pg, jpeg, gif, png</div>
       </div>
     </div>
-
     <input type="hidden" name="group_id" value="{{ category.group_id }}">
     <input type="hidden" name="parent_id" value="{{ category.parent_id }}">
     {{ form_csrf_token() }}

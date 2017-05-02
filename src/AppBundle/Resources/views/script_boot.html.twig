@@ -1,0 +1,22 @@
+<script>
+  var app = {};
+  app.version = '{{ asset_version('/') }}';
+  app.httpHost = '{{ app.request.getSchemeAndHttpHost() }}';
+  app.basePath = '{{ app.request.getBasePath() }}';
+
+  var CLOUD_FILE_SERVER = ""; 
+
+  app.config = {};
+
+  app.arguments = {};
+  {% if script_controller is defined %}
+    app.controller = '{{ script_controller }}';
+  {% endif %}
+  {% if script_arguments is defined %}
+    app.arguments = {{ script_arguments|json_encode|raw }};
+  {% endif %}
+
+  app.uploadUrl = '{{ path("file_upload") }}';
+  app.imgCropUrl = '{{ path("file_img_crop") }}';
+  app.lang = '{{ app.request.locale }}';
+</script>

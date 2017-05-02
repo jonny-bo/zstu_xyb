@@ -33,11 +33,13 @@ $("#category-form").validate({
 });
 
 new EsWebUploader({
-  element: '#category-icon-uploader',
+  element: '#upload-picture-btn',
   onUploadSuccess: function(file, response) {
-    console.log(file);
+    console.log(response);
+    $('#category-icon-field').html('<img src="' + response.url + '" class="mbm" width = "132">');
+    $("#category-form").find('[name=icon]').val(response.uri);
     // let url = $("#category-icon-uploader").data("gotoUrl");
-    // notify('success', Translator.trans('上传成功！'), 1);
+    notify('success', '上传成功！', 1);
     // document.location.href = url;
   }
 });

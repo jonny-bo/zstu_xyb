@@ -88,7 +88,9 @@ class GoodsController extends BaseController
     public function createCategoryAction(Request $request)
     {
         if ($request->getMethod() == 'POST') {
-            $category = $this->getCategoryService()->createCategory($request->request->all());
+            $fields = $request->request->all();
+            unset($fields['file']);
+            $category = $this->getCategoryService()->createCategory($fields);
             return $this->redirect($this->generateUrl('admin_goods_category'));
         }
 
@@ -113,7 +115,9 @@ class GoodsController extends BaseController
         $category = $this->getCategoryService()->getCategory($id);
 
         if ($request->getMethod() == 'POST') {
-            $category = $this->getCategoryService()->updateCategory($id, $request->request->all());
+            $fields = $request->request->all();
+            unset($fields['file']);
+            $category = $this->getCategoryService()->updateCategory($id, $fields);
             return $this->redirect($this->generateUrl('admin_goods_category'));
         }
 

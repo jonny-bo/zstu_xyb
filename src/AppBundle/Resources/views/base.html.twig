@@ -25,6 +25,7 @@
         <script src="{{ asset('static-dist/' ~ path, 'webpack') }}"></script>
       {% endfor %}
     {% endblock %}
+    {% include 'AppBundle::script_boot.html.twig' %}
     <script>
     var _hmt = _hmt || [];
     (function() {

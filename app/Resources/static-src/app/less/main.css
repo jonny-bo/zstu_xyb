@@ -31,7 +31,6 @@ body {
     right: 50px;
   }
 }
-
 .nav.navbar-nav > li {
   float: left;
   height: 60px;
@@ -238,10 +237,10 @@ body {
   -moz-border-radius: 4px;
   border-radius: 4px;
 }
-
 .webuploader-element-invisible {
   display: none;
   position: absolute !important;
-  clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
-  clip: rect(1px,1px,1px,1px);
+  clip: rect(1px 1px 1px 1px);
+  /* IE6, IE7 */
+  clip: rect(1px, 1px, 1px, 1px);
 }

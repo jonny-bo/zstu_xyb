@@ -6,5 +6,7 @@
 {% do script(['libs/vendor.js', 'app/js/common.js', 'app/js/main.js'], 100) %}
 
 {% block body %}
-
+    {% block header %}
+      {% include 'AppBundle:default:header.html.twig' %}
+    {% endblock %}
 {% endblock %}
