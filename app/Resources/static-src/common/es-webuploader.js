@@ -38,7 +38,7 @@ class EsWebUploader {
       }),
       accept: config.accept,
       auto: true,
-      fileNumLimit: 1,
+      fileNumLimit: 10,
       fileSizeLimit: config.fileSizeLimit
     });
 

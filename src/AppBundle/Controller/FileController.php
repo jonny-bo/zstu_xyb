@@ -9,7 +9,7 @@ class FileController extends BaseController
     public function uploadAction(Request $request)
     {
         $file = $request->files->get('file');
-        $code = $request->request->get('uploadToken');
+        $code = $request->request->get('token');
         $group = $this->getFileGroupService()->getFileGroupByCode($code);
         if (empty($group)) {
             $code = 'default';
