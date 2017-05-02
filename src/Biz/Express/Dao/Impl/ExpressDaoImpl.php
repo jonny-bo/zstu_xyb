@@ -24,6 +24,7 @@ class ExpressDaoImpl extends GeneralDaoImpl implements ExpressDao
                 'created_time >= :startTime',
                 'created_time <= :endTime',
                 'title LIKE :title',
+                'is_urgent     = :is_urgent'
             ),
         );
     }
