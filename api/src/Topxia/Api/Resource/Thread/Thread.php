@@ -49,10 +49,11 @@ class Thread extends BaseResource
             $group = $this->getGroupService()->getGroupByTitle('default');
             $fields['group_id'] = $group['id'];
         }
-        if (isset($fields['imgs']) && !empty($goods['imgs'])) {
-            $goods['imgs'] = json_decode($goods['imgs'], true);
-            $goods['imgs'] = array_values($goods['imgs']);
+        if (isset($fields['imgs']) && !empty($fields['imgs'])) {
+            $fields['imgs'] = json_decode($fields['imgs'], true);
+            $fields['imgs'] = array_values($fields['imgs']);
         }
+
         $this->checkRequiredFields($this->requireFiles, $fields);
         $this->getThreadService()->createThread($fields);
 
