@@ -37,4 +37,9 @@ class GroupDaoImpl extends GeneralDaoImpl implements GroupDao
     {
         return $this->findInField('id', $ids);
     }
+
+    public function getByTitle($title)
+    {
+        return $this->getByFields(array('title' => $title));
+    }
 }

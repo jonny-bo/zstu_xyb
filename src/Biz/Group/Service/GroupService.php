@@ -6,6 +6,8 @@ interface GroupService
 {
     public function getGroup($groupId);
 
+    public function getGroupByTitle($title);
+
     public function searchGroups($conditions, $orderBy, $start, $limit);
 
     public function searchGroupsCount($conditions);

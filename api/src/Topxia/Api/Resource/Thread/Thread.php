@@ -10,7 +10,7 @@ use Biz\Common\ArrayToolkit;
 class Thread extends BaseResource
 {
     protected $requireFiles = array(
-        'title', 'content', 'group_id'
+        'title', 'content'
     );
     public function search(Request $request)
     {
@@ -45,6 +45,10 @@ class Thread extends BaseResource
     public function post(Request $request)
     {
         $fields             = $request->request->all();
+        if (!isset($fields['group_id']) || empty($fields['group_id'])) {
+            $group = $this->getGroupService()->getGroupByTitle('default');
+            $fields['group_id'] = $group['id'];
+        }
         $this->checkRequiredFields($this->requireFiles, $fields);
         $this->getThreadService()->createThread($fields);
 

@@ -19,6 +19,11 @@ class GroupServiceImpl extends BaseService implements GroupService
         return $this->getGroupDao()->get($groupId);
     }
 
+    public function getGroupByTitle($title)
+    {
+        return $this->getGroupDao()->getByTitle($title);
+    }
+
     public function searchGroups($conditions, $orderBy, $start, $limit)
     {
         $conditions = $this->perConditions($conditions);
