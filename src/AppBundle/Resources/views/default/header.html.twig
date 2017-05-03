@@ -12,10 +12,6 @@
       <a class="navbar-brand" href="{{path('homepage')}}">{{'浙江理工大学－校园帮'}}</a>
     </div>
     <div class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-        <li class="{% if menu == 'goods' %} active {% endif %}"><a title="{{'旧货'|trans}}" href="">{{'旧货'|trans}}</a></li>
-        <li class="{% if menu == 'group' %} active {% endif %}"><a title="{{'论坛'|trans}}" href="">{{'论坛'|trans}}</a></li>
-      </ul>
       <ul class="nav navbar-nav navbar-right">
         {% if app.user %}
         <li class="user-avatar-li nav-hover">
