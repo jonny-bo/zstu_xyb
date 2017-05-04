@@ -33,11 +33,22 @@ class Thread extends BaseResource
         return $this->wrap($this->multiFilter($threds), $total);
     }
 
-    public function get($threadId)
+    public function get(Request $request, $threadId)
     {
+        $start  = $request->query->get('start', 0);
+        $limit  = $request->query->get('limit', 10);
         $thread = $this->getThreadService()->getThread($threadId);
 
         $this->getThreadService()->hitThread($threadId);
+
+        $comments   = $this->getThreadService()->searchThreadPosts(
+            array('thread_id' => $threadId, 'post_id' => 0),
+            array('created_time' => 'ASC'),
+            $start,
+            $limit
+        );
+
+        $thread['comments'] = $this->multicallFilter('Thread/Posts', $comments);
 
         return $this->filter($thread);
     }

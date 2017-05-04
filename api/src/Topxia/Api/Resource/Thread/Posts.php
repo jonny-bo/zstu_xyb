@@ -29,7 +29,7 @@ class Posts extends BaseResource
 
         $posts = $this->getThreadService()->searchThreadPosts(
             $conditions,
-            array('created_time' => 'DESC'),
+            array('created_time' => 'ASC'),
             $start,
             $limit
         );
@@ -50,6 +50,13 @@ class Posts extends BaseResource
                 'post_id' => $res['id'],
                 'thread_id' => $res['thread_id']
             ));
+            $itemComments = $this->getThreadService()->searchThreadPosts(
+                array('thread_id' => $res['thread_id'], 'post_id' => $res['id']),
+                array('created_time' => 'ASC'),
+                0,
+                3
+            );
+            $res['item_comments'] = $this->multiFilter($itemComments);
         }
 
         unset($res['user_id']);
