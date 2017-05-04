@@ -76,12 +76,13 @@ class Thread extends BaseResource
         foreach ($res['imgs'] as $key => $uri) {
             $res['imgs'][$key] = $this->getFileUrl($uri);
         }
+        $res['user'] = $this->callSimplify('User/User', $this->getUserService()->getUser($res['user_id']));
         if ($res['last_post_member_id']) {
             $res['last_post_member']    = $this->callSimplify('User/User', $this->getUserService()->getUser($res['last_post_member_id']));
         } else {
-            $res['last_post_member'] = array();
+            $res['last_post_member'] = $res['user'];
         }
-        $res['user'] = $this->callSimplify('User/User', $this->getUserService()->getUser($res['user_id']));
+
         $res['updated_time'] = date('c', $res['updated_time']);
         $res['created_time'] = date('c', $res['created_time']);
         $res['last_post_time'] = $res['last_post_time'] ? date('c', $res['last_post_time']) : $res['last_post_time'];
