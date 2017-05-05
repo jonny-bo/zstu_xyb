@@ -21,32 +21,36 @@
             <ul class="dropdown-menu" role="menu">
               <li role="presentation" class="dropdown-header">{{ app.user.nickname }}</li>
               <li>
-                <a href="/user/1"><i class="glyphicon glyphicon-user"></i>个人主页</a>
+                <a href=""><i class="glyphicon glyphicon-user"></i>个人主页</a>
               </li>
               <li>
-                <a href="/settings/"><i class="glyphicon glyphicon-cog"></i>个人设置</a>
+                <a href=""><i class="glyphicon glyphicon-cog"></i>个人设置</a>
               </li>
-                                         
-              <li>
-                <a href="/admin/"><i class="glyphicon glyphicon-tasks"></i>管理后台</a>
-              </li>
+               {% if app.user.isAdmin()|default(null) %}           
+                <li>
+                  <a href="{{ path('admin_dashboard') }}"><i class="glyphicon glyphicon-tasks"></i>管理后台</a>
+                </li>
+              {% endif %}
               <li class="user-nav-li-logout">
-                <a href="/logout"><i class="glyphicon glyphicon-off"> </i>退出登录</a>
+                <a href="/logout"><i class="glyphicon glyphicon-off"></i>退出登录</a>
               </li>
             </ul>
         </li>
         <li class="visible-lg nav-hover">
-          <a><span class="glyphicon glyphicon-envelope" style="color: white;"></span></a>
+          <a class="hasmessage">
+            <span class="fa fa-envelope-o" style="color: white;"></span>
+            <span class="dot"></span>
+          </a>
           <ul class="dropdown-menu" role="menu">
             <li>
               <a href="/notification">
-                <span class="pull-right num"></span>
+                <span class="pull-right num">11</span>
                 <i class="glyphicon glyphicon-bell"></i>通知
               </a>
             </li>
             <li>
               <a href="/message/">
-                <span class="pull-right num"></span>
+                <span class="pull-right num">3</span>
                 <i class="glyphicon glyphicon-envelope"></i>私信
               </a>
             </li>

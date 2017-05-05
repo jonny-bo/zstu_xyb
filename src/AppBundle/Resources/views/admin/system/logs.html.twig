@@ -2,6 +2,7 @@
 
 {% set page = 'log' %}
 {% set menu = 'system' %}
+{% do script(['app/js/admin/express/index.js']) %}
 
 {% block page_title %}
     {{ '系统日志' }}
@@ -30,11 +31,11 @@
         </select>
       </div>
       <div class="form-group has-feedback">
-        <input type="text" id="startTime" class="form-control datepicker" value="{{ app.request.query.get('start_time') }}" name="start_time" placeholder="操作时间">
+        <input type="text" id="startDate" class="form-control datepicker" value="{{ app.request.query.get('start_time') }}" name="start_time" placeholder="操作时间">
         <i class="fa fa-calendar form-control-feedback"></i>
       </div>
       <div class="form-group has-feedback">
-        <input type="text" id="endTime" class="form-control datepicker" value="{{ app.request.query.get('end_time') }}" name="end_time" placeholder="到">
+        <input type="text" id="endDate" class="form-control datepicker" value="{{ app.request.query.get('end_time') }}" name="end_time" placeholder="到">
         <i class="fa fa-calendar form-control-feedback"></i>
       </div>
       <div class="form-group">
@@ -47,8 +48,8 @@
     <table class="table table-responsive table-hover">
       <thead class="">
       <tr>
-        <th>用户</th>
         <th>模块</th>
+        <th>用户</th>
         <th>日志内容</th>
         <th>操作时间</th>
         <th>日志等级</th>
@@ -59,8 +60,8 @@
       <tbody class="table-center">
       {% for log in logs %}
         <tr>
-          <td>{{ log.username }}</td>
           <td>{{ dict_text('log-module', log.module) }}</td>
+          <td>{{ log.username }}</td>
           <td>{{ log.message }}</td>
           <td>{{ log.created_time|date('Y-m-d H:i:s') }}</td>
           <td>

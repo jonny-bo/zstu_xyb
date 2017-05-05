@@ -244,3 +244,28 @@ body {
   /* IE6, IE7 */
   clip: rect(1px, 1px, 1px, 1px);
 }
+.dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  background-color: #e83d2c;
+}
+.dot-md {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  background-color: #e83d2c;
+}
+.nav.navbar-nav > li > a.hasmessage {
+  position: relative;
+  display: block;
+}
+.navbar-inverse .navbar-brand {
+  margin-top: 5px;
+}
