@@ -155,3 +155,20 @@ admin_thread_set_elite:
 admin_setting_site:
   path:  /setting/site
   defaults: { _controller: AppBundle:Admin/Setting:site }
+
+admin_log_modal:
+  path:      /log
+  defaults:  { _controller: AppBundle:Admin/Log:showModal }
+  requirements:
+    _method: GET
+
+admin_system_log_list:
+  path:      /system/log
+  defaults:  { _controller: AppBundle:Admin/Log:showList }
+
+admin_log_info_modal:
+  path:      /system/log/{logId}
+  defaults:  { _controller: AppBundle:Admin/Log:showInfoModal }
+  requirements:
+    _method: GET
+    logId: \d+

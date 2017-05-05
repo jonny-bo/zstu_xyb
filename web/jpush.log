@@ -1,0 +1,2 @@
+Send POST https://api.jpush.cn/v3/push, body:{"platform":"all","audience":"all","notification":{"alert":"Hi, JPush"},"options":{"sendno":1846697402,"apns_production":false}}, times:1
+Send POST https://api.jpush.cn/v3/push, body:{"platform":"all","audience":"all","notification":{"alert":"\u60a8\u7684\u8ba2\u5355\u5df2\u88ab\u63a5\u53d7\uff0c\u8bf7\u53ca\u65f6\u786e\u8ba4\uff01"},"options":{"sendno":1958990945,"apns_production":false}}, times:1

@@ -43,7 +43,10 @@ class UserController extends BaseController
             $fields = $request->request->all();
             $fields['created_ip'] = $request->getClientIp();
 
-            $this->getUserService()->register($fields);
+            $user = $this->getUserService()->register($fields);
+
+            $this->getLogService()->info('user', $user['id'], 'register_user', "添加用户{$user['nickname']}(#{$user['id']})", array(), $user);
+
             $this->setFlashMessage('success', '添加用户成功');
 
             return $this->redirect($this->generateUrl('admin_user'));
@@ -80,6 +83,8 @@ class UserController extends BaseController
 
             $user = $this->getUserService()->getUser($id);
 
+            $this->getLogService()->info('user', $user['id'], 'change_role', "设置用户{$user['nickname']}(#{$user['id']})的角色为：".implode(',', $roles));
+
             return $this->render('AppBundle::admin/user/table-tr.html.twig', array(
                 'user'    => $user
             ));
@@ -94,17 +99,20 @@ class UserController extends BaseController
     {
         $this->getUserService()->lockUser($id);
         $this->kickUserLogout($id);
+        $user = $this->getUserService()->getUser($id);
+        $this->getLogService()->info('user', $user['id'], 'lock_user', "封禁用户{$user['nickname']}(#{$user['id']})");
         return $this->render('AppBundle::admin/user/table-tr.html.twig', array(
-            'user'    => $this->getUserService()->getUser($id),
+            'user'    => $user,
         ));
     }
 
     public function unlockAction($id)
     {
         $this->getUserService()->unlockUser($id);
-
+        $user = $this->getUserService()->getUser($id);
+        $this->getLogService()->info('user', $user['id'], 'unlock_user', "解禁禁用户{$user['nickname']}(#{$user['id']})");
         return $this->render('AppBundle::admin/user/table-tr.html.twig', array(
-            'user'    => $this->getUserService()->getUser($id),
+            'user'    => $user,
         ));
     }
 

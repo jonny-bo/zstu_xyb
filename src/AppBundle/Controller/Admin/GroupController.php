@@ -69,6 +69,8 @@ class GroupController extends BaseController
         $group = $this->getGroupService()->openGroup($id);
         $user  = $this->getUserService()->getUser($group['owner_id']);
 
+        $this->getLogService()->info('group', $group['id'], 'open_group', "发布小组{$group['title']}(#{$group['id']})");
+
         return $this->render('AppBundle::admin/group/group-table-tr.html.twig', array(
             'group' => $group,
             'user'  => $user
@@ -79,6 +81,8 @@ class GroupController extends BaseController
     {
         $group = $this->getGroupService()->closeGroup($id);
         $user  = $this->getUserService()->getUser($group['owner_id']);
+
+        $this->getLogService()->info('group', $group['id'], 'close_group', "关闭小组{$group['title']}(#{$group['id']})");
 
         return $this->render('AppBundle::admin/group/group-table-tr.html.twig', array(
             'group' => $group,
@@ -104,6 +108,8 @@ class GroupController extends BaseController
             } else {
                 $this->getGroupService()->joinGroup($id, $user['id']);
             }
+
+            $this->getLogService()->info('group', $group['id'], 'transfer_group', "转让小组{$group['title']}(#{$group['id']})给{$user['nickname']}");
 
             return $this->redirect($this->generateUrl('admin_group'));
         }
@@ -133,6 +139,8 @@ class GroupController extends BaseController
         $user   = $this->getUserService()->getUser($thread['user_id']);
         $group  = $this->getGroupService()->getGroup($thread['group_id']);
 
+        $this->getLogService()->info('thread', $thread['id'], 'open_thread', "发布话题{$thread['title']}(#{$thread['id']})");
+
         return $this->render('AppBundle::admin/group/thread-table-tr.html.twig', array(
             'thread' => $thread,
             'user'   => $user,
@@ -146,6 +154,8 @@ class GroupController extends BaseController
         $user   = $this->getUserService()->getUser($thread['user_id']);
         $group  = $this->getGroupService()->getGroup($thread['group_id']);
 
+        $this->getLogService()->info('thread', $thread['id'], 'close_thread', "关闭话题{$thread['title']}(#{$thread['id']})");
+
         return $this->render('AppBundle::admin/group/thread-table-tr.html.twig', array(
             'thread' => $thread,
             'user'  => $user,
@@ -155,7 +165,10 @@ class GroupController extends BaseController
 
     public function deleteThreadAction($id)
     {
+        $thread = $this->getThreadService()->getThread($id);
         $this->getThreadService()->deleteThread($id);
+
+        $this->getLogService()->warning('thread', $thread['id'], 'delete_thread', "删除话题{$thread['title']}(#{$thread['id']})");
 
         return $this->createJsonResponse('success');
     }

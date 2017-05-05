@@ -16,6 +16,13 @@ services:
         tags:
             - { name: twig.extension }
 
+    app.twig_extension:
+        class: AppBundle\Twig\AppExtension
+        arguments:    ['@service_container']
+        public: false
+        tags:
+            - { name: twig.extension }
+
     app.user_provider:
         class: AppBundle\Security\UserProvider
         arguments: ["@biz"]

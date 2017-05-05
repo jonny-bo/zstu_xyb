@@ -54,6 +54,8 @@ class GoodsController extends BaseController
         $category = $this->getCategoryService()->getCategory($goods['category_id']);
         $user     = $this->getUserService()->getUser($goods['publisher_id']);
 
+        $this->getLogService()->info('goods', $goods['id'], 'publish_goods', "发布旧货交易{$goods['title']}(#{$goods['id']})");
+
         return $this->render('AppBundle::admin/goods/table-tr.html.twig', array(
             'goods'    => $goods,
             'category' => $category['name'],
@@ -66,6 +68,8 @@ class GoodsController extends BaseController
         $goods     = $this->getGoodsService()->cancelGoods($id);
         $category = $this->getCategoryService()->getCategory($goods['category_id']);
         $user     = $this->getUserService()->getUser($goods['publisher_id']);
+
+        $this->getLogService()->info('goods', $goods['id'], 'publish_goods', "关闭旧货交易{$goods['title']}(#{$goods['id']})");
 
         return $this->render('AppBundle::admin/goods/table-tr.html.twig', array(
             'goods'    => $goods,
@@ -91,6 +95,9 @@ class GoodsController extends BaseController
             $fields = $request->request->all();
             unset($fields['file']);
             $category = $this->getCategoryService()->createCategory($fields);
+
+            $this->getLogService()->info('category', $category['id'], 'create_category', "创建分类{$category['name']}(#{$category['id']})", array(), $category);
+
             return $this->redirect($this->generateUrl('admin_goods_category'));
         }
 
@@ -115,9 +122,13 @@ class GoodsController extends BaseController
         $category = $this->getCategoryService()->getCategory($id);
 
         if ($request->getMethod() == 'POST') {
+            $oldData = $category;
             $fields = $request->request->all();
             unset($fields['file']);
             $category = $this->getCategoryService()->updateCategory($id, $fields);
+
+            $this->getLogService()->info('category', $category['id'], 'edit_category', "编辑分类{$category['name']}(#{$category['id']})", $oldData, $category);
+
             return $this->redirect($this->generateUrl('admin_goods_category'));
         }
 
@@ -128,7 +139,10 @@ class GoodsController extends BaseController
 
     public function deleteCategoryAction($id)
     {
+        $category = $this->getCategoryService()->getCategory($id);
         $this->getCategoryService()->deleteCategory($id);
+
+        $this->getLogService()->warning('category', $category['id'], 'delete_category', "删除分类{$category['name']}(#{$category['id']})");
 
         return $this->redirect($this->generateUrl('admin_goods_category'));
     }

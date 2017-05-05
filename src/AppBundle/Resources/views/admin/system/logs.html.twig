@@ -1,0 +1,76 @@
+{% extends 'AppBundle::admin/layout.html.twig' %}
+
+{% set page = 'log' %}
+{% set menu = 'system' %}
+
+{% block page_title %}
+    {{ '系统日志' }}
+{% endblock %}
+
+{% block sidebar %}
+  {% include 'AppBundle::admin/system/side-bar.html.twig' %}
+{% endblock %}
+
+{% block page_flash_message %}
+  {{ web_macro.flash_messages() }}
+{% endblock %}
+
+{% block main %}
+  <form id="log-search-form" class="form-inline well well-sm" action="" method="get" novalidate>
+      <div class="form-group">
+        <select class="form-control" id="level" name="level" data-placeholder="日志等级" >
+          <option value="" selected="selected">--所有等级--</option>
+          {{ select_options(dict('log-level'), app.request.query.get('level')|default('')) }}
+        </select>
+      </div>
+      <div class="form-group">
+        <select class="form-control" id="module" name="module" data-placeholder="所有模块" >
+          <option value="" selected="selected">--所有模块--</option>
+          {{ select_options(dict('log-module'), app.request.query.get('module')|default('')) }}
+        </select>
+      </div>
+      <div class="form-group has-feedback">
+        <input type="text" id="startTime" class="form-control datepicker" value="{{ app.request.query.get('start_time') }}" name="start_time" placeholder="操作时间">
+        <i class="fa fa-calendar form-control-feedback"></i>
+      </div>
+      <div class="form-group has-feedback">
+        <input type="text" id="endTime" class="form-control datepicker" value="{{ app.request.query.get('end_time') }}" name="end_time" placeholder="到">
+        <i class="fa fa-calendar form-control-feedback"></i>
+      </div>
+      <div class="form-group">
+        <input type="text" id="username" name="username" value="{{ app.request.query.get('username') }}" class="form-control"  placeholder="请输入用户名">
+      </div>
+
+    <button class="btn btn-primary">搜索</button>
+  </form>
+  <div class="listtable">
+    <table class="table table-responsive table-hover">
+      <thead class="">
+      <tr>
+        <th>用户</th>
+        <th>模块</th>
+        <th>日志内容</th>
+        <th>操作时间</th>
+        <th>日志等级</th>
+        <th>操作</th>
+      </tr>
+      </thead>
+    
+      <tbody class="table-center">
+      {% for log in logs %}
+        <tr>
+          <td>{{ log.username }}</td>
+          <td>{{ dict_text('log-module', log.module) }}</td>
+          <td>{{ log.message }}</td>
+          <td>{{ log.created_time|date('Y-m-d H:i:s') }}</td>
+          <td>
+            <label class="label label-{{ log.level }}">{{ dict_text('log-level', log.level) }}</label>
+          </td>
+          <td><button id="log-info" class="btn btn-default btn-sm margin_0" data-url="{{ path('admin_log_info_modal', {logId: log.id}) }}" data-target="#modal" data-toggle="modal">查看数据</button></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+    </table>
+    {{ web_macro.paginator(paginator) }}
+  </div>
+{% endblock %}
