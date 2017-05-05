@@ -51,30 +51,6 @@ class Thread extends BaseResource
 
         $thread['comments'] = $this->multicallFilter('Thread/Posts', $comments);
 
-        $app_key = '20990a7b45465c239ba31270';
-        $master_secret = '27520d83f3e71642f4305bfd';
-        // $registration_id = getenv('registration_id');
-
-        $client = new JPush($app_key, $master_secret);
-
-        $push_payload = $client->push()
-        ->setPlatform('all')
-        ->addAllAudience()
-        ->setNotificationAlert('您的订单已被接受，请及时确认！');
-
-        try {
-            $response = $push_payload->send();
-            print_r($response);
-        } catch (\JPush\Exceptions\APIConnectionException $e) {
-            // try something here
-            print $e;
-        } catch (\JPush\Exceptions\APIRequestException $e) {
-            // try something here
-            print $e;
-        }
-
-        exit();
-
         return $this->filter($thread);
     }
 
