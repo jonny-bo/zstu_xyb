@@ -1,6 +1,115 @@
 {% extends "AppBundle::layout.html.twig" %}
 
-{% block title %}Homepage - {{ parent() }}{% endblock %}
-{% block description %}This is homepage.{% endblock %}
-{% block keywords %}homepage{% endblock %}
+{% block top_content %}
+    {% include 'AppBundle:default:baner.html.twig' %}
+{% endblock %}
+{% block content %}
+    <div class="text-line">
+      <h5><span>旧货市场</span><div class="line"></div></h5>
+      <div class="subtitle">高校旧货市场，让你的生活闲置起来。</div>
+    </div>
+    <div class="course-filter" id="course-filter">
+        <ul class="nav nav-pills hidden-xs" role="tablist">
+            <li role="presentation" class="active  js-course-filter" data-url="/course/search?orderBy=latest" data-type="course">
+                <a href="javascript:;">全部物品</a>
+            </li>
+            <li role="presentation" class=" js-course-filter" data-url="/course/search?categoryId=1&amp;orderBy=latest" data-type="course">
+                <a href="javascript:;">默认分类</a>
+            </li>
+        </ul>
+        <div class="btn-group visible-xs">
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                全部课程 <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                <li role="presentation" class="js-course-filter active " data-url="/course/search?orderBy=latest" data-type="course">
+                    <a href="javascript:;">全部物品</a>
+                </li>
+                <li role="presentation" class="js-course-filter " data-url="/course/search?categoryId=1&amp;orderBy=latest" data-type="course">
+                    <a href="javascript:;">默认分类</a>
+                </li>
+            </ul>
+        </div>
+        <div class="course-sort btn-group">
+          <a href="javascript:;" class="btn btn-default  active js-course-filter" data-url="/course/search?categoryId=0&amp;orderBy=latest" data-type="course">
+            最新
+          </a>
+          <a href="javascript:;" class="btn btn-default js-course-filter" data-url="/course/search?categoryId=0&amp;orderBy=studentNum" data-type="course">
+            最热
+          </a>
+        </div>
+    </div>
+    {% include 'AppBundle:goods:goods-list.html.twig' with {goodses:goodses} %}
+    <div class="section-more-btn">
+      <a href="" class="btn btn-default btn-lg">
+        更多物品 <i class="glyphicon glyphicon-chevron-right"></i>
+      </a>
+    </div>
+    <section class="dynamic-section ">
+      <div class="container">
+        <div class="text-line gray">
+          <h5><span>动态</span><div class="line"></div></h5>
+          <div class="subtitle">参与小组，结交更多同学，关注动态话题。</div>
+        </div>
+        <div class="dynamic-section-main row">
+          <div class="col-md-6">
+            <div class="panel panel-default index-group">
+              <div class="panel-heading">
+                <a href="/group" class="more"><i class="glyphicon glyphicon-option-horizontal"></i></a>
+                <h3 class="panel-title">
+                  <i class="es-icon es-icon-whatshot pull-left"></i>热门小组
+                </h3>
+              </div>
+              <div class="panel-body row">
+                <div class="media-group-list">
+                  {% for group in groups %}
+                    <div class="media media-group col-md-6 col-sm-4">
+                      <div class="media-left">
+                        <a href="">
+                          <img src="{{file_path(group.logo|default(''), 'group.png')}}" alt="{{ group.title }}" class="avatar-square-md">
+                        </a>
+                      </div>
+                      <div class="media-body">
+                        <div class="title">
+                          <a class="link-light" href="">
+                            {{ group.title }}
+                          </a>
+                        </div>
+                        <div class="metas">
+                          <span><i class="glyphicon glyphicon-user"></i>{{ group.member_num }}</span>
+                          <span><i class="glyphicon glyphicon-comment"></i>{{ group.post_num }}</span>
+                        </div>
+                      </div>
+                    </div>                      
+                  {% endfor %}
+                  </div>
+                </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="panel panel-default index-article">
+              <div class="panel-heading">
+                <h3 class="panel-title">
+                  热门话题
+                  <a class="more" href="/article"><i class="glyphicon glyphicon-option-horizontal"></i></a>
+                </h3>
+              </div>
+              <div class="panel-body clearfix">
+                <ul class="index-new-article full">
+                  {% for thread in threads %}
+                    <li class=" clearfix">
+                      <i class="glyphicon glyphicon-fire color-primary mrs"></i>
+                      <a class="link-dark" href="" title="sssfasdfasd">{{ thread.title|raw }}
+                      </a>
+                      <span class="date">{{ thread.created_time|smart_time }}</span>
+                    </li>
+                  {% endfor %}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+{% endblock %}
 

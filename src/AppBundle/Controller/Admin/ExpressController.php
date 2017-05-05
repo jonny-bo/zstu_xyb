@@ -11,7 +11,7 @@ class ExpressController extends BaseController
     public function indexAction(Request $request)
     {
         $conditions = $request->query->all();
-        $orderBy    = $this->getOrderBy($conditions);
+        $orderBy    = $this->getOrderBy($conditions, array('created_time' => 'DESC'));
         $expressCount  = $this->getExpressService()->searchExpressCount($conditions);
         $paginator  = new Paginator($request, $expressCount, parent::DEFAULT_PAGE_COUNT);
 

@@ -1,0 +1,33 @@
+<div class="course-list">
+  <div class="row">
+    {% for goods in goodses %}
+    <div class="col-lg-3 col-md-4 col-xs-6">
+      <div class="course-item">
+        <div class="course-img">
+            <a href="" target="_blank">
+
+              <img src="{{ file_path(goods.imgs[0]|default(''), 'goods.jpg') }}" alt="{{ goods.title }}" class="img-responsive">
+            </a>
+        </div>
+        <div class="course-info">
+          <div class="title">
+            <a class="link-dark" href="" target="_blank">
+              {{ goods.title }}
+            </a>
+          </div>
+          <div class="metas clearfix">
+            <span class="num"><i class="  glyphicon glyphicon-heart-empty"></i>{{ goods.ups_num }}</span>
+            <span class="comment"><i class="glyphicon glyphicon-comment"></i>{{ goods.post_num }}</span>
+            <span class="course-price-widget">
+              <span class="price">
+                {{ goods.price }}元  
+              </span> 
+            </span>    
+          </div>
+        </div>
+      </div>
+    </div>        
+    {% endfor %}
+
+  </div>
+</div>

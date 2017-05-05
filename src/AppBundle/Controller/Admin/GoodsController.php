@@ -11,7 +11,7 @@ class GoodsController extends BaseController
     public function indexAction(Request $request)
     {
         $conditions = $request->query->all();
-        $orderBy    = $this->getOrderBy($conditions);
+        $orderBy    = $this->getOrderBy($conditions, array('created_time' => 'DESC'));
         $goodsCount = $this->getGoodsService()->searchGoodsCount($conditions);
         $paginator  = new Paginator($request, $goodsCount, parent::DEFAULT_PAGE_COUNT);
 

@@ -11,7 +11,7 @@ class GroupController extends BaseController
     public function groupAction(Request $request)
     {
         $conditions = $request->query->all();
-        $orderBy    = $this->getOrderBy($conditions);
+        $orderBy    = $this->getOrderBy($conditions, array('created_time' => 'DESC'));
         $groupCount = $this->getGroupService()->searchGroupsCount($conditions);
         $paginator  = new Paginator($request, $groupCount, parent::DEFAULT_PAGE_COUNT);
 
@@ -37,7 +37,7 @@ class GroupController extends BaseController
     public function threadAction(Request $request)
     {
         $conditions = $request->query->all();
-        $orderBy    = $this->getOrderBy($conditions);
+        $orderBy    = $this->getOrderBy($conditions, array('created_time' => 'DESC'));
         $threadCount = $this->getThreadService()->searchThreadsCount($conditions);
         $paginator  = new Paginator($request, $threadCount, parent::DEFAULT_PAGE_COUNT);
 

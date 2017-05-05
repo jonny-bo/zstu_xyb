@@ -10,7 +10,7 @@ class UserController extends BaseController
     public function indexAction(Request $request)
     {
         $conditions = $request->query->all();
-        $orderBy    = $this->getOrderBy($conditions);
+        $orderBy    = $this->getOrderBy($conditions, array('created_time' => 'DESC'));
         $userCount  = $this->getUserService()->searchUsersCount($conditions);
         $paginator  = new Paginator($request, $userCount, parent::DEFAULT_PAGE_COUNT);
 

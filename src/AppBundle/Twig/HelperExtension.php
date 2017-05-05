@@ -208,7 +208,7 @@ class HelperExtension extends \Twig_Extension
             }
 
             if (!file_exists($url)) {
-                $url = $assets->getUrl('assets/img/default/'.$default);
+                return $assets->getUrl('assets/img/default/default.jpg');
             }
 
             return $url;
