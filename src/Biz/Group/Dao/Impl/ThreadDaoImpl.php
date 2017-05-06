@@ -17,6 +17,7 @@ class ThreadDaoImpl extends GeneralDaoImpl implements ThreadDao
             'orderbys' => array('created_time', 'updated_time', 'post_num', 'hit_num'),
             'conditions' => array(
                 'group_id = :group_id',
+                'user_id = :user_id',
                 'title LIKE :title',
                 'status = :status',
                 'is_stick = :isStick',

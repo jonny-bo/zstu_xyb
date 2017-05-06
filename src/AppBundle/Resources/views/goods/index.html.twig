@@ -1,0 +1,10 @@
+{% extends "AppBundle::layout.html.twig" %}
+
+{% do script(['app/js/goods/index.js']) %}
+
+{% block content %}
+    {% include 'AppBundle:goods:category.html.twig' %}
+    <div id="goods-list"  data-url = "{{ app.request.requestUri }}" data-count = "{{ goodsCount }}">
+        {% include 'AppBundle:goods:goods-list.html.twig' with {goodses:goodses} %}
+    </div>
+{% endblock %}

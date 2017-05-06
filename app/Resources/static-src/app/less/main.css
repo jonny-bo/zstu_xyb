@@ -663,3 +663,73 @@ body {
 .color-primary {
   color: #46c37b !important;
 }
+.tabs-wrapper {
+  border: 1px solid #e4ecf3;
+  border-radius: 4px;
+  margin-bottom: 30px;
+  background-color: #ffffff;
+}
+.tabs-wrapper .tabs-mark-group {
+  border-bottom: 1px dashed #e4ecf3;
+}
+.plm {
+  padding-left: 10px !important;
+}
+.ptm {
+  padding-top: 10px !important;
+}
+.tabs-wrapper .tabs-mark-group .title {
+  width: 90px;
+  margin-top: 3px;
+  float: left;
+}
+.tabs-wrapper .tabs-mark-group .content {
+  margin-left: 100px;
+}
+.tabs-wrapper .tabs-mark-group .classify {
+  margin-top: 3px;
+}
+.tabs-wrapper .tabs-group {
+  padding: 0 60px 0 15px;
+  position: relative;
+  overflow-y: hidden;
+}
+.tabs-wrapper .tabs-group .title {
+  float: left;
+  padding: 15px 0;
+  width: 100px;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-wrap: normal;
+}
+.tabs-wrapper .tabs-group .content {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 0 100px;
+}
+.tabs-wrapper .tabs-group .content > li {
+  float: left;
+  padding: 10px 12px;
+}
+.tabs-wrapper .tabs-group .content > li:hover > a,
+.tabs-wrapper .tabs-group .content > li:focus > a,
+.tabs-wrapper .tabs-group .content > li.active > a {
+  color: #46c37b;
+}
+.tabs-wrapper .tabs-group .content > li > a {
+  display: block;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  color: #919191;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+.tabs-wrapper .tabs-group .content > li {
+  float: left;
+  padding: 10px 12px;
+}

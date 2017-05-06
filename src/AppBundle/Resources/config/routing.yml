@@ -19,3 +19,7 @@ file_upload:
 file_img_crop:
   path:      /file/crop
   defaults:  { _controller: AppBundle:File:crop }
+
+app_goods:
+  path:      /goods
+  defaults:  { _controller: AppBundle:Goods:index }

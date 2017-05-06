@@ -19,6 +19,7 @@ class GoodsDaoImpl extends GeneralDaoImpl implements GoodsDao
                 'id = :id',
                 'category_id = :category_id',
                 'status = :status',
+                'publisher_id = :publisher_id',
                 'created_time >= :startTime',
                 'created_time <= :endTime',
                 'title LIKE :title',

@@ -29,7 +29,7 @@ class DefaultController extends BaseController
         return $this->render('AppBundle:default:index.html.twig', array(
             'goodses' => $goodses,
             'groups'  => $groups,
-            'threads' => $threads
+            'threads' => $threads,
         ));
     }
 
