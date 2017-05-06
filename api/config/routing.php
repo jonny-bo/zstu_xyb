@@ -55,3 +55,7 @@ $app->get(_u('/threads/{threadId}'), 'res.Thread/Thread:get');
 $app->post(_u('/threads'), 'res.Thread/Thread:post');
 $app->post(_u('/threads/{threadId}/post'), 'res.Thread/Posts:post');
 $app->get(_u('/threads/{threadId}/post'), 'res.Thread/Posts:get');
+
+$app->post(_u('/collections'), 'res.Collection/Collection:post');
+$app->post(_u('/collections/{id}'), 'res.Collection/Collection:delete');
+$app->get(_u('/collections'), 'res.Collection/Collection:get');

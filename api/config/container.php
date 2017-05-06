@@ -11,7 +11,8 @@ $resources = array(
     'Group/Group',
     'Group/Member',
     'Thread/Thread',
-    'Thread/Posts'
+    'Thread/Posts',
+    'Collection/Collection'
 );
 
 foreach ($resources as $res) {
