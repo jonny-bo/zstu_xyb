@@ -10,7 +10,7 @@ class DefaultController extends BaseController
     {
         $goodses = $this->getGoodsService()->searchGoods(
             array('status' => 2),
-            array(),
+            array('hits' => 'DESC'),
             0,
             8
         );
