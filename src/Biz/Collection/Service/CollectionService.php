@@ -15,4 +15,6 @@ interface CollectionService
     public function updateCollection($collectionId, $fields);
 
     public function deleteCollection($collectionId);
+
+    public function getCollectionByFields($fields);
 }

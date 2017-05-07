@@ -20,4 +20,8 @@ class CollectionDaoImpl extends GeneralDaoImpl implements CollectionDao
             ),
         );
     }
+    public function getCollectionByFields($fields)
+    {
+        return $this->getByFields($fields);
+    }
 }

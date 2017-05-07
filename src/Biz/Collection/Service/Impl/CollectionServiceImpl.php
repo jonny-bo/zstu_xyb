@@ -45,6 +45,11 @@ class CollectionServiceImpl extends BaseService implements CollectionService
         return $this->getCollectionDao()->delete($collectionId);
     }
 
+    public function getCollectionByFields($fields)
+    {
+        return $this->getCollectionDao()->getCollectionByFields($fields);
+    }
+
     protected function getCollectionDao()
     {
         return $this->biz->dao('Collection:CollectionDao');

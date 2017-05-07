@@ -25,9 +25,15 @@ class Collection extends BaseResource
         return array('success' => 'true');
     }
 
-    public function delete($id)
+    public function cancel(Request $request)
     {
-        $this->getCollectionService()->deleteCollection($id);
+        $fields = $request->request->all();
+        $fields['user_id'] = $this->getCurrentUser()['id'];
+        $this->checkRequiredFields(array('object_type', 'object_id'), $fields);
+
+        $collection = $this->getCollectionService()->getCollectionByFields($fields);
+
+        $this->getCollectionService()->deleteCollection($collection['id']);
 
         return array('success' => 'true');
     }
