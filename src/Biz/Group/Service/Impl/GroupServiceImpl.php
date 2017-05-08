@@ -51,6 +51,7 @@ class GroupServiceImpl extends BaseService implements GroupService
         $user                 = $this->getCurrentUser();
         $fields['owner_id']   = $user['id'];
         $fields['member_num'] = 1;
+        $fields['status']     = 2;
 
         $group  = $this->getGroupDao()->create($fields);
         $member = array(

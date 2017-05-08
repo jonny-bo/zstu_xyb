@@ -14,7 +14,6 @@ class AppExtension extends \Twig_Extension
     public function getFilters()
     {
         return array(
-            new \Twig_SimpleFilter('smart_time', array($this, 'smarttimeFilter')),
             new \Twig_SimpleFilter('deadline_time', array($this, 'deadlineTimeFilter'), array('is_safe' => array('html'))),
             new \Twig_SimpleFilter('format_ip', array($this, 'formatIp')),
             new \Twig_SimpleFilter('json_decode', array($this, 'jsonDecodeFilter')),
@@ -32,41 +31,6 @@ class AppExtension extends \Twig_Extension
             new \Twig_SimpleFunction('get_sort_status', array($this, 'getSortStatus')),
             new \Twig_SimpleFunction('ip_to_array', array($this, 'explodeIP'))
         );
-    }
-
-    public function smarttimeFilter($time)
-    {
-        $diff = time() - $time;
-
-        if ($diff < 0) {
-            return '未来';
-        }
-
-        if ($diff == 0) {
-            return '刚刚';
-        }
-
-        if ($diff < 60) {
-            return '秒前';
-        }
-
-        if ($diff < 3600) {
-            return round($diff / 60).'分钟前';
-        }
-
-        if ($diff < 86400) {
-            return round($diff / 3600).'小时前';
-        }
-
-        if ($diff < 2592000) {
-            return round($diff / 86400).'天前';
-        }
-
-        if ($diff < 31536000) {
-            return date('m-d', $time);
-        }
-
-        return date('Y-m-d', $time);
     }
 
     public function deadlineTimeFilter($time)

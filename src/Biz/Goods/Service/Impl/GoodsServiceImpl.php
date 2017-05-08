@@ -45,7 +45,7 @@ class GoodsServiceImpl extends BaseService implements GoodsService
         $fields = $this->checkFields($fields);
 
         $fields['publisher_id'] = $this->getCurrentUser()['id'];
-        $fields['status']       = 1;
+        $fields['status']       = 2;
 
         return $this->getGoodsDao()->create($fields);
     }

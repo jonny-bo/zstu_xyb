@@ -53,7 +53,7 @@ class Goods extends BaseResource
             $goods['imgs'] = array_values($goods['imgs']);
         }
 
-        $this->getGoodsService()->createGoods($goods);
+        $goods = $this->getGoodsService()->createGoods($goods);
 
         return array('success' => 'true');
     }
