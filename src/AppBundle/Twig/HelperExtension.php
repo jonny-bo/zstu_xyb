@@ -207,9 +207,9 @@ class HelperExtension extends \Twig_Extension
                 $url = $request->getSchemeAndHttpHost().$url;
             }
 
-            if (!file_exists($url)) {
-                return $assets->getUrl('assets/img/default/default.jpg');
-            }
+            // if (!file_exists($url)) {
+            //     return $assets->getUrl('assets/img/default/default.jpg');
+            // }
 
             return $url;
         }
