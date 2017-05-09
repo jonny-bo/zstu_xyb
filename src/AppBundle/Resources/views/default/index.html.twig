@@ -39,7 +39,9 @@
           </a>
         </div>
     </div>
-    {% include 'AppBundle:goods:goods-list.html.twig' with {goodses:goodses} %}
+    <div class="course-list">
+      {% include 'AppBundle:goods:goods-list.html.twig' with {goodses:goodses} %}
+    </div>
     <div class="section-more-btn">
       <a href="{{ path('app_goods') }}" class="btn btn-default btn-lg">
         更多物品 <i class="glyphicon glyphicon-chevron-right"></i>

@@ -47,6 +47,7 @@ class ThreadServiceImpl extends BaseService implements ThreadService
         $fields['title']   = $this->purifyHtml($fields['title']);
         $fields['content'] = $this->purifyHtml($fields['content']);
         $fields['user_id'] = $this->getCurrentUser()['id'];
+        $fields['status']  = 'close';
 
         $thread            = $this->getThreadDao()->create($fields);
 

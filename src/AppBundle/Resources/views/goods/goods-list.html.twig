@@ -1,27 +1,25 @@
-<div class="course-list">
-    {% for goods in goodses %}
-      <div class="course-item">
-        <div class="course-img">
-            <a href="" target="_blank">
-              <img src="{{ file_path(goods.imgs[0]|default(''), 'goods.jpg') }}" alt="{{ goods.title }}" class="img-responsive">
-            </a>
-        </div>
-        <div class="course-info">
-          <div class="title">
-            <a class="link-dark" href="" target="_blank">
-              {{ goods.title }}
-            </a>
-          </div>
-          <div class="metas clearfix">
-            <span class="num"><i class="glyphicon glyphicon-eye-open"></i>{{ goods.hits }}</span>
-            <span class="comment"><i class="glyphicon glyphicon-comment"></i>{{ goods.post_num }}</span>
-            <span class="course-price-widget">
-              <span class="price">
-                {{ goods.price }}元  
-              </span> 
-            </span>    
-          </div>
-        </div>
-      </div>      
-    {% endfor %}
-</div>
+{% for goods in goodses %}
+  <div class="course-item">
+    <div class="course-img">
+        <a href="" target="_blank">
+          <img src="{{ file_path(goods.imgs[0]|default(''), 'goods.jpg') }}" alt="{{ goods.title }}" class="img-responsive">
+        </a>
+    </div>
+    <div class="course-info">
+      <div class="title">
+        <a class="link-dark" href="" target="_blank">
+          {{ goods.title }}
+        </a>
+      </div>
+      <div class="metas clearfix">
+        <span class="num"><i class="glyphicon glyphicon-eye-open"></i>{{ goods.hits }}</span>
+        <span class="comment"><i class="glyphicon glyphicon-comment"></i>{{ goods.post_num }}</span>
+        <span class="course-price-widget">
+          <span class="price">
+            {{ goods.price }}元  
+          </span> 
+        </span>    
+      </div>
+    </div>
+  </div>      
+{% endfor %}

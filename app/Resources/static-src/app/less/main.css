@@ -352,12 +352,12 @@ body {
 }
 .course-list {
   position: relative;
-  min-height: 300px;
+  min-height: 800px;
 }
 .course-list .course-item {
   margin-left: 15px;
   float: left;
-  width: 23.5%;
+  width: 23%;
   z-index: 1;
   margin-bottom: 30px;
   -webkit-border-radius: 4px;
@@ -529,11 +529,13 @@ body {
   background: #46c37b;
 }
 .section-more-btn {
+  clear: both;
   text-align: center;
   margin: 20px auto;
 }
 .dynamic-section {
   padding-bottom: 20px;
+  clear: both;
 }
 .dynamic-section-main .panel {
   height: 300px;
