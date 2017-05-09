@@ -352,7 +352,7 @@ body {
 }
 .course-list {
   position: relative;
-  min-height: 800px;
+  min-height: 700px;
 }
 .course-list .course-item {
   margin-left: 15px;

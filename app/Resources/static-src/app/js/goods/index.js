@@ -12,7 +12,6 @@ waterfall();
 $(window).scroll(function(){ 
     let srollPos = $(window).scrollTop();
     let totalheight = parseFloat($(window).height()) + parseFloat(srollPos);
-    console.log("checkscrollside: " + checkscrollside());
 
     if(($(document).height() - range) <= totalheight && stop && (Math.ceil(count/limit) >= page)) {
         stop = false;
