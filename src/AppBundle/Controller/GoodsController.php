@@ -13,6 +13,9 @@ class GoodsController extends BaseController
     {
         $conditions = $request->query->all();
         $conditions['status'] = 2;
+        if (isset($conditions['children_id'])) {
+            $conditions['category_id'] = $conditions['children_id'];
+        }
         $orderBy    = $this->getOrderBy($conditions, array('created_time' => 'DESC'));
         $goodsCount = $this->getGoodsService()->searchGoodsCount($conditions);
         $paginator  = new Paginator($request, $goodsCount, parent::DEFAULT_PAGE_COUNT);
@@ -24,8 +27,8 @@ class GoodsController extends BaseController
             $paginator->getPerPageCount()
         );
 
-        $categorys = $this->getCategoryService()->findCategoryByGroupCode('goods');
-        $categorys = array_column($categorys, 'name', 'id');
+        $categorys = $this->getCategoryService()->getCategoryStructureTree('goods');
+        $categorys = ArrayToolkit::index($categorys, 'id');
 
         if ($request->isXmlHttpRequest()) {
             $page = $request->query->get('page');

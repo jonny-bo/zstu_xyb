@@ -1,17 +1,32 @@
+{% set category_id = app.request.query.get('category_id')|default('') %}
+{% set children_id = app.request.query.get('children_id')|default('') %}
+
 <div class="tabs-wrapper">
   <div class="tabs-mark-group plm ptm">
     <div class="title">所有分类：</div>
     <ul class="content list-unstyled list-inline">
-      <li class="classify"></li>
-      <li class="classify"></li>
       <li class="classify"></li>
     </ul>
   </div>
   <div class="tabs-group">
     <div class="title">分类:</div>
       <ul class="content clearfix">
-        <li class="active"><a class="nav-link" href="">全部</a></li>
-        <li class=""><a class="nav-link" href="">默认分类</a></li>
+        <li class="{% if not category_id %}active {% endif %}"><a class="nav-link" href="{{ path('app_goods') }}">全部</a></li>
+        {% for category in categorys %}
+          <li class="{% if category_id == category.id %}active {% endif %}"><a class="nav-link" href="{{ path('app_goods', {category_id:category.id}) }}">{{category.name}}</a></li>
+        {% endfor %}
       </ul>
-  </div> 
+  </div>
+{% if categorys[category_id]['children']|default('') %}
+  <div class="tabs-group">
+   <div class="title">子类:</div>
+    <ul class="content clearfix">
+    <li class="{% if not children_id %}active {% endif %}"><a class="nav-link" href="{{ path('app_goods', {category_id: category_id}) }}">全部</a></li>
+      {% for category in categorys[category_id]['children']|default('') %}
+        <li class="{% if children_id == category.id %}active {% endif %}"><a class="nav-link" href="{{ path('app_goods', {category_id:category_id, children_id:category.id}) }}">{{category.name}}</a></li>
+      {% endfor %}          
+    </ul>
+  </div>
+{% endif %}
+
 </div>
