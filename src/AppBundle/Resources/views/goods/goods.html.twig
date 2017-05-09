@@ -1,0 +1,36 @@
+{% extends "AppBundle::layout.html.twig" %}
+
+{% block content %}
+<div class="manage-header">
+  <div class="es-section course-manage-header clearfix">
+    <h1 class="title">
+        <a class="link-dark">标题： {{ goods.title }}</a>
+    </h1>
+    <div class="teachers">
+        <a href="javascript:;">
+              <img class="avatar-md" src="{{ file_path(user.avatar|default(''), 'avatar.png') }}">
+            </a>
+        <a href="">{{ user.nickname }}</a>
+        <span>发布于：{{ user.created_time|smart_time }}</span>
+    </div>
+    <div class="toolbar">
+      <div class="price">
+          一口价：<b>¥</b><em>{{ goods.price }}</em>    
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+    <div class="col-lg-9 col-md-8  goods-detail-main">
+      <div class="detail">
+          <p>{{ goods.body }}</p>
+      </div>
+      {% for img in goods.imgs %}
+          <img src="{{ file_path(img, 'goods.jpg') }}" width="45%">
+      {% endfor %}
+    </div>
+    <div class="col-lg-3 col-md-4  goods-sidebar">
+      
+    </div>
+</div>
+{% endblock %}

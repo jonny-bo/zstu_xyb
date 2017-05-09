@@ -738,3 +738,69 @@ body {
   float: left;
   padding: 10px 12px;
 }
+.es-section {
+  background: #fff;
+  padding: 15px;
+  margin-bottom: 20px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  border: 1px solid #e4ecf3;
+}
+.es-section {
+  background: #fff;
+  padding: 15px;
+  margin-bottom: 20px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  border: 1px solid #e4ecf3;
+}
+.course-manage-header {
+  position: relative;
+}
+.course-manage-header .title {
+  margin: 5px 170px 10px 0;
+  line-height: 1.2;
+  font-size: 18px;
+  font-weight: bold;
+  word-break: break-all;
+}
+.link-dark {
+  color: #313131 !important;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+.course-manage-header .teachers {
+  color: #919191;
+  font-size: 13px;
+}
+.course-manage-header .teachers a {
+  margin-right: 10px;
+  color: #616161;
+}
+.course-manage-header .toolbar {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  margin-top: -15px;
+}
+.course-manage-header .price {
+  font-family: Verdana;
+  font-size: 22px;
+}
+.course-manage-header .price em {
+  font-weight: 700;
+  color: #f40;
+}
+.course-manage-header .price b {
+  font-weight: 400;
+  font-family: Arial,Verdana;
+  padding-right: 2px;
+  color: #999;
+}
+a {
+  text-decoration: none !important;
+}

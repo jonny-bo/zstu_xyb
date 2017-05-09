@@ -51,6 +51,17 @@ class GoodsController extends BaseController
         ));
     }
 
+    public function goodsAction($id)
+    {
+        $goods = $this->getGoodsService()->getGoods($id);
+        $user  = $this->getUserService()->getUser($goods['publisher_id']);
+
+        return $this->render('AppBundle:goods:goods.html.twig', array(
+            'goods'     => $goods,
+            'user'      => $user
+        ));
+    }
+
     protected function getUserService()
     {
         return $this->biz->service('User:UserService');

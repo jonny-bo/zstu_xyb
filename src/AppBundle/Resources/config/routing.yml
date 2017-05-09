@@ -23,3 +23,7 @@ file_img_crop:
 app_goods:
   path:      /goods
   defaults:  { _controller: AppBundle:Goods:index }
+
+app_goods_show:
+  path:      /goods/{id}
+  defaults:  { _controller: AppBundle:Goods:goods }
