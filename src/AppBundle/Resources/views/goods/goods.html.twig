@@ -25,6 +25,8 @@
       <div class="detail">
           <p>{{ goods.body }}</p>
       </div>
+      <br>
+      <hr>
       {% for img in goods.imgs %}
           <img src="{{ file_path(img, 'goods.jpg') }}" width="45%">
       {% endfor %}
