@@ -3,7 +3,7 @@
     pin 元素id
 */
 const waterfall = (parent, pin) =>{
-    var $aPin = $( ".course-list > .course-item" );
+    var $aPin = $( ".course-list > div" );
     var iPinW = $aPin.eq( 0 ).width();// 一个块框pin的宽
     console.log("iPinW" + iPinW);
     var num = Math.floor( $(".course-list").width() / iPinW );
