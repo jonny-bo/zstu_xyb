@@ -26,6 +26,5 @@ composer.lock
 chunk-manifest.json
 plugins/
 web/static-dist
-report/
 .idea/*
 .happypack/*
