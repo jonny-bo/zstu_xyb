@@ -17,4 +17,120 @@
 
 {% block main %}
 
+<form class="form-horizontal" id="site-form" method="post">
+    <div class="form-group">
+      <div class="col-md-2 control-label">
+        <label for="name">{{'网站名称'|trans}}</label>
+      </div>
+      <div class="col-md-8 controls">
+        <input type="text" id="name" name="name" class="form-control" value="{{get('name')}}">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-md-2 control-label">
+        <label for="slogan">{{'网站副标题'|trans}}</label> 
+      </div>
+      <div class="col-md-8 controls">
+         <input type="text" id="slogan" name="slogan" class="form-control" value="{{get('slogan')}}">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-md-2 control-label"> 
+        <label for="url">{{'网站域名'|trans}}</label> 
+      </div>
+      <div class="col-md-8 controls">
+       <input type="text" id="url" name="url" class="form-control" value="{{url|default('')}}">
+        <p class="help-block">{{'以"%http%://"开头'|trans({'%http%':app.request.getScheme()})}}</p>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-md-2 control-label">
+        <label for="logo">{{'网站LOGO'|trans}}</label>
+      </div>
+      <div class="col-md-8 controls">
+        <div id="site-logo-container">{% if get('logo') %}<img src="{{ asset(get('logo')) }}">{% endif %}</div>
+        <a class="btn btn-default" id="site-logo-upload" 
+        data-upload-token="{{ '' }}"
+        data-goto-url="{{ '' }}">{{'上传'|trans}}</a>
+        <button class="btn btn-default" id="site-logo-remove" type="button" data-url="{{ '' }}" {% if not get('logo') %}style="display:none;"{% endif %}>{{'删除'|trans}}</button>
+        <p class="help-block">{{'请上传png, gif, jpg格式的图片文件。LOGO图片建议不要超过250*50。网站logo设置后显示顶部导航左上角,'|trans}}<a href="{{ path('homepage') }}" target="_blank">点击查看</a></p>
+        <input type="hidden" name="logo" value="{{ get('logo') }}">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-md-2 control-label">
+        <label for="favicon">{{'浏览器图标'|trans}}</label>
+      </div>
+      <div class="col-md-8 controls">
+        <div id="site-favicon-container">{% if get('favicon') %}<img src="{{ asset(get('favicon')) }}">{% endif %}</div>
+        <a class="btn btn-default" 
+        id="site-favicon-upload" 
+        data-upload-token="{{ '' }}"
+        data-goto-url="{{ '' }}">{{'上传'|trans}}</a>
+        <button class="btn btn-default" 
+        id="site-favicon-remove" 
+        type="button" data-url="{{ '' }}" {% if not get('favicon') %}style="display:none;"{% endif %}>{{'删除'|trans}}</button>
+        <p class="help-block">{{'请上传ico格式的图标文件, 建议大小16*16或者32*32。'|trans}}</p>
+        <input type="hidden" name="favicon" value="{{ get('favicon') }}">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-md-2 control-label">
+        <label for="master_email">{{'管理员邮箱地址'|trans}}</label>
+      </div>
+      <div class="col-md-8 controls">
+        <input type="text" id="master_email" name="master_email" class="form-control" value="{{get('master_email')|default('')}}">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-md-2 control-label">
+        <label for="copyright">{{'内容版权方'|trans}}</label>
+      </div>
+      <div class="col-md-8 controls">
+        <input type="text" id="copyright" name="copyright" class="form-control" value="{{get('copyright')}}">
+        <div class="help-block">{{'您可以填写网站名称或公司名称。'|trans}}</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-md-2 control-label">
+        <label for="icp">{{'ICP备案号'|trans}}</label>
+      </div>
+      <div class="col-md-8 controls">
+        <input type="text" id="icp" name="icp" class="form-control" value="{{get('icp')}}">
+      </div>
+    </div>
+
+<br>
+
+  <fieldset>
+    <legend>{{'网站统计分析代码部署'|trans}}</legend>
+    <div class="form-group">
+      <div class="col-md-2 control-label">
+        <label for="analytics">{{'统计分析代码'|trans}}</label>
+      </div>
+      <div class="col-md-8 controls">
+
+        <textarea id="analytics" name="analytics" class="form-control" rows="4">{{get('analytics')}}</textarea>
+
+        <p class="help-block">统计代码是网站统计软件发布的一段代码，用以统计添加统计代码的网站的数据。</p>
+        <p class="help-block">包括网站的访客来源，从哪个网页跳转到此网站，搜索什么关键词到网站，一共有多少人访问，每天多少人多少IP，平均访问时间是多少等等数据。</p>
+        <p class="help-block">统计分析工具可以分析网校访问趋势，以及根据数据做推广调整，优化网校资源，建议使用<a href="http://tongji.baidu.com" target="_blank">百度统计</a>、<a href="http://ta.qq.com/" target="_blank">腾讯分析</a>或者<a target="_blank" href="http://www.umeng.com/">CNZZ。</a></p>
+      </div>
+    </div>
+  </fieldset>
+  {{ form_csrf_token() }}
+  <div class="row form-group">
+    <div class="controls col-md-offset-2 col-md-8">
+      <button type="submit" class="btn btn-primary">{{'保存'|trans}}</button>
+    </div>
+  </div>
+  
+</form>
 {% endblock %}

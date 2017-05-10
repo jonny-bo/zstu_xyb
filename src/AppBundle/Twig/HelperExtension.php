@@ -25,6 +25,7 @@ class HelperExtension extends \Twig_Extension
             new \Twig_SimpleFunction('form_csrf_token', array($this, 'rendorFormCsrfToken'), array('is_safe' => array('html'))),
             new \Twig_SimpleFunction('convertIP', array($this, 'getConvertIP')),
             new \Twig_SimpleFunction('file_path', array($this, 'getFilePath')),
+            new \Twig_SimpleFunction('get', array($this, 'getSetting')),
         );
     }
 
@@ -69,6 +70,16 @@ class HelperExtension extends \Twig_Extension
         }
 
         return date('Y-n-d H:i', $time);
+    }
+
+    public function getSetting($name)
+    {
+        $setting = $this->getSettingService()->get($name);
+
+        if (!empty($setting)) {
+            return $setting['value'];
+        }
+        return '';
     }
 
     public function selectOptions($choices, $selected = null, $empty = null)
@@ -223,5 +234,10 @@ class HelperExtension extends \Twig_Extension
     protected function getFileService()
     {
         return $this->biz->service('File:FileService');
+    }
+
+    protected function getSettingService()
+    {
+        return $this->biz->service('System:SettingService');
     }
 }

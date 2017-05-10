@@ -1,5 +1,5 @@
 <div class="list-group">
-  <a title="站点设置" class="list-group-item{% if page == 'site' %} active {% endif %}" href="">
+  <a title="站点设置" class="list-group-item{% if page == 'site' %} active {% endif %}" href="{{ path('admin_setting_site') }}">
     站点设置
   </a>  
   <a title="系统日志" class="list-group-item{% if page == 'log' %} active {% endif %}" href="{{ path('admin_system_log_list') }}">
