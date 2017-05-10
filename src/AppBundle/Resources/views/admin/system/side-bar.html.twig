@@ -4,5 +4,11 @@
   </a>  
   <a title="系统日志" class="list-group-item{% if page == 'log' %} active {% endif %}" href="{{ path('admin_system_log_list') }}">
     系统日志
-  </a>    
+  </a> 
+  <a title="IP黑名单" class="list-group-item{% if page == 'ip_blacklist' %} active {% endif %}" href="{{ path('admin_system_ip_blacklist') }}">
+    IP黑名单
+  </a>
+  <a title="系统自检" class="list-group-item{% if page == 'status' %} active {% endif %}" href="{{ path('admin_system_status') }}">
+    系统自检
+  </a>   
 </div>

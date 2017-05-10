@@ -32,3 +32,9 @@ services:
         arguments:    ['@service_container']
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority:255 }
+
+    app.kernel_request_listener:
+        class: AppBundle\Listener\KernelRequestListener
+        arguments:    ['@service_container', '@biz']
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority:255 }

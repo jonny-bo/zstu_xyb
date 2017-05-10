@@ -172,3 +172,15 @@ admin_log_info_modal:
   requirements:
     _method: GET
     logId: \d+
+
+admin_system_ip_blacklist:
+  path: /system/ip-blacklist
+  defaults: { _controller: AppBundle:Admin/Setting:ipBlacklist }
+
+admin_system_status:
+  path: /system/status
+  defaults: { _controller: AppBundle:Admin/Setting:status }
+
+admin_system_status_directory:
+  path: /system/status/directory
+  defaults: { _controller: AppBundle:Admin/Setting:checkDir }

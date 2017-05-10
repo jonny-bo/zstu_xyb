@@ -15,3 +15,4 @@ parameters:
         upload.public_directory: "%kernel.root_dir%/../web/files"
         upload.public_url_path: "/files"
         upload.private_directory: "%kernel.root_dir%/../var/data/private_files"
+        disk.local_directory: "%kernel.root_dir%/../var/data/udisk"
