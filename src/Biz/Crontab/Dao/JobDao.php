@@ -4,7 +4,7 @@ namespace Biz\Crontab\Dao;
 
 use Codeages\Biz\Framework\Dao\GeneralDaoInterface;
 
-interface CrontabDao extends GeneralDaoInterface
+interface JobDao extends GeneralDaoInterface
 {
     public function findByNameAndTargetTypeAndTargetId($jobName, $targetType, $targetId);
 

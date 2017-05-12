@@ -38,7 +38,8 @@ threadType:
 log-level:
     info: '提示'
     warning: '警告'
-    danger: '错误'
+    danger: '危险'
+    error: '错误'
 log-module:
     system: '系统'
     goods: '旧货交易'
@@ -46,3 +47,4 @@ log-module:
     group: '小组管理'
     category: '分类管理'
     user: '用户管理'
+    crontab: '定时任务'

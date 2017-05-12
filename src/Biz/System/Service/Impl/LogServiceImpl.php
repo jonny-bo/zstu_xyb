@@ -68,12 +68,9 @@ class LogServiceImpl extends BaseService implements LogService
         if (isset($newData['updated_time'])) {
             unset($newData['updated_time']);
         }
-        foreach ($oldData as $key => $value) {
-            if ($value !== $newData[$key]) {
-                $currentOldData = array_merge($currentOldData, array($key => $value));
-                $currentNewData = array_merge($currentNewData, array($key => $newData[$key]));
-            }
-        }
+
+        $currentOldData = array_diff($oldData, $newData);
+        $currentNewData = array_diff($newData, $oldData);
 
         return array(
             'currentOldData' => empty($currentOldData) ? '' : json_encode($currentOldData),
@@ -92,7 +89,7 @@ class LogServiceImpl extends BaseService implements LogService
         } else {
             return $this->getLogDao()->create(array(
                 'username'     => $this->biz['user']->getUsername(),
-                'module'       => Logger::getModule($module),
+                'module'       => $module,
                 'module_id'    => $moduleId,
                 'operation'    => $operation,
                 'message'      => $message,

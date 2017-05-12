@@ -3,9 +3,9 @@
 namespace Biz\Crontab\Dao\Impl;
 
 use Codeages\Biz\Framework\Dao\GeneralDaoImpl;
-use Biz\Crontab\Dao\CrontabDao;
+use Biz\Crontab\Dao\JobDao;
 
-class CrontabDaoImpl extends GeneralDaoImpl implements CrontabDao
+class JobDaoImpl extends GeneralDaoImpl implements JobDao
 {
     protected $table = 'crontab_job';
 

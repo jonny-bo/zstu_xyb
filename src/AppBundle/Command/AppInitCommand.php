@@ -2,11 +2,10 @@
 
 namespace AppBundle\Command;
 
-use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class AppInitCommand extends Command
+class AppInitCommand extends BaseCommand
 {
     protected function configure()
     {
@@ -149,16 +148,16 @@ class AppInitCommand extends Command
 
     protected function getUserService()
     {
-        return $this->getApplication()->getKernel()->getContainer()->get('biz')->service('User:UserService');
+        return $this->getBiz()->service('User:UserService');
     }
 
     protected function getFileGroupService()
     {
-        return $this->getApplication()->getKernel()->getContainer()->get('biz')->service('File:FileGroupService');
+        return $this->getBiz()->service('File:FileGroupService');
     }
 
     public function getCategoryGroupService()
     {
-        return $this->getApplication()->getKernel()->getContainer()->get('biz')->service('Category:CategoryGroupService');
+        return $this->getBiz()->service('Category:CategoryGroupService');
     }
 }
