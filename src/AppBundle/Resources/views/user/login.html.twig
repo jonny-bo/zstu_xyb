@@ -6,7 +6,7 @@
   <div class="alert alert-error">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
 {% endif %}
 <div class="login-box">
-  <div class="login-logo"> 浙江理工大学－校园帮</div>
+  <div class="login-logo">{{ get('name')|default('校园帮') }}</div>
   <div class="login-box-body">
        <h4 class="text-center text-position">登录</h4>
        <form action="{{ path('login_check') }}" method="post">

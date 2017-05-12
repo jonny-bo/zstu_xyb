@@ -74,12 +74,7 @@ class HelperExtension extends \Twig_Extension
 
     public function getSetting($name)
     {
-        $setting = $this->getSettingService()->get($name);
-
-        if (!empty($setting)) {
-            return $setting['value'];
-        }
-        return '';
+        return $this->getSettingService()->get($name);
     }
 
     public function selectOptions($choices, $selected = null, $empty = null)

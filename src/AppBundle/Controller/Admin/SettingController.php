@@ -45,7 +45,7 @@ class SettingController extends BaseController
             return $this->redirect($this->generateUrl('admin_system_ip_blacklist'));
         }
 
-        $blackListIps = $this->getSettingService()->get('blacklist_ip')['value'];
+        $blackListIps = $this->getSettingService()->get('blacklist_ip');
 
         if (!empty($blackListIps)) {
             $blackListIps = json_decode($blackListIps, true);

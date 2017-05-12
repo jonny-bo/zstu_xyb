@@ -10,6 +10,8 @@ interface LogService
 
     public function danger($module, $moduleId, $operation, $message, array $oldData = array(), array $newData = array());
 
+    public function error($module, $moduleId, $operation, $message, array $oldData = array(), array $newData = array());
+
     public function searchLogsCount($fields);
 
     public function getLogById($logID);

@@ -27,7 +27,7 @@ class KernelRequestListener
 
         $settingService = $this->biz->service('System:SettingService');
 
-        $blacklistIps = $settingService->get('blacklist_ip')['value'];
+        $blacklistIps = $settingService->get('blacklist_ip');
 
         if (!empty($blacklistIps)) {
             $blacklistIps = json_decode($blacklistIps, true);

@@ -6,28 +6,21 @@ use JPush\Client;
 
 class Jpush
 {
-    protected $appKey = '20990a7b45465c239ba31270';
+    protected $appKey = 'e9bf5c98051d928343ddc96e';
 
-    protected $masterSecret = '27520d83f3e71642f4305bfd';
+    protected $masterSecret = '28c6404bb742c6fac1cb4a30';
 
-    protected static $client = '';
+    private static $client;
 
-    public function __construct($appKey = '', $masterSecret = '')
+    private function __construct()
     {
-        if ($appKey && $masterSecret) {
-            $this->appKey = $appKey;
-            $this->masterSecret = $masterSecret;
-        }
-
-        $this->client = new Client($this->appKey, $this->masterSecret);
     }
 
-    public static function getClient($appKey = '', $masterSecret = '')
+    public static function getClient()
     {
-        if (self::$client == '') {
-            new self($appKey, $masterSecret);
+        if (!self::$client) {
+            self::$client = new Client($this->appKey, $this->masterSecret);
         }
-
         return self::$client;
     }
 }

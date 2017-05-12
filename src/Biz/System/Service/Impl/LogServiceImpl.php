@@ -24,6 +24,11 @@ class LogServiceImpl extends BaseService implements LogService
         return $this->createLog('danger', $module, $moduleId, $operation, $message, $oldData, $newData);
     }
 
+    public function error($module, $moduleId, $operation, $message, array $oldData = array(), array $newData = array())
+    {
+        return $this->createLog('error', $module, $moduleId, $operation, $message, $oldData, $newData);
+    }
+
     public function searchLogsCount($fields)
     {
         return $this->getLogDao()->count($fields);

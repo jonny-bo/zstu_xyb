@@ -21,12 +21,16 @@ class SettingServiceImpl extends BaseService implements SettingService
 
     public function get($name)
     {
-        return $this->getSettingDao()->getByName($name);
+        $setting = $this->getSettingDao()->getByName($name);
+        if ($setting) {
+            return $setting['value'];
+        }
+        return '';
     }
 
     public function delete($name)
     {
-        $setting = $this->get($name);
+        $setting = $this->getSettingDao()->getByName($name);
 
         if ($setting) {
             $this->getSettingDao()->delete($setting['id']);
