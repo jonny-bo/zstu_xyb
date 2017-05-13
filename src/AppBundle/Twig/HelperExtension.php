@@ -26,6 +26,7 @@ class HelperExtension extends \Twig_Extension
             new \Twig_SimpleFunction('convertIP', array($this, 'getConvertIP')),
             new \Twig_SimpleFunction('file_path', array($this, 'getFilePath')),
             new \Twig_SimpleFunction('get', array($this, 'getSetting')),
+            new \Twig_SimpleFunction('crontab_next_executed_time', array($this, 'getNextExecutedTime')),
         );
     }
 
@@ -75,6 +76,11 @@ class HelperExtension extends \Twig_Extension
     public function getSetting($name)
     {
         return $this->getSettingService()->get($name);
+    }
+
+    public function getNextExecutedTime()
+    {
+        return $this->biz->service('Crontab:CrontabService')->getNextExcutedTime();
     }
 
     public function selectOptions($choices, $selected = null, $empty = null)

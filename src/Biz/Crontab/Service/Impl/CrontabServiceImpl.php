@@ -168,7 +168,8 @@ class CrontabServiceImpl extends BaseService implements CrontabService
             $job = $job[0];
             $this->getLogService()->info('crontab', $job['id'], 'job_start', "定时任务(#{$job['id']})开始执行！", $job);
             $this->executeJob($job['id']);
-            $this->getLogService()->info('crontab', $job['id'], 'job_end', "定时任务(#{$job['id']})执行结束！", $job);
+            $newJob = $this->getJob($job['id']);
+            $this->getLogService()->info('crontab', $job['id'], 'job_end', "定时任务(#{$job['id']})执行结束！", $job, $newJob);
         }
     }
 
@@ -189,7 +190,7 @@ class CrontabServiceImpl extends BaseService implements CrontabService
 
     public function getNextExcutedTime()
     {
-        $filePath = __DIR__.'/../../../../../app/data/crontab_config.yml';
+        $filePath = __DIR__.'/../../../../../app/config/crontab_config.yml';
         $yaml     = new Yaml();
 
         if (!file_exists($filePath)) {

@@ -8,7 +8,7 @@ abstract class BaseCommand extends ContainerAwareCommand
 {
     protected function getBiz()
     {
-        return $this->getApplication()->getKernel()->getContainer()->get('biz');
+        return $this->getContainer()->get('biz');
     }
 
     protected function initBiz()

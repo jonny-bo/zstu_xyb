@@ -16,6 +16,7 @@
         <link href="{{ asset('static-dist/' ~ path, 'webpack') }}" rel="stylesheet" />
       {% endfor %}
     {% endblock %}
+    {% include 'AppBundle::script_boot.html.twig' %}
   </head>
   <body{% if body_class is defined %} class="{{ body_class }}"{% endif %}>
     {% block body %}{% endblock %}
@@ -25,7 +26,6 @@
         <script src="{{ asset('static-dist/' ~ path, 'webpack') }}"></script>
       {% endfor %}
     {% endblock %}
-    {% include 'AppBundle::script_boot.html.twig' %}
     <script>
     var _hmt = _hmt || [];
     (function() {

@@ -24,4 +24,9 @@ $('#modal').on('show.bs.modal', function (e) {
     $this.empty().load(url);
     localStorage.setItem("modalUrl",url);
   }
-})
+});
+
+if (app.scheduleCrontab) {
+    console.log('scheduleCrontab start');
+    $.post(app.scheduleCrontab);
+} 

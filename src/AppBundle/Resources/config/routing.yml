@@ -27,3 +27,7 @@ app_goods:
 app_goods_show:
   path:      /goods/{id}
   defaults:  { _controller: AppBundle:Goods:goods }
+
+default_crontab:
+    path:  /default/crontab
+    defaults: { _controller: AppBundle:Default:crontab }

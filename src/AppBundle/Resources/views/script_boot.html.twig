@@ -16,7 +16,16 @@
     app.arguments = {{ script_arguments|json_encode|raw }};
   {% endif %}
 
+  app.crontab = '{{ path('default_crontab') }}';
+  {% set crontabNextExecutedTime = crontab_next_executed_time() %}
+  {% if crontabNextExecutedTime > 0  %}
+    {% if date(crontabNextExecutedTime|date('Y-m-d H:i:s')) < date() %}
+      app.scheduleCrontab = '{{ path('default_crontab') }}';
+    {% endif %}
+  {% endif %}
+
   app.uploadUrl = '{{ path("file_upload") }}';
   app.imgCropUrl = '{{ path("file_img_crop") }}';
   app.lang = '{{ app.request.locale }}';
+
 </script>

@@ -50,6 +50,11 @@ class Collection extends BaseResource
             $conditions['user_id'] = $this->getCurrentUser()['id'];
         }
 
+        if (!$conditions['object_type'] == 'thread') {
+            $conditions['publisher_id'] = $conditions['user_id'];
+            unset($conditions['user_id']);
+        }
+
         $start = $request->query->get('start', 0);
         $limit = $request->query->get('limit', 10);
 
@@ -92,5 +97,10 @@ class Collection extends BaseResource
     protected function getGoodsService()
     {
         return $this->biz->service('Goods:GoodsService');
+    }
+
+    protected function getThreadService()
+    {
+        return $this->biz->service('Group:ThreadService');
     }
 }

@@ -33,6 +33,19 @@ class DefaultController extends BaseController
         ));
     }
 
+    public function crontabAction()
+    {
+        $setting = $this->getSettingService()->get('magic');
+
+        $setting = json_decode($setting, true);
+
+        if (empty($setting['disable_web_crontab'])) {
+            $this->getServiceKernel()->createService('Crontab.CrontabService')->scheduleJobs();
+        }
+
+        return $this->createJsonResponse(true);
+    }
+
     protected function getUserService()
     {
         return $this->biz->service('User:UserService');
@@ -56,5 +69,10 @@ class DefaultController extends BaseController
     protected function getThreadService()
     {
         return $this->biz->service('Group:ThreadService');
+    }
+
+    protected function getSettingService()
+    {
+        return $this->biz->service('System:SettingService');
     }
 }
