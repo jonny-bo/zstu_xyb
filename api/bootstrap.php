@@ -53,5 +53,6 @@ $biz['user.password_encoder'] = function () {
 };
 $biz->register(new \Codeages\Biz\Framework\Provider\DoctrineServiceProvider());
 $biz->register(new \Codeages\Biz\RateLimiter\RateLimiterServiceProvider());
+$biz->register(new \Biz\EventSubscribersProvider());
 $biz['subscribers'] = new \ArrayObject();
 $biz->boot();

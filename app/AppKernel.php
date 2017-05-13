@@ -49,6 +49,7 @@ class AppKernel extends Kernel implements PluginableHttpKernelInterface
         };
 
         $biz->register(new \Codeages\Biz\Framework\Provider\DoctrineServiceProvider());
+        $biz->register(new \Biz\EventSubscribersProvider());
         $biz->boot();
     }
 

@@ -40,7 +40,7 @@ class DefaultController extends BaseController
         $setting = json_decode($setting, true);
 
         if (empty($setting['disable_web_crontab'])) {
-            $this->getServiceKernel()->createService('Crontab.CrontabService')->scheduleJobs();
+            $this->getCrontabService()->scheduleJobs();
         }
 
         return $this->createJsonResponse(true);
@@ -74,5 +74,10 @@ class DefaultController extends BaseController
     protected function getSettingService()
     {
         return $this->biz->service('System:SettingService');
+    }
+
+    protected function getCrontabService()
+    {
+        return $this->biz->service('Crontab:CrontabService');
     }
 }

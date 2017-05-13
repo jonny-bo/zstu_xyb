@@ -21,4 +21,6 @@ interface ExpressService
     public function confirmMyPublishExpress($expressId);
 
     public function confirmMyReceiveExpress($expressId);
+
+    public function reviewExpress($expressId, $rating, $content);
 }

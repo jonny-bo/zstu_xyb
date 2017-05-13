@@ -24,6 +24,7 @@ $app->post(_u('/expresses/{expressId}/order'), 'res.Express/Express:order');
 $app->post(_u('/expresses/{expressId}/cancel'), 'res.Express/Express:cancel');
 $app->get(_u('/expresses'), 'res.Express/Express:search');
 $app->post(_u('/expresses'), 'res.Express/Express:create');
+$app->post(_u('/expresses/{expressId}/review'), 'res.Express/Express:review');
 
 $app->get(_u('/goods/categorys'), 'res.Goods/Category:all');
 $app->get(_u('/goods'), 'res.Goods/Goods:search');

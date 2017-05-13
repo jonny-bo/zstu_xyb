@@ -39,9 +39,23 @@ class UserInfoServiceImpl extends BaseService implements UserInfoService
         return $this->getUserDao()->update($user['id'], array('avatar' => $file['uri']));
     }
 
+    public function recordCredit($userId, $message, $credit)
+    {
+        return $this->getUserCreditRecordDao()->create(array(
+            'user_id' => $userId,
+            'message' => $message,
+            'up'      => $credit
+        ));
+    }
+
     protected function getUserDao()
     {
         return $this->biz->dao('User:UserDao');
+    }
+
+    protected function getUserCreditRecordDao()
+    {
+        return $this->biz->dao('User:UserCreditRecordDao');
     }
 
     protected function getUserTokenDao()

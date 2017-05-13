@@ -73,9 +73,37 @@ class HelperExtension extends \Twig_Extension
         return date('Y-n-d H:i', $time);
     }
 
-    public function getSetting($name)
+    public function getSetting($name, $default = null)
     {
-        return $this->getSettingService()->get($name);
+        $names = explode('.', $name);
+
+        $name = array_shift($names);
+
+        if (empty($name)) {
+            return $default;
+        }
+
+        $value = $this->getSettingService()->get($name);
+
+        if (!isset($value)) {
+            return $default;
+        }
+
+        if (empty($names)) {
+            return $value;
+        }
+
+        $result = json_decode($value, true);
+
+        foreach ($names as $name) {
+            if (!isset($result[$name])) {
+                return $default;
+            }
+
+            $result = $result[$name];
+        }
+
+        return $result;
     }
 
     public function getNextExecutedTime()

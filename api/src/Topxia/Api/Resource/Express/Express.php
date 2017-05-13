@@ -79,6 +79,16 @@ class Express extends BaseResource
         return array('success' => 'true');
     }
 
+    public function review($expressId, Request $request)
+    {
+        $rating = $request->request->get('rating', 3.0);
+        $content = $request->request->get('content', '暂无评价！');
+
+        $this->getExpressService()->reviewExpress($expressId, $rating, $content);
+
+        return array('success' => 'true');
+    }
+
     public function filter($res)
     {
         $res['publisher'] = $this->callSimplify('User/User', $this->getUserService()->getUser($res['publisher_id']));

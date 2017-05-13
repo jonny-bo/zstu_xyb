@@ -10,7 +10,7 @@ class AddCreditRecordAndExpressReview extends Migration
     public function up()
     {
         $sql = "
-                CREATE TABLE IF NOT EXISTS `credit_record` (
+                CREATE TABLE IF NOT EXISTS `user_credit_record` (
                   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
                   `user_id` int(10) unsigned NOT NULL DEFAULT '0',
                   `message` varchar(256) NOT NULL COMMENT '消息',
@@ -21,7 +21,7 @@ class AddCreditRecordAndExpressReview extends Migration
                 CREATE TABLE IF NOT EXISTS `express_review` (
                  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '课程评价ID',
                  `user_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '评价人ID',
-                 `expressId` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '被评价的课程ID',
+                 `express_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '被评价的快递ID',
                  `title` varchar(255) NOT NULL DEFAULT '' COMMENT '评价标题',
                  `content` text NOT NULL COMMENT '评论内容',
                  `rating` float(2,1) unsigned NOT NULL DEFAULT '0.0' COMMENT '评分',
@@ -46,7 +46,8 @@ class AddCreditRecordAndExpressReview extends Migration
         $biz = $this->getContainer();
         $db  = $biz['db'];
         $db->exec("
-            DROP TABLE IF EXISTS `credit_record`;
+            DROP TABLE IF EXISTS `user_credit_record`;
+            DROP TABLE IF EXISTS `express_review`;
         ");
     }
 }

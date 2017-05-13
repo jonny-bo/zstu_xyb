@@ -184,3 +184,7 @@ admin_system_status:
 admin_system_status_directory:
   path: /system/status/directory
   defaults: { _controller: AppBundle:Admin/Setting:checkDir }
+
+admin_setting_developer_magic:
+    path:  /system/developer/magic
+    defaults: { _controller: AppBundle:Admin/Setting:magic }

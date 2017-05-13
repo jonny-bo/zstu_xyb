@@ -15,7 +15,7 @@ class BaseService extends ParentService
         return $this->biz['dispatcher'];
     }
 
-    protected function dispatchEvent($eventName, $subject, $arguments = array())
+    protected function dispatchEvent($eventName, $subject = null, array $arguments = array())
     {
         $event = new GenericEvent($subject, $arguments);
 

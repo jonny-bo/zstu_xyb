@@ -178,6 +178,26 @@ class SettingController extends BaseController
         }, array($logs, $webFiles, $material));
     }
 
+    public function magicAction(Request $request)
+    {
+        if ($request->getMethod() == 'POST') {
+            $setting = $request->request->get('setting', '{}');
+            $setting = json_decode($setting, true);
+            if (empty($setting)) {
+                $setting = array('disable_web_crontab' => 0);
+            }
+            $this->getSettingService()->set('magic', json_encode($setting));
+            $this->getLogService()->info('system', 0, 'update_settings', '更新Magic设置', $setting);
+            $this->setFlashMessage('success', '设置已保存！');
+        }
+
+        $setting = $this->getSettingService()->get('magic');
+
+        return $this->render('AppBundle:admin/system:magic.html.twig', array(
+            'setting' => $setting
+        ));
+    }
+
 
     protected function getUserService()
     {

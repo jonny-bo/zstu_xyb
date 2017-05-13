@@ -9,6 +9,7 @@ use Biz\Common\Exception\ResourceNotFoundException;
 use Biz\Common\Exception\AccessDeniedException;
 use Biz\Common\ArrayToolkit;
 use Biz\Express\Service\ExpressService;
+use Biz\User\Event\UserEvents;
 
 class ExpressServiceImpl extends BaseService implements ExpressService
 {
@@ -127,6 +128,39 @@ class ExpressServiceImpl extends BaseService implements ExpressService
         return $this->getExpressDao()->update($expressId, array('status' => 3));
     }
 
+    public function reviewExpress($expressId, $rating, $content)
+    {
+        $express = $this->getExpress($expressId);
+        if (empty($express) || !floatval($rating) || !$content) {
+            throw new InvalidArgumentException('订单不存在或参数错误！');
+        }
+        if ($express['status'] != 4) {
+            throw new UnexpectedValueException('该订单未确认，不能评价！');
+        }
+
+        $user = $this->getCurrentUser();
+
+        $review = $this->getExpressReviewDao()->getByExpressAndUserId($expressId, $user['id']);
+
+        if ($review) {
+            throw new UnexpectedValueException('该订单您已经评价过了！');
+        }
+
+        $review['express_id'] = $expressId;
+        $review['rating']     = $rating;
+        $review['content']    = $content;
+        $review['user_id']    = $user['id'];
+
+        $review = $this->getExpressReviewDao()->create($review);
+        //触发信用度变化事件，订阅者模式
+        $this->dispatchEvent(UserEvents::CREDIT, $express['receiver_id'], array(
+            'rating' => $rating,
+            'message' => "完成快递订单，获得{$rating}星级评价！"
+        ));
+
+        return $review;
+    }
+
     protected function perConditions($conditions)
     {
         $conditions =  array_filter($conditions);
@@ -177,5 +211,10 @@ class ExpressServiceImpl extends BaseService implements ExpressService
     protected function getUserService()
     {
         return $this->biz->service('User:UserService');
+    }
+
+    protected function getExpressReviewDao()
+    {
+        return $this->biz->dao('Express:ExpressReviewDao');
     }
 }
