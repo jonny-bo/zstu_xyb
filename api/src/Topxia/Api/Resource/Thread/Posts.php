@@ -54,7 +54,7 @@ class Posts extends BaseResource
                 array('thread_id' => $res['thread_id'], 'post_id' => $res['id']),
                 array('created_time' => 'ASC'),
                 0,
-                3
+                PHP_INI_MAX
             );
             $res['item_comments'] = $this->multiFilter($itemComments);
         }
