@@ -120,6 +120,8 @@ class User extends BaseResource
     {
         unset($res['password']);
         unset($res['salt']);
+        unset($res['pay_password']);
+        unset($res['pay_password_salt']);
 
         $res['login_time']   = date('c', $res['login_time']);
         $res['updated_time'] = date('c', $res['updated_time']);
