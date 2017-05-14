@@ -45,4 +45,6 @@ interface UserService
     public function unlockUser($id);
 
     public function updateCredit($userId, $credit);
+
+    public function updateCoin($userId, $coin);
 }

@@ -168,6 +168,13 @@ class UserServiceImpl extends BaseService implements UserService
         return $this->getUserDao()->update($userId, array('credit' => $user['credit']+$credit));
     }
 
+    public function updateCoin($userId, $coin)
+    {
+        $user = $this->getUser($userId);
+
+        return $this->getUserDao()->update($userId, array('coin' => $user['coin']+$coin));
+    }
+
     protected function perConditions($conditions)
     {
         $conditions =  array_filter($conditions);

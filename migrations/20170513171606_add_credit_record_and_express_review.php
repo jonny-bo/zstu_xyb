@@ -19,7 +19,7 @@ class AddCreditRecordAndExpressReview extends Migration
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
                 CREATE TABLE IF NOT EXISTS `express_review` (
-                 `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '课程评价ID',
+                 `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '评价ID',
                  `user_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '评价人ID',
                  `express_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '被评价的快递ID',
                  `title` varchar(255) NOT NULL DEFAULT '' COMMENT '评价标题',

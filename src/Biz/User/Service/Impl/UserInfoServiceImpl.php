@@ -48,6 +48,15 @@ class UserInfoServiceImpl extends BaseService implements UserInfoService
         ));
     }
 
+    public function recordBill($userId, $message, $coin)
+    {
+        return $this->getUserBillDao()->create(array(
+            'user_id' => $userId,
+            'message' => $message,
+            'up'      => $coin
+        ));
+    }
+
     protected function getUserDao()
     {
         return $this->biz->dao('User:UserDao');
@@ -66,5 +75,10 @@ class UserInfoServiceImpl extends BaseService implements UserInfoService
     protected function getFileService()
     {
         return $this->biz->service('File:FileService');
+    }
+
+    protected function getUserBillDao()
+    {
+        return $this->biz->dao('User:UserBillDao');
     }
 }

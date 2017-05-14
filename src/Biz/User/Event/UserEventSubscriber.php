@@ -16,7 +16,8 @@ class UserEventSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            UserEvents::CREDIT => 'onCredit'
+            UserEvents::CREDIT => 'onCredit',
+            UserEvents::COIN => 'onCoin',
         );
     }
 
@@ -30,6 +31,15 @@ class UserEventSubscriber implements EventSubscriberInterface
 
         $this->getUserService()->updateCredit($userId, $credit);
         $this->getUserInfoService()->recordCredit($userId, $message, $credit);
+    }
+
+    public function onCoin(GenericEvent $event)
+    {
+        $userId = $event->getSubject();
+        $coin = $event->getArgument('coin');
+        $message = $event->getArgument('message');
+
+        $this->getUserInfoService()->recordBill($userId, $message, $coin);
     }
 
     protected function getUserService()

@@ -24,7 +24,9 @@ class UserProvider implements UserProviderInterface
                 sprintf('Username "%s" does not exist.', $username)
             );
         }
+        $request = $this->container->get('request');
 
+        $user['login_ip'] = $request->getClientIp();
         $currentUser = new CurrentUser($user);
 
         $this->biz['user'] = $currentUser;

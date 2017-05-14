@@ -48,12 +48,32 @@ class ExpressServiceImpl extends BaseService implements ExpressService
             throw new AccessDeniedException('未登录用户，无权操作！');
         }
 
+
         $fields['publisher_id'] = $user['id'];
         $fields['title']        = $this->purifyHtml($fields['title']);
         $fields['detail']       = $this->purifyHtml($fields['detail']);
         $fields['status']       = 1;
 
-        return $this->getExpressDao()->create($fields);
+        try {
+            $this->getExpressDao()->db()->beginTransaction();
+            $express = $this->getExpressDao()->create($fields);
+
+            $this->getOrderService()->createOrder(array(
+                'user_id' => $user['id'],
+                'target_type' => 'express',
+                'target_id' => $express['id'],
+                'title' => "发布快递代领{$express['title']}(#{$express['id']})",
+                'payment' => 'coin',
+                'coin_amount' => $express['offer']
+            ));
+
+            $this->getExpressDao()->db()->commit();
+        } catch (\Exception $e) {
+            $this->getExpressDao()->db()->rollBack();
+            throw $e;
+        }
+
+        return $express;
     }
 
     public function orderExpress($expressId, $userId)
@@ -109,7 +129,24 @@ class ExpressServiceImpl extends BaseService implements ExpressService
             throw new UnexpectedValueException('该订单未送达，不能确认收货');
         }
 
-        return $this->getExpressDao()->update($expressId, array('status' => 4));
+        try {
+            $this->getExpressDao()->db()->beginTransaction();
+            $order = $this->getOrderService()->getOrderByTargetTypeAndTargetIdAndUserId('express', $expressId, $user['id']);
+            $this->getOrderService()->payOrder(array(
+                'sn' => $order['sn'],
+                'status' => false,
+                'coin_amount' => $express['offer'],
+                'to_user_id' => $express['receiver_id'],
+                'paid_time' => time()
+            ));
+            $express = $this->getExpressDao()->update($expressId, array('status' => 4));
+            $this->getExpressDao()->db()->commit();
+        } catch (Exception $e) {
+            $this->getExpressDao()->db()->rollBack();
+            throw $e;
+        }
+
+        return $express;
     }
 
     public function confirmMyReceiveExpress($expressId)
@@ -216,5 +253,10 @@ class ExpressServiceImpl extends BaseService implements ExpressService
     protected function getExpressReviewDao()
     {
         return $this->biz->dao('Express:ExpressReviewDao');
+    }
+
+    protected function getOrderService()
+    {
+        return $this->biz->service('Order:OrderService');
     }
 }
