@@ -42,6 +42,9 @@ class Express extends BaseResource
     {
         $fields = $request->request->all();
 
+        return $this->error('500', $fields['pay_password']);
+        exit();
+
         $this->getExpressService()->createExpress($fields);
 
         return array('success' => 'true');
