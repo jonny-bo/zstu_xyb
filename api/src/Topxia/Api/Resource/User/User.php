@@ -137,6 +137,8 @@ class User extends BaseResource
 
     public function filter($res)
     {
+        $res['is_pay_set'] = empty($res['pay_password']) ? 0 : 1;
+
         unset($res['password']);
         unset($res['salt']);
         unset($res['pay_password']);
@@ -156,6 +158,7 @@ class User extends BaseResource
             unset($res['updated_time']);
             unset($res['login_time']);
             unset($res['created_time']);
+            unset($res['is_pay_set']);
 
             return $res;
         }
