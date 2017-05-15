@@ -57,6 +57,13 @@ class UserInfoServiceImpl extends BaseService implements UserInfoService
         ));
     }
 
+    public function setTagId($userId, $tagId)
+    {
+        return $this->getUserDao()->update($userId, array(
+            'tag_id' => $tagId
+        ));
+    }
+
     protected function getUserDao()
     {
         return $this->biz->dao('User:UserDao');

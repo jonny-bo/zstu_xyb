@@ -11,6 +11,7 @@ $app->get(_u('/users'), 'res.User/User:search');
 $app->post(_u('/users/register'), 'res.User/User:register');  // 用户注册
 $app->post(_u('/users/avatar'), 'res.User/User:setAvatar');
 $app->post(_u('/users/pay_pass'), 'res.User/User:setPayPass');
+$app->post(_u('/users/set_tag'), 'res.User/User:setTag');
 
 $app->get(_u('/my/expresses'), 'res.Express/MyExpress:get');
 $app->get(_u('/my/publish_expresses/{expressId}'), 'res.Express/MyExpress:myPublish');

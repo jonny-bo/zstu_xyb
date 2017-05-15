@@ -135,6 +135,17 @@ class User extends BaseResource
         return array('success' => 'true');
     }
 
+    public function setTag(Request $request)
+    {
+        $user   = $this->getCurrentUser();
+        $userId = $request->request->get('user_id', $user['id']);
+        $tagId  = $request->request->get('tag_id', 'zstu_xyb_'.$user['id']);
+
+        $user = $this->getUserInfoService()->setTagId($userId, $tagId);
+
+        return $this->filter($user);
+    }
+
     public function filter($res)
     {
         $res['is_pay_set'] = empty($res['pay_password']) ? 0 : 1;

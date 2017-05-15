@@ -11,4 +11,6 @@ interface UserInfoService
     public function recordCredit($userId, $message, $credit);
 
     public function recordBill($userId, $message, $coin);
+
+    public function setTagId($userId, $tagId);
 }
