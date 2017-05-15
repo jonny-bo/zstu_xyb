@@ -48,7 +48,7 @@ class ExpressServiceImpl extends BaseService implements ExpressService
             throw new AccessDeniedException('未登录用户，无权操作！');
         }
         if (!$this->getUserService()->verifyPayPassword($user['id'], $fields['pay_password'])) {
-            throw new AccessDeniedException('支付密码错误！');
+            throw new AccessDeniedException($fields['pay_password']);
         }
 
         unset($fields['pay_password']);
