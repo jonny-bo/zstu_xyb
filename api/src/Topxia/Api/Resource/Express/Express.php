@@ -65,7 +65,7 @@ class Express extends BaseResource
 
         $publisher = $this->getUserService()->getUser($express['publisher_id']);
 
-        Jpush::send(array($publisher['tag_id']), '您的快递有一人申请接单，请及时确认！');
+        Jpush::send($publisher['tag_id'], '您的快递有一人申请接单，请及时确认！');
 
         return array('success' => 'true');
     }

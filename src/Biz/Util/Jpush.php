@@ -30,7 +30,7 @@ class Jpush
         try {
             $client->push()
                 ->setPlatform(array('android'))
-                ->addTag($tagId)
+                ->addAlias($tagId)
                 ->setNotificationAlert($message)
                 ->send();
         } catch (\Exception $e) {
