@@ -22,4 +22,19 @@ class Jpush
         }
         return self::$client;
     }
+
+    public static function send($tagId, $message)
+    {
+        $client = self::getClient();
+
+        try {
+            $client->push()
+                ->setPlatform(array('android'))
+                ->addTag($tagId)
+                ->setNotificationAlert($message)
+                ->send();
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
 }
