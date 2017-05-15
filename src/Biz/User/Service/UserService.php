@@ -47,4 +47,8 @@ interface UserService
     public function updateCredit($userId, $credit);
 
     public function updateCoin($userId, $coin);
+
+    public function changePayPassword($userId, $newPayPassword);
+
+    public function verifyPayPassword($userId, $payPassword);
 }

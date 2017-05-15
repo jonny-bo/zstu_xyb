@@ -14,7 +14,7 @@ use Biz\User\Event\UserEvents;
 class ExpressServiceImpl extends BaseService implements ExpressService
 {
     protected $requiredFields = array(
-        'title', 'detail', 'offer'
+        'title', 'detail', 'offer', 'pay_password'
     );
 
     public function getExpress($expressId)
@@ -47,7 +47,11 @@ class ExpressServiceImpl extends BaseService implements ExpressService
         if (empty($user->id)) {
             throw new AccessDeniedException('未登录用户，无权操作！');
         }
+        if (!$this->getUserService()->verifyPayPassword($user['id'], $fields['pay_password'])) {
+            throw new AccessDeniedException('支付密码错误！');
+        }
 
+        unset($fields['pay_password']);
 
         $fields['publisher_id'] = $user['id'];
         $fields['title']        = $this->purifyHtml($fields['title']);

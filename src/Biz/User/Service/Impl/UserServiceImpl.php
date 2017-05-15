@@ -175,6 +175,47 @@ class UserServiceImpl extends BaseService implements UserService
         return $this->getUserDao()->update($userId, array('coin' => $user['coin']+$coin));
     }
 
+    public function changePayPassword($userId, $newPayPassword)
+    {
+        if (empty($newPayPassword)) {
+            throw new InvalidArgumentException('参数不正确，更改支付密码失败');
+        }
+
+        $user = $this->getUser($userId);
+
+        if (empty($user)) {
+            throw new ResourceNotFoundException('User', $userId, '更改支付密码失败');
+        }
+
+        if (!SimpleValidator::numbers($newPayPassword) || strlen($newPayPassword) != 6) {
+            throw new InvalidArgumentException('支付密码格式不不正确！');
+        }
+
+        $payPasswordSalt = base_convert(sha1(uniqid(mt_rand(), true)), 16, 36);
+
+        $fields = array(
+            'pay_password_salt' => $payPasswordSalt,
+            'pay_password'     => $this->passwordEncode($newPayPassword, $payPasswordSalt)
+        );
+
+        $this->getUserDao()->update($userId, $fields);
+
+        $this->getLogService()->info('user', $userId, 'pay-password-changed', sprintf('用户%s(ID:%u)重置支付密码成功', $user['nickname'], $user['id']));
+
+        return true;
+    }
+
+    public function verifyPayPassword($userId, $payPassword)
+    {
+        $user = $this->getUser($userId);
+
+        if (empty($user)) {
+            throw new ResourceNotFoundException('User', $userId, '用户不存在');
+        }
+
+        return $this->verifyInSaltOut($payPassword, $user['pay_password_salt'], $user['pay_password']);
+    }
+
     protected function perConditions($conditions)
     {
         $conditions =  array_filter($conditions);
@@ -349,5 +390,10 @@ class UserServiceImpl extends BaseService implements UserService
     protected function getUserTokenDao()
     {
         return $this->biz->dao('User:UserTokenDao');
+    }
+
+    protected function getLogService()
+    {
+        return $this->biz->service('System:LogService');
     }
 }

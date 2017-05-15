@@ -116,6 +116,25 @@ class User extends BaseResource
         return $this->filter($user);
     }
 
+    public function setPayPass(Request $request)
+    {
+        $fields = $request->request->all();
+
+        if (!ArrayToolkit::requireds($fields, array('password', 'new_pay_password'))) {
+            return $this->error('500', '参数错误');
+        }
+
+        $user = $this->getCurrentUser();
+
+        if (!$this->getUserService()->verifyPassword($user['id'], $fields['password'])) {
+            return $this->error('500', '密码错误');
+        }
+
+        $this->getUserService()->changePayPassword($user['id'], $fields['new_pay_password']);
+
+        return array('success' => 'true');
+    }
+
     public function filter($res)
     {
         unset($res['password']);

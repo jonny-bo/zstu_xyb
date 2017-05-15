@@ -6,7 +6,7 @@ use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 use Topxia\Api\Resource\BaseResource;
 use Biz\Common\ArrayToolkit;
-use JPush\Client as JPush;
+use Biz\Util\Jpush;
 
 class Thread extends BaseResource
 {
@@ -23,6 +23,23 @@ class Thread extends BaseResource
         $start   = $request->query->get('start', 0);
         $limit   = $request->query->get('limit', 10);
 
+        $client = JPush::getClient();
+        try {
+            $response = $client->push()
+            ->setPlatform('all')
+            ->addAllAudience()
+            ->setNotificationAlert('Hi, 我是波波，测试jpush中')
+            ->send();
+
+            print_r($response);
+        } catch (\JPush\Exceptions\APIConnectionException $e) {
+            // try something here
+            print $e;
+        } catch (\JPush\Exceptions\APIRequestException $e) {
+            // try something here
+            print $e;
+        }
+        exit();
         $threds = $this->getThreadService()->searchThreads(
             $conditions,
             $ordeyBy,
