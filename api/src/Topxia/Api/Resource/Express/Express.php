@@ -11,6 +11,7 @@ use Biz\Common\Exception\ResourceNotFoundException;
 use Biz\Common\Exception\RuntimeException;
 use Biz\Common\Exception\AccessDeniedException;
 use Biz\Common\ArrayToolkit;
+use Biz\Util\Jpush;
 
 class Express extends BaseResource
 {
@@ -59,7 +60,15 @@ class Express extends BaseResource
     public function apply($expressId)
     {
         $user = $this->getCurrentUser();
+        $express = $this->getExpressService()->getExpress($expressId);
         $this->getExpressApplyService()->apply($expressId, $user['id']);
+
+        $publisher = $this->getUserService()->getUser($express['publisher_id']);
+        Jpush::getClient()
+            ->setPlatform('all')
+            ->addTag(array($publisher['tag_id']))
+            ->setNotificationAlert('您的快递，有一人申请接单！')
+            ->send();
 
         return array('success' => 'true');
     }
