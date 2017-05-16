@@ -19,4 +19,6 @@ interface OrderService
     public function payOrder($payData);
 
     public function getOrderByTargetTypeAndTargetIdAndUserId($targetType, $targetId, $userId);
+    
+    public function findOrderLogsByorderId($orderId);
 }

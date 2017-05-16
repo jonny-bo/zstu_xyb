@@ -48,3 +48,24 @@ log-module:
     category: '分类管理'
     user: '用户管理'
     crontab: '定时任务'
+ordersStatus:
+    created: '已创建'
+    paid: '已支付'
+    refunding: '退款中'
+    refunded: '已退款'
+payment:
+    none: '--'
+    alipay: '支付宝'
+    wxpay: '微信支付'
+    coin: '流币'
+    outside: '线下支付'
+ordersKeyWordType:
+    nickname: '用户昵称'
+    sn: '订单编号'
+    title:　'订单标题'
+orderLogType:
+    created: '已创建'
+    pay_unknown: '未知支付'
+    pay_success: '支付成功'
+    pay_error: '支付失败'
+    pay_ignore: '已处里'

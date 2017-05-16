@@ -35,6 +35,7 @@ class HelperExtension extends \Twig_Extension
         return [
             new \Twig_SimpleFilter('money', [$this, 'formatMoney']),
             new \Twig_SimpleFilter('smart_time', [$this, 'smarttimeFilter']),
+            new \Twig_SimpleFilter('plain_text', array($this, 'plainTextFilter'), array('is_safe' => array('html'))),
         ];
     }
 
@@ -71,6 +72,24 @@ class HelperExtension extends \Twig_Extension
         }
 
         return date('Y-n-d H:i', $time);
+    }
+
+    public function plainTextFilter($text, $length = null)
+    {
+        $text = strip_tags($text);
+
+        $text = str_replace(array("\n", "\r", "\t"), '', $text);
+        $text = str_replace('&nbsp;', ' ', $text);
+        $text = trim($text);
+
+        $length = (int) $length;
+
+        if (($length > 0) && (mb_strlen($text) > $length)) {
+            $text = mb_substr($text, 0, $length, 'UTF-8');
+            $text .= '...';
+        }
+
+        return $text;
     }
 
     public function getSetting($name, $default = null)

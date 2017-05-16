@@ -12,7 +12,8 @@ class ExpressServiceTest extends BaseTestCase
         $expressText = array(
             'title'  => 'test',
             'detail' => 'detail',
-            'offer'  => 3
+            'offer'  => 0,
+            'pay_password' => '123456'
         );
 
         $express = $this->getExpressService()->createExpress($expressText);
@@ -27,7 +28,8 @@ class ExpressServiceTest extends BaseTestCase
         $expressText = array(
             'title'  => 'test',
             'detail' => 'detail',
-            'offer'  => 3
+            'offer'  => 0,
+            'pay_password' => '123456'
         );
 
         $express = $this->getExpressService()->createExpress($expressText);
@@ -46,17 +48,20 @@ class ExpressServiceTest extends BaseTestCase
         $expressText1 = array(
             'title'  => 'test1',
             'detail' => 'detail1',
-            'offer'  => 3
+            'offer'  => 0,
+            'pay_password' => '123456'
         );
         $expressText2 = array(
             'title'  => 'test2',
             'detail' => 'detail2',
-            'offer'  => 3
+            'offer'  => 0,
+            'pay_password' => '123456'
         );
         $expressText3 = array(
             'title'  => 'test3',
             'detail' => 'detail3',
-            'offer'  => 3
+            'offer'  => 0,
+            'pay_password' => '123456'
         );
 
         $express1 = $this->getExpressService()->createExpress($expressText1);
@@ -95,7 +100,8 @@ class ExpressServiceTest extends BaseTestCase
         $expressText = array(
             'title'  => 'test',
             'detail' => 'detail',
-            'offer'  => 3
+            'offer'  => 0,
+            'pay_password' => '123456'
         );
 
         self::$biz['user'] = '';
@@ -107,7 +113,8 @@ class ExpressServiceTest extends BaseTestCase
         $expressText = array(
             'title'  => 'test',
             'detail' => 'detail',
-            'offer'  => 3
+            'offer'  => 0,
+            'pay_password' => '123456'
         );
 
         $express = $this->getExpressService()->createExpress($expressText);
@@ -143,7 +150,8 @@ class ExpressServiceTest extends BaseTestCase
         $expressText = array(
             'title'  => 'test',
             'detail' => 'detail',
-            'offer'  => 3,
+            'offer'  => 0,
+            'pay_password' => '123456'
         );
 
         $user = $this->createUser('test_user2');
@@ -167,7 +175,8 @@ class ExpressServiceTest extends BaseTestCase
         $expressText = array(
             'title'  => 'test',
             'detail' => 'detail',
-            'offer'  => 3
+            'offer'  => 0,
+            'pay_password' => '123456'
         );
         $user = self::$biz['user'];
 
@@ -183,7 +192,8 @@ class ExpressServiceTest extends BaseTestCase
         $expressText = array(
             'title'  => 'test',
             'detail' => 'detail',
-            'offer'  => 3
+            'offer'  => 0,
+            'pay_password' => '123456'
         );
         $user1 = $this->createUser('test_user1');
         $currentUser1 = new CurrentUser($user1);
@@ -220,11 +230,13 @@ class ExpressServiceTest extends BaseTestCase
         $expressText = array(
             'title'  => 'test',
             'detail' => 'detail',
-            'offer'  => 3
+            'offer'  => 0,
+            'pay_password' => '123456'
         );
         $user1 = $this->createUser('test_user1');
         $currentUser1 = new CurrentUser($user1);
         self::$biz['user'] = $currentUser1;
+        $this->getUserService()->changePayPassword($user1['id'], '123456');
 
         $express = $this->getExpressService()->createExpress($expressText);
 
@@ -233,6 +245,7 @@ class ExpressServiceTest extends BaseTestCase
         $user2 = $this->createUser('test_user2');
         $currentUser2 = new CurrentUser($user2);
         self::$biz['user'] = $currentUser2;
+        $this->getUserService()->changePayPassword($user2['id'], '123456');
 
         $express = $this->getExpressService()->orderExpress($express['id'], $user2['id']);
 
@@ -252,11 +265,13 @@ class ExpressServiceTest extends BaseTestCase
         $expressText = array(
             'title'  => 'test',
             'detail' => 'detail',
-            'offer'  => 3
+            'offer'  => 0,
+            'pay_password' => '123456'
         );
         $user1 = $this->createUser('test_user1');
         $currentUser1 = new CurrentUser($user1);
         self::$biz['user'] = $currentUser1;
+        $this->getUserService()->changePayPassword($user1['id'], '123456');
 
         $express = $this->getExpressService()->createExpress($expressText);
 
@@ -265,6 +280,7 @@ class ExpressServiceTest extends BaseTestCase
         $user2 = $this->createUser('test_user2');
         $currentUser2 = new CurrentUser($user2);
         self::$biz['user'] = $currentUser2;
+        $this->getUserService()->changePayPassword($user2['id'], '123456');
 
         $express = $this->getExpressService()->orderExpress($express['id'], $user2['id']);
 
@@ -286,11 +302,13 @@ class ExpressServiceTest extends BaseTestCase
         $expressText = array(
             'title'  => 'test',
             'detail' => 'detail',
-            'offer'  => 3
+            'offer'  => 0,
+            'pay_password' => '123456'
         );
         $user1 = $this->createUser('test_user1');
         $currentUser1 = new CurrentUser($user1);
         self::$biz['user'] = $currentUser1;
+        $this->getUserService()->changePayPassword($user1['id'], '123456');
 
         $express = $this->getExpressService()->createExpress($expressText);
 
@@ -299,6 +317,7 @@ class ExpressServiceTest extends BaseTestCase
         $user2 = $this->createUser('test_user2');
         $currentUser2 = new CurrentUser($user2);
         self::$biz['user'] = $currentUser2;
+        $this->getUserService()->changePayPassword($user2['id'], '123456');
 
         $this->assertEquals($express['status'], 1);
 
@@ -314,11 +333,13 @@ class ExpressServiceTest extends BaseTestCase
         $expressText = array(
             'title'  => 'test',
             'detail' => 'detail',
-            'offer'  => 3
+            'offer'  => 0,
+            'pay_password' => '123456'
         );
         $user1 = $this->createUser('test_user1');
         $currentUser1 = new CurrentUser($user1);
         self::$biz['user'] = $currentUser1;
+        $this->getUserService()->changePayPassword($user1['id'], '123456');
 
         $express = $this->getExpressService()->createExpress($expressText);
 
@@ -327,6 +348,7 @@ class ExpressServiceTest extends BaseTestCase
         $user2 = $this->createUser('test_user2');
         $currentUser2 = new CurrentUser($user2);
         self::$biz['user'] = $currentUser2;
+        $this->getUserService()->changePayPassword($user2['id'], '123456');
 
         $this->assertEquals($express['status'], 1);
 

@@ -156,6 +156,8 @@ class GoodsServiceTest extends BaseTestCase
         );
         $goods = $this->getGoodsService()->createGoods($goodsText);
 
+        $this->getGoodsService()->cancelGoods($goods['id']);
+
         $newGoods = $this->getGoodsService()->updateGoods($goods['id'], array(
             'title' => '11111',
             'price' => 66
@@ -234,6 +236,7 @@ class GoodsServiceTest extends BaseTestCase
         );
         $goods = $this->getGoodsService()->createGoods($goodsText);
 
+        $this->getGoodsService()->cancelGoods($goods['id']);
         $result = $this->getGoodsService()->deleteGoods($goods['id']);
 
         $this->assertEquals($result, 1);
@@ -250,8 +253,6 @@ class GoodsServiceTest extends BaseTestCase
         );
         $goods = $this->getGoodsService()->createGoods($goodsText);
 
-        $goods = $this->getGoodsService()->publishGoods($goods['id']);
-
         $this->assertEquals($goods['status'], 2);
     }
 
@@ -265,8 +266,6 @@ class GoodsServiceTest extends BaseTestCase
             'imgs' => []
         );
         $goods = $this->getGoodsService()->createGoods($goodsText);
-
-        $goods = $this->getGoodsService()->publishGoods($goods['id']);
 
         $this->assertEquals($goods['status'], 2);
 

@@ -1,0 +1,28 @@
+<tr id="order-table-tr-{{ order.id }}">
+  <td>
+    <strong>{{ order.title|raw }}</strong>
+  </td>
+  <td>
+    {{ order.createdTime|smart_time }}
+  </td>
+  <td>
+    {{ dict_text('ordersStatus', order.status) }}
+  </td>
+  <td>
+    {{ order.amount }}
+  </td>
+  <td>
+    {{ order.coin_amount }} /汇率{{ order.coin_rate }}
+  </td>
+  <td>
+    {{ admin_macro.user_link(users[order.user_id]) }}
+  </td>
+  <td>
+    {{ dict_text('payment', order.payment) }}
+  </td>
+  <td>
+    <div class="btn-group">
+      <a href="#modal" data-toggle="modal" data-url="{{ path('admin_goods_orders_show', {orderId:order.id}) }}" data-url="" class="btn btn-default btn-sm">查看</a>
+    </div>
+  </td>
+</tr>

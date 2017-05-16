@@ -165,6 +165,48 @@ class GoodsController extends BaseController
         return $this->createJsonResponse(false);
     }
 
+    public function ordersAction(Request $request)
+    {
+        $conditions = $request->query->all();
+        $orderBy    = $this->getOrderBy($conditions, array('createdTime' => 'DESC'));
+        $conditions['target_type'] = 'goods';
+
+        $ordersCount  = $this->getOrderService()->searchOrderCount($conditions);
+        $paginator  = new Paginator($request, $ordersCount, parent::DEFAULT_PAGE_COUNT);
+
+        $orders = $this->getOrderService()->searchOrder(
+            $conditions,
+            $orderBy,
+            $paginator->getOffsetCount(),
+            $paginator->getPerPageCount()
+        );
+
+        $userIds = ArrayToolkit::column($orders, 'user_id');
+
+        $users   = $this->getUserService()->findUsersByIds($userIds);
+        $users   = ArrayToolkit::index($users, 'id');
+
+        return $this->render('AppBundle:admin/goods:orders.html.twig', array(
+            'orders'        => $orders,
+            'ordersCount'   => $ordersCount,
+            'users'         => $users,
+            'paginator'     => $paginator
+        ));
+    }
+
+    public function showOrderAction($orderId)
+    {
+        $order = $this->getOrderService()->getOrder($orderId);
+        $user = $this->getUserService()->getUser($order['user_id']);
+        $orderLogs = $this->getOrderService()->findOrderLogsByorderId($orderId);
+
+        return $this->render('AppBundle:admin/goods:order-show-modal.html.twig', array(
+            'order'   => $order,
+            'user'     => $user,
+            'orderLogs' => $orderLogs
+        ));
+    }
+
 
     protected function getUserService()
     {
@@ -184,5 +226,10 @@ class GoodsController extends BaseController
     protected function getCategoryGroupService()
     {
         return $this->biz->service('Category:CategoryGroupService');
+    }
+
+    protected function getOrderService()
+    {
+        return $this->biz->service('Order:OrderService');
     }
 }

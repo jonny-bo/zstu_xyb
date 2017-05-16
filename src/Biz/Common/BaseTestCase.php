@@ -29,6 +29,8 @@ class BaseTestCase extends ParentTestCase
         $currentUser = new CurrentUser($user);
 
         self::$biz['user'] = $currentUser;
+
+        $this->getUserService()->changePayPassword($user['id'], '123456');
     }
 
     protected function createUser($username, $roles = array('ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN'))
@@ -39,9 +41,12 @@ class BaseTestCase extends ParentTestCase
             "phone"    => '13582654789',
             "email"    => "{$username}@test.com",
             'password' => '12345',
-            'roles'    => $roles
+            'roles'    => $roles,
+            'coin' => 100
         );
-        return $this->getUserService()->register($user);
+        $user = $this->getUserService()->register($user);
+
+        return $user;
     }
 
     protected function getUserService()

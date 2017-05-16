@@ -42,6 +42,14 @@ admin_express_show:
   path:      /express/{id}/show
   defaults:  { _controller: AppBundle:Admin/Express:show }
 
+admin_express_orders:
+  path:      /express/orders
+  defaults:  { _controller: AppBundle:Admin/Express:orders }
+
+admin_express_orders_show:
+    path:      /express/orders/{orderId}/show
+    defaults:  { _controller: AppBundle:Admin/Express:showOrder }
+
 admin_goods:
   path:      /goods
   defaults:  { _controller: AppBundle:Admin/Goods:index }
@@ -81,6 +89,14 @@ admin_goods_category_delete:
 admin_goods_category_checkcode:
   path:  /goods/category/checkcode
   defaults: { _controller: AppBundle:Admin/Goods:checkcode }
+
+admin_goods_orders:
+  path:      /goods/orders
+  defaults:  { _controller: AppBundle:Admin/Goods:orders }
+
+admin_goods_orders_show:
+    path:      /goods/orders/{orderId}/show
+    defaults:  { _controller: AppBundle:Admin/Goods:showOrder }
 
 admin_group:
   path:      /group

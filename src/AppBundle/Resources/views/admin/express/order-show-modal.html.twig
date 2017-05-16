@@ -1,0 +1,117 @@
+{% extends 'AppBundle::bootstrap-modal-layout.html.twig' %}
+
+{% block title %}{{'订单详细信息'|trans}}{% endblock %}
+
+{% block body %}
+
+  {% if orderLogs %}
+  <table class="table table-striped table-condenseda table-bordered">
+    <tr>
+      <th width="25%">{{'标题'|trans}}</th>
+      <td width="75%">
+        {{ order.title|raw }}
+      </td>
+    </tr>
+    <tr>
+      <th width="25%">{{'编号'|trans}}</th>
+      <td width="75%">
+        {{ order.sn|raw }}
+      </td>
+    </tr>
+    <tr>
+      <th>{{'状态'|trans}}</th>
+      <td>
+        {{ dict_text('ordersStatus', order.status) }}
+      </td>
+    </tr>
+    <tr>
+      <th>{{'实付金额'|trans}}</th>
+      <td>
+        {{ order.amount }}
+      </td>
+    </tr>
+    <tr>
+      <th>{{'订单总价'|trans}}</th>
+      <td>
+        {{ order.total_price }}
+      </td>
+    </tr>
+    <tr>
+      <th>{{'流币付款'|trans}}</th>
+      <td>
+        {{ order.coin_amount }}/汇率{{ order.coin_rate }}
+      </td>
+    </tr>
+    <tr>
+      <th>{{'支付方式'|trans}}</th>
+      <td>
+        {{ dict_text('payment', order.payment) }}
+      </td>
+    </tr>
+    <tr>
+      <th>{{'流水帐号'|trans}}</th>
+      <td>
+        {{ order.cash_sn }}
+      </td>
+    </tr>
+    <tr>
+      <th>{{'创建时间'|trans}}</th>
+      <td> 
+        {{ order.createdTime|date('Y-n-d H:i:s') }}    
+      </td>
+    </tr>
+    <tr>
+      <th>{{'创建用户'|trans}}</th>
+      <td>
+          {{ user.username }}
+      </td>
+    </tr>
+    <tr>
+      <th>{{'备注'|trans}}</th>
+      <td>
+        {{ order.note }}
+      </td>
+    </tr>
+  </table>
+  <table class="table">
+    <thead>
+      <tr>
+        <th width="50%">{{'日志信息'|trans}}</th>
+        <th width="25%">{{'操作人'|trans}}</th>
+        <th width="25%">{{'创建时间'|trans}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for orderLog in orderLogs %}
+        {% set logUser = user|default(null) %}
+        <tr>
+          <td>
+            {{ orderLog.message | plain_text(50) }}
+            <br>
+            <span class="text-muted text-sm">{{ dict_text('orderLogType', orderLog.type)}}</span>
+          </td>
+          <td>
+            {% if logUser %}
+              {{ admin_macro.user_link(logUser) }}
+            {% else %}
+              --
+            {% endif %}
+          </td>
+          <td>
+            {{ orderLog.created_time|date('Y-n-d H:i')}}
+            <br>
+            <span class="text-muted text-sm">{{ orderLog.ip}}</span>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+<div class="empty">{{'暂无交易日志!'|trans}}</div>
+{% endif %}
+
+{% endblock %}
+
+{% block footer %}
+  <button type="button" class="btn btn-primary" data-dismiss="modal">{{'关闭'|trans}}</button>
+{% endblock %}

@@ -173,6 +173,11 @@ class OrderServiceImpl extends BaseService implements OrderService
         return array($success, $order);
     }
 
+    public function findOrderLogsByorderId($orderId)
+    {
+        return $this->getOrderLogDao()->findByOrderId($orderId);
+    }
+
     public function getOrderByTargetTypeAndTargetIdAndUserId($targetType, $targetId, $userId)
     {
         return $this->getOrderDao()->getByTargetTypeAndTargetIdAndUserId($targetType, $targetId, $userId);

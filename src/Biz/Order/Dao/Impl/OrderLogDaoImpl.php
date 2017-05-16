@@ -18,4 +18,11 @@ class OrderLogDaoImpl extends GeneralDaoImpl implements OrderLogDao
             'conditions' => array(),
         );
     }
+
+    public function findByOrderId($orderId)
+    {
+        return $this->findByFields(array(
+            'order_id' => $orderId
+        ));
+    }
 }
