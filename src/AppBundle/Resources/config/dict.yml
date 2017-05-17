@@ -69,3 +69,11 @@ orderLogType:
     pay_success: '支付成功'
     pay_error: '支付失败'
     pay_ignore: '已处里'
+approvalKeyWordType:
+    truename: '真实姓名'
+    note: '学号'
+approvalStatus:
+    unapprove: '未审核'
+    approving: '审核中'
+    approved: '已审核'
+    approve_fail: '审核不通过'

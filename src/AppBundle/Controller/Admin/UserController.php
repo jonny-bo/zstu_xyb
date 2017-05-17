@@ -4,6 +4,7 @@ namespace AppBundle\Controller\Admin;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Controller\BaseController;
 use AppBundle\Common\Paginator;
+use Biz\Common\ArrayToolkit;
 
 class UserController extends BaseController
 {
@@ -116,6 +117,83 @@ class UserController extends BaseController
         ));
     }
 
+    public function approvalsAction(Request $request)
+    {
+        $conditions = $request->query->all();
+        $orderBy    = $this->getOrderBy($conditions, array('created_time' => 'DESC'));
+        $userApprovalCount  = $this->getUserApprovalService()->searchUserApprovalCount($conditions);
+        $paginator  = new Paginator($request, $userApprovalCount, parent::DEFAULT_PAGE_COUNT);
+
+        $userApprovals = $this->getUserApprovalService()->searchUserApproval(
+            $conditions,
+            $orderBy,
+            $paginator->getOffsetCount(),
+            $paginator->getPerPageCount()
+        );
+
+        $userIds = ArrayToolkit::column($userApprovals, 'user_id');
+
+        $users   = $this->getUserService()->findUsersByIds($userIds);
+        $users   = ArrayToolkit::index($users, 'id');
+
+        return $this->render('AppBundle:admin/user:approvals.html.twig', array(
+            'userApprovals'     => $userApprovals,
+            'userApprovalCount' => $userApprovalCount,
+            'users' => $users,
+            'paginator' => $paginator
+        ));
+    }
+
+    public function showApprovalAction($id)
+    {
+        $approval = $this->getUserApprovalService()->getUserApproval($id);
+
+        $user = $this->getUserService()->getUser($approval['user_id']);
+
+        return $this->render('AppBundle:admin/user:approval-show-modal.html.twig', array(
+            'user'     => $user,
+            'approval' => $approval
+        ));
+    }
+
+    public function reviewAction($id)
+    {
+        $currenUser = $this->getCurrentUser();
+
+        $approval = $this->getUserApprovalService()->updateUserApproval($id, array(
+            'status' => 'approved',
+            'operator_id' => $currenUser['id']
+        ));
+
+        $user = $this->getUserService()->getUser($approval['user_id']);
+
+        $this->getLogService()->info('user', $currenUser['id'], 'review_user', "{$currenUser['nickname']}审核通过用户{$user['nickname']}(#{$user['id']})");
+
+        return $this->render('AppBundle::admin/user/approval-tr.html.twig', array(
+            'userApproval'    => $approval,
+            'user'  => $user
+        ));
+    }
+
+    public function unreviewAction($id)
+    {
+        $currenUser = $this->getCurrentUser();
+
+        $approval = $this->getUserApprovalService()->updateUserApproval($id, array(
+            'status' => 'approve_fail',
+            'operator_id' => $currenUser['id']
+        ));
+
+        $user = $this->getUserService()->getUser($approval['user_id']);
+
+        $this->getLogService()->info('user', $currenUser['id'], 'review_user', "{$currenUser['nickname']}取消审核通过用户{$user['nickname']}(#{$user['id']})");
+
+        return $this->render('AppBundle::admin/user/approval-tr.html.twig', array(
+            'userApproval'    => $approval,
+            'user'  => $user
+        ));
+    }
+
     protected function kickUserLogout($userId)
     {
         $tokens = $this->getUserService()->findTokensByUserIdAndType($userId, 'mobile_login');
@@ -129,5 +207,10 @@ class UserController extends BaseController
     protected function getUserService()
     {
         return $this->biz->service('User:UserService');
+    }
+
+    protected function getUserApprovalService()
+    {
+        return $this->biz->service('User:UserApprovalService');
     }
 }

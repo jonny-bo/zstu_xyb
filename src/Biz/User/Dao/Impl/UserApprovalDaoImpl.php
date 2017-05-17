@@ -14,7 +14,7 @@ class UserApprovalDaoImpl extends GeneralDaoImpl implements UserApprovalDao
         return array(
             'timestamps' => array('created_time'),
             'serializes' => array(),
-            'orderbys' => array(),
+            'orderbys' => array('created_time'),
             'conditions' => array(),
         );
     }

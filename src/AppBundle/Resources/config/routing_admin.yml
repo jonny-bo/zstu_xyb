@@ -34,6 +34,22 @@ admin_user_unlock:
   path:      /user/{id}/unlock
   defaults:  { _controller: AppBundle:Admin/User:unlock }
 
+admin_user_approvals:
+  path:      /user/approvals
+  defaults:  { _controller: AppBundle:Admin/User:approvals }
+
+admin_user_approval_show:
+  path:      /user/approvals/{id}/show
+  defaults:  { _controller: AppBundle:Admin/User:showApproval }
+
+admin_user_approval_unreview:
+  path:      /user/approvals/{id}/unreview
+  defaults:  { _controller: AppBundle:Admin/User:unreview }
+
+admin_user_approval_review:
+  path:      /user/approvals/{id}/review
+  defaults:  { _controller: AppBundle:Admin/User:review }
+
 admin_express:
   path:      /express
   defaults:  { _controller: AppBundle:Admin/Express:index }
