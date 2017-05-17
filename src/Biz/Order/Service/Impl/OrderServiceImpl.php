@@ -61,7 +61,6 @@ class OrderServiceImpl extends BaseService implements OrderService
                 throw new ResourceNotFoundException('user', $order['id'], '订单用户不存在，不能创建订单。');
             }
 
-            // $payment = ExtensionManager::instance()->getDataDict('payment');
             $payment = array (
                 'none' => '--',
                 'alipay' => '支付宝',
@@ -122,7 +121,6 @@ class OrderServiceImpl extends BaseService implements OrderService
             }
 
             if ($payData['status'] == 'success' || $order['payment'] == 'coin') {
-                //支付避免浮点数比较大小可能带来的问题，转成整数再比较。
                 if ($order['payment'] == 'coin') {
                     if ($payData['coin_amount'] != $order['coin_amount']) {
                         $message = "订单{$order['sn']}流币支付额度{$payData['coin_amount']}与实际支付的流币额度{$order['coin_amount']} 不符，支付失败！";
