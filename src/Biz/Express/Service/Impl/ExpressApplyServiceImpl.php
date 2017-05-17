@@ -59,10 +59,10 @@ class ExpressApplyServiceImpl extends BaseService implements ExpressApplyService
             throw new UnexpectedValueException('该订单已被认领！');
         }
 
-        $apply = $this->getExpressApplyDao()->getByExpressIdAndUserId(expressId, $userId);
+        $apply = $this->getExpressApplyDao()->getByExpressIdAndUserId($expressId, $userId);
 
         if ($apply) {
-            throw new UnexpectedValueException('不能重读申请该订单！');
+            throw new UnexpectedValueException('不能重复申请该订单！');
         }
 
         $apply = array(
