@@ -15,4 +15,6 @@ interface UserInfoService
     public function setTagId($userId, $tagId);
 
     public function setBaseInfo($userId, $fields);
+
+    public function findCreditsByUserId($userId);
 }

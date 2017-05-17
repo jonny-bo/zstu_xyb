@@ -69,6 +69,11 @@ class UserInfoServiceImpl extends BaseService implements UserInfoService
         return $this->getUserDao()->update($userId, $fields);
     }
 
+    public function findCreditsByUserId($userId)
+    {
+        return $this->getUserCreditRecordDao()->findByUserId($userId);
+    }
+
     protected function getUserDao()
     {
         return $this->biz->dao('User:UserDao');

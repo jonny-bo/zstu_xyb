@@ -14,6 +14,7 @@ $app->post(_u('/users/pay_pass'), 'res.User/User:setPayPass');
 $app->post(_u('/users/set_tag'), 'res.User/User:setTag');
 $app->post(_u('/users/approval'), 'res.User/User:approval');
 
+$app->get(_u('/my/credit'), 'res.User/User:credit');
 $app->get(_u('/my/expresses'), 'res.Express/MyExpress:get');
 $app->get(_u('/my/publish_expresses/{expressId}'), 'res.Express/MyExpress:myPublish');
 $app->post(_u('/my/publish_expresses/{expressId}/auth'), 'res.Express/MyExpress:auth');

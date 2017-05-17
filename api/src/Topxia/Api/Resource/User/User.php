@@ -177,6 +177,13 @@ class User extends BaseResource
         return array('success' => 'true');
     }
 
+    public function credit()
+    {
+        $user = $this->getCurrentUser();
+
+        return $this->getUserInfoService()->findCreditsByUserId($user['id']);
+    }
+
     public function filter($res)
     {
         $res['is_pay_set'] = empty($res['pay_password']) ? 0 : 1;

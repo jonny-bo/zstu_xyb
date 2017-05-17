@@ -18,4 +18,11 @@ class UserCreditRecordDaoImpl extends GeneralDaoImpl implements UserCreditRecord
             'conditions' => array(),
         );
     }
+
+    public function findByUserId($userId)
+    {
+        return $this->findByFields(array(
+            'user_id' => $userId
+        ));
+    }
 }
