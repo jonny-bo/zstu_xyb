@@ -180,8 +180,11 @@ class User extends BaseResource
     public function credit()
     {
         $user = $this->getCurrentUser();
-
-        return $this->getUserInfoService()->findCreditsByUserId($user['id']);
+        $credits = $this->getUserInfoService()->findCreditsByUserId($user['id']);
+        foreach ($credits as $credit) {
+            $credit['created_time'] = date('c', $credit['created_time']);
+        }
+        return $credits;
     }
 
     public function filter($res)
