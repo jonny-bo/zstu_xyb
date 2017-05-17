@@ -11,6 +11,7 @@ use Biz\Common\Exception\ResourceNotFoundException;
 use Biz\Common\Exception\RuntimeException;
 use Biz\Common\Exception\AccessDeniedException;
 use Biz\Common\ArrayToolkit;
+use Biz\Util\Jpush;
 
 class MyExpress extends BaseResource
 {
@@ -61,6 +62,10 @@ class MyExpress extends BaseResource
         $userId = $request->request->get('user_id');
         $this->getExpressApplyService()->auth($expressId, $userId);
 
+        $user = $this->getUserService()->getUser($userId);
+
+        Jpush::send($user['tag_id'], '您申请的快递已被用户授权，请及时送达！');
+
         return array('success' => 'true');
     }
 
@@ -80,7 +85,10 @@ class MyExpress extends BaseResource
 
     public function recivedConfirm($expressId)
     {
-        $this->getExpressService()->confirmMyReceiveExpress($expressId);
+        $express = $this->getExpressService()->confirmMyReceiveExpress($expressId);
+
+        $publisher = $this->getUserService()->getUser($express['publisher_id']);
+        Jpush::send($publisher['tag_id'], '您的快递已被送达，请及时确认评价！');
 
         return array('success' => 'true');
     }
