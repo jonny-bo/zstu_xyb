@@ -1,52 +1,47 @@
 {% extends 'AppBundle::bootstrap-modal-layout.html.twig' %}
 
-{% block title %}{{'旧货详细信息'|trans}}{% endblock %}
+{% block title %}{{'话题信息详情'|trans}}{% endblock %}
 
 {% block body %}
 
 <table class="table table-striped table-condenseda table-bordered">
   <tr>
-    <th width="25%">{{'标题'|trans}}</th>
+    <th width="25%">{{'话题标题'|trans}}</th>
     <td width="75%">
-      {{ goods.title|raw }}
+      {{ thread.title|raw }}
     </td>
   </tr>
   <tr>
-    <th width="25%">{{'详情'|trans}}</th>
+    <th width="25%">{{'话题内容'|trans}}</th>
     <td width="75%">
-      {{ goods.body|raw }}
+      {{ thread.content|raw }}
     </td>
   </tr>
   <tr>
-    <th>{{'分类'|trans}}</th>
-    <td>
-      {{ category.name }}
-    </td>
-  </tr>
-  <tr>
-    <th>{{'价格'|trans}}</th>
-    <td>
-      {{ goods.price }}
+    <th width="25%">{{'所属小组'|trans}}</th>
+    <td width="75%">
+      {{ group.title|raw }}
     </td>
   </tr>
   <tr>
     <th>{{'状态'|trans}}</th>
     <td>
-      {{ dict_text('goodsStatus', goods.status) }}
+      {{ dict_text('threadStatus', thread.status) }}
     </td>
   </tr>
   <tr>
     <th>{{'创建时间'|trans}}</th>
     <td> 
-      {{ goods.created_time|smart_time }}    
+      {{ thread.created_time|date('Y-n-d H:i:s') }}    
     </td>
   </tr>
   <tr>
-    <th>{{'发布用户'|trans}}</th>
+    <th>{{'创建人'|trans}}</th>
     <td>
-        {{ publisher.username }} -- {{ publisher.nickname }}
+        {{ user.username }} -- {{ user.nickname }}
     </td>
   </tr>
+  <tr>
 </table>
 
 {% endblock %}

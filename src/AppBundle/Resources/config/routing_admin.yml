@@ -118,6 +118,10 @@ admin_group:
   path:      /group
   defaults:  { _controller: AppBundle:Admin/Group:group }
 
+admin_group_show:
+  path:      /group/{id}/show
+  defaults:  { _controller: AppBundle:Admin/Group:show }
+
 admin_group_open:
   path:      /group/{id}/open
   defaults:  { _controller: AppBundle:Admin/Group:open }
@@ -141,6 +145,10 @@ admin_group_checkuser:
 admin_thread:
   path:      /thread
   defaults:  { _controller: AppBundle:Admin/Group:thread }
+
+admin_thread_show:
+  path:      /thread/{id}/show
+  defaults:  { _controller: AppBundle:Admin/Group:threadShow }
 
 admin_thread_delete:
   path:      /thread/{id}/delete

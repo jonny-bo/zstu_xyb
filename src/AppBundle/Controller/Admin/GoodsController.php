@@ -41,10 +41,12 @@ class GoodsController extends BaseController
     {
         $goods      = $this->getGoodsService()->getGoods($id);
         $publisher  = $this->getUserService()->getUser($goods['publisher_id']);
+        $category = $this->getCategoryService()->getCategory($goods['category_id']);
 
         return $this->render('AppBundle:admin/goods:show-modal.html.twig', array(
             'goods'       => $goods,
-            'publisher'   => $publisher
+            'publisher'   => $publisher,
+            'category'    => $category
         ));
     }
 

@@ -34,6 +34,27 @@ class GroupController extends BaseController
         ));
     }
 
+    public function showAction($id)
+    {
+        $group  = $this->getGroupService()->getGroup($id);
+        $user   = $this->getUserService()->getUser($group['owner_id']);
+        return $this->render('AppBundle:admin/group:show-modal.html.twig', array(
+            'group' => $group,
+            'user'  => $user,
+        ));
+    }
+
+    public function threadShow($id)
+    {
+        $thread = $this->getThreadService()->getThread($id);
+        $group  = $this->getGroupService()->getGroup($thread['group_id']);
+        $user   = $this->getUserService()->getUser($thread['user_id']);
+        return $this->render('AppBundle:admin/group:thread-show-modal.html.twig', array(
+            'group' => $group,
+            'user'  => $user,
+        ));
+    }
+
     public function threadAction(Request $request)
     {
         $conditions = $request->query->all();
