@@ -189,6 +189,9 @@ class User extends BaseResource
 
     public function filter($res)
     {
+        $approval = $this->getUserApprovalService()->getUserApprovalByUserId($res['id']);
+
+        $res['is_approval'] = empty($approval) ? 'none' : $approval['status'];
         $res['is_pay_set'] = empty($res['pay_password']) ? 0 : 1;
 
         unset($res['password']);
