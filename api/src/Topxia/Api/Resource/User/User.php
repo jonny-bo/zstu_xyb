@@ -181,8 +181,8 @@ class User extends BaseResource
     {
         $user = $this->getCurrentUser();
         $credits = $this->getUserInfoService()->findCreditsByUserId($user['id']);
-        foreach ($credits as $credit) {
-            $credit['created_time'] = date('c', $credit['created_time']);
+        foreach ($credits as $key => $credit) {
+            $credits[$key]['created_time'] = date('c', $credit['created_time']);
         }
         return $credits;
     }
