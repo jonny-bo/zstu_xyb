@@ -13,4 +13,6 @@ interface UserInfoService
     public function recordBill($userId, $message, $coin);
 
     public function setTagId($userId, $tagId);
+
+    public function setBaseInfo($userId, $fields);
 }

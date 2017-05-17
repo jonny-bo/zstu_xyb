@@ -37,6 +37,11 @@ class UserApprovalServiceImpl extends BaseService implements UserApprovalService
         return $this->getUserApprovalDao()->delete($userApprovalId);
     }
 
+    public function getUserApprovalByUserId($userId)
+    {
+        return $this->getUserApprovalDao()->getByUserId($userId);
+    }
+
     protected function getUserApprovalDao()
     {
         return $this->biz->dao('User:UserApprovalDao');

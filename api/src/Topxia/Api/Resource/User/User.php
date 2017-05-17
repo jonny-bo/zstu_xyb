@@ -146,6 +146,37 @@ class User extends BaseResource
         return $this->filter($user);
     }
 
+    public function approval(Request $request)
+    {
+        $fields = $request->request->all();
+
+        if (!ArrayToolkit::requireds($fields, array('truename', 'note', 'mobile', 'email', 'student_card_img'))) {
+            return $this->error('500', '参数错误');
+        }
+
+        $user = $this->getCurrentUser();
+
+        $this->getUserInfoService()->setBaseInfo($user['id'], array(
+            'mobile' => $fields['mobile'],
+            'email'  => $fields['email'],
+        ));
+
+        unset($fields['mobile']);
+        unset($fields['email']);
+
+        $userApproval = $this->getUserApprovalService()->getUserApprovalByUserId($user['id']);
+
+        if ($userApproval) {
+            return $this->error('500', '您已经提交审核过了');
+        }
+
+        $fields['user_id'] = $user['id'];
+
+        $userApproval = $this->getUserApprovalService()->createUserApproval($fields);
+
+        return array('success' => 'true');
+    }
+
     public function filter($res)
     {
         $res['is_pay_set'] = empty($res['pay_password']) ? 0 : 1;
@@ -201,5 +232,10 @@ class User extends BaseResource
     protected function getUserInfoService()
     {
         return $this->biz->service('User:UserInfoService');
+    }
+
+    protected function getUserApprovalService()
+    {
+        return $this->biz->service('User:UserApprovalService');
     }
 }

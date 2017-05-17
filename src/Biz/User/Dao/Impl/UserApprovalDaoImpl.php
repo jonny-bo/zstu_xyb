@@ -18,4 +18,9 @@ class UserApprovalDaoImpl extends GeneralDaoImpl implements UserApprovalDao
             'conditions' => array(),
         );
     }
+
+    public function getByUserId($userId)
+    {
+        return $this->getByFields(array('user_id' => $userId));
+    }
 }

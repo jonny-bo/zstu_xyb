@@ -15,4 +15,6 @@ interface UserApprovalService
     public function updateUserApproval($userApprovalId, $fields);
 
     public function deleteUserApproval($userApprovalId);
+
+    public function getUserApprovalByUserId($userId);
 }
