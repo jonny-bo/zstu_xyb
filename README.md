@@ -93,3 +93,18 @@ app/console server:run
     ```
     phpunit -c app TEST_CAST_FILEPATH
     ```
+
+## 系统演示
+
+ - 体验校园帮管理系统, 请访问 [http://112.74.36.71:8000/admin](http://112.74.36.71:8000/admin)
+ - 注册帐号, 请访问app或者通过api
+
+一. 普通测试用户
+
+- **用户名:** `test123123`
+- **密码:** `test123`
+
+二. 管理员用户
+
+- **用户名:** `testAdmin`
+- **密码:** `test123`
