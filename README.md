@@ -17,6 +17,8 @@
 
 为了保证开发过程中各成员的程序结构和开发框架的一致性及代码的可维护性，作为项目开发过程中相关人员的工作基础和依据，并作为项目质量评估的标准。
 
+  [校园帮－接口文档(密码zstu)](http://www.xiaoyaoji.com.cn/dashboard/#!/share/1xsmCDqx8i)
+
 ## 开发规范
 
 * [Git 使用规范](coding-standards/git.md)
