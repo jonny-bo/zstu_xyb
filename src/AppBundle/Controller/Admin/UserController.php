@@ -46,7 +46,7 @@ class UserController extends BaseController
 
             $user = $this->getUserService()->register($fields);
 
-            $this->getLogService()->info('user', $user['id'], 'register_user', "添加用户{$user['nickname']}(#{$user['id']})", $user);
+            $this->getLogService()->info('user', $user['id'], 'register_user', "添加用户{$user['nickname']}(#{$user['id']})");
 
             $this->setFlashMessage('success', '添加用户成功');
 
