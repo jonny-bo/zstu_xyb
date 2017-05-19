@@ -34,9 +34,9 @@ framework:
     assets:
         packages:
             webpack:
-                version: '%webpack_assets_version%'
-                base_urls:
-                    - "%webpack_assets_base_url%"
+                # version: '%webpack_assets_version%'
+                # base_urls:
+                #     - "%webpack_assets_base_url%"
 
 
 # Twig Configuration

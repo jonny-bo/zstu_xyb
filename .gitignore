@@ -3,6 +3,7 @@
 /app/bootstrap.php.cache
 /app/config/parameters.yml
 /app/config/parameters_test.yml
+/app/config/crontab_config.yml
 /app/config/platform.php
 /var/cache/*
 /var/logs/*
