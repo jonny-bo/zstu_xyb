@@ -4,6 +4,7 @@ namespace AppBundle\Command;
 
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Filesystem\Filesystem;
 
 class AppInitCommand extends BaseCommand
 {
@@ -37,11 +38,32 @@ class AppInitCommand extends BaseCommand
         $this->initFileGroup();
         $output->writeln(' ...<info>成功</info>');
 
+        $output->write('  初始化系统文件');
+        $this->initFolders();
+        $output->writeln(' ...<info>成功</info>');
+
         $output->write('  初始化分类信息');
         $this->initCategory();
         $output->writeln(' ...<info>成功</info>');
 
         $output->writeln('<info>初始化系统完毕</info>');
+    }
+
+    protected function initFolders()
+    {
+        $folders = array(
+            ServiceKernel::instance()->getParameter('kernel.root_dir').'/data/udisk',
+            ServiceKernel::instance()->getParameter('kernel.root_dir').'/data/private_files',
+            ServiceKernel::instance()->getParameter('kernel.root_dir').'/../web/files',
+        );
+
+        $filesystem = new Filesystem();
+
+        foreach ($folders as $folder) {
+            if (!$filesystem->exists($folder)) {
+                $filesystem->mkdir($folder);
+            }
+        }
     }
 
     protected function initCategory()
