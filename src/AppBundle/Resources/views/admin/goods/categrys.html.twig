@@ -1,5 +1,7 @@
 {% extends 'AppBundle::admin/layout.html.twig' %}
+
 {% import "AppBundle::macro.html.twig" as web_macro %}
+{% import _self as self_macro %}
 
 {% set page = 'category' %}
 {% set menu = 'goods' %}
@@ -31,7 +33,7 @@
     </li>
     <li id="category-table-body">
         {% if categories is not empty %}
-            {{ _self.showCategoryTree(categories, group, false) }}
+            {{ self_macro.showCategoryTree(categories, group, false) }}
         {% else %}
             <div class="row empty">{{'暂无分类记录'|trans}}</div>
         {% endif %}
@@ -66,7 +68,7 @@
                     </div>
                 </div>
                 {% if isParent %}
-                    {{ _self.showCategoryTree(category.children, group, isCollapseChildren) }}
+                    {{ self_macro.showCategoryTree(category.children, group, isCollapseChildren) }}
                 {% endif %}
             </li>
         {% endfor %}
