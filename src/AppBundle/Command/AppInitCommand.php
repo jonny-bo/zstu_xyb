@@ -52,9 +52,9 @@ class AppInitCommand extends BaseCommand
     protected function initFolders()
     {
         $folders = array(
-            ServiceKernel::instance()->getParameter('kernel.root_dir').'/data/udisk',
-            ServiceKernel::instance()->getParameter('kernel.root_dir').'/data/private_files',
-            ServiceKernel::instance()->getParameter('kernel.root_dir').'/../web/files',
+            $this->getContainer()->getParameter('kernel.root_dir').'/data/udisk',
+            $this->getContainer()->getParameter('kernel.root_dir').'/data/private_files',
+            $this->getContainer()->getParameter('kernel.root_dir').'/../web/files',
         );
 
         $filesystem = new Filesystem();
