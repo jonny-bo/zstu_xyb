@@ -1,0 +1,1 @@
+webpackJsonp(["app/js/admin/system/status/index"],[function(module,exports){"use strict";$('[data-toggle="popover"]').popover();var $table=$("#direcory-check-table");$.post($table.data("url"),function(html){$table.find("tbody").html(html)})}]);

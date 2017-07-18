@@ -1,0 +1,1 @@
+webpackJsonp(["app/js/user/index"],[function(module,exports){"use strict";console.log("user")}]);

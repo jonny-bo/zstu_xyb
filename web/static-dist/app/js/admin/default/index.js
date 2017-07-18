@@ -1,0 +1,1 @@
+webpackJsonp(["app/js/admin/default/index"],[function(module,exports){"use strict";console.log("admin-default-index")}]);

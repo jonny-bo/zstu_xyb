@@ -1,0 +1,1 @@
+webpackJsonp(["app/js/main"],{dfa8b8b7fc44e9c4818f:function(module,exports){},0:function(module,exports,__webpack_require__){"use strict";__webpack_require__("dfa8b8b7fc44e9c4818f"),console.log("web-main")}});
