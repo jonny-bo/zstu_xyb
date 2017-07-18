@@ -95,7 +95,7 @@ app/console server:run
 
 ## 系统演示
  - 校园帮－接口文档(密码zstu) [http://www.xiaoyaoji.com.cn/dashboard/#!/share/1xsmCDqx8i](http://www.xiaoyaoji.com.cn/dashboard/#!/share/1xsmCDqx8i) 
- - 体验校园帮管理系统, 请访问 [http://112.74.36.71:8000/admin](http://112.74.36.71:8000/admin)
+ - 体验校园帮管理系统, 请访问 [http://139.196.80.220:8080/admin](http://139.196.80.220:8080/admin)
  - 注册帐号, 请访问app或者通过api
 
 一. 测试用户
