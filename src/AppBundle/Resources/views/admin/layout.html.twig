@@ -1,7 +1,7 @@
 {% extends 'AppBundle::base.html.twig' %}
 
-{% import "macro.html.twig" as web_macro %}
-{% import "admin/macro.html.twig" as admin_macro %}
+{% import "AppBundle::macro.html.twig" as web_macro %}
+{% import "AppBundle::admin/macro.html.twig" as admin_macro %}
 
 {% do css(['libs/vendor.css', 'app/css/admin/main.css'], 100) %}
 {% do script(['libs/vendor.js', 'app/js/admin/common.js', 'app/js/admin/main.js'], 100) %}
