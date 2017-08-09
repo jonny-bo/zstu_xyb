@@ -12,14 +12,14 @@
 {% block main %}
 <div class="page-header"><h1>Feature Magic Setting</h1></div>
 
-{{ web_macro.flash_messages() }}
+　{{ web_macro.flash_messages() }}
 
 
 <form class="form-horizontal" method="post" novalidate>
 
   <div class="form-group">
     <div class="controls col-md-12">
-      <textarea class="form-control info" id='data' rows="10" name="setting">{{ setting }}</textarea>
+      <textarea class="form-control info" id='data' rows="10" name="setting" title="系统设置">{{ setting }}</textarea>
     </div>
   </div>
 
