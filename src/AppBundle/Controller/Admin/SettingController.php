@@ -163,17 +163,18 @@ class SettingController extends BaseController
         );
 
         return array_map(function ($array) {
-            $name  = $array['name'];
-            $dir   = $array['dir'];
+            $name = $array['name'];
+            $dir = $array['dir'];
             $total = disk_total_space($dir);
-            $free  = disk_free_space($dir);
-            $rate  = (string) number_format($free / $total, 2) * 100 .'%';
+            $free = disk_free_space($dir);
+            $rate = (string) number_format($free / $total, 2) * 100 .'%';
+
             return array(
-                'name'  => $name,
-                'rate'  => $rate,
-                'free'  => StringToolkit::printMem($free),
+                'name' => $name,
+                'rate' => $rate,
+                'free' => StringToolkit::printMem($free),
                 'total' => StringToolkit::printMem($total),
-                'title' => $array['title']
+                'title' => $array['title'],
             );
         }, array($logs, $webFiles, $material));
     }
